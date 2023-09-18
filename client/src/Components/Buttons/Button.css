@@ -1,0 +1,50 @@
+.buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.button {
+    width: 220px;
+    height: 40px;
+    border: 1px solid #07D5A1;
+    border-radius: 100px;
+    background-color: transparent;
+    color: #07D5A1;
+    font-weight: 800;
+    font-size: 16px;
+    transition: all 0.25s ease-in;
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.button:hover {
+    transform: translateY(2px) translateX(2px) scale(1.05);
+    background-color: #07D5A1;
+    color: #fff;
+    border: transparent;
+    transition: all 0.25s ease-out;
+}
+
+.menuButton {
+    width: 100%;
+    min-height: 45px;
+    height: auto;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bolder;
+    border: #07D5A1 1px solid;
+    background: transparent;
+    color: #07D5A1;
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+    transition: all 0.25s ease-in;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.menuButton:hover {
+    transform: translateY(2px) translateX(2px) scale(1.05);
+    background-color: #07D5A1;
+    color: #fff;
+    border: transparent;
+    transition: all 0.25s ease-out;
+}

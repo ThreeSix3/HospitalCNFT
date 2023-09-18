@@ -1,0 +1,10 @@
+.content-container {
+  flex: 1;
+  /* Ancho cuando la barra lateral está abierta */
+  transition: all 0.3s ease-out;
+}
+
+.inactive .content-container {
+  width: 100%;
+  margin-left: 0;
+}
