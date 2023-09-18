@@ -533,7 +533,7 @@ app.get("/usuarios/:nombre_usuario", async (req, res) => {
   try {
     respuesta = await db.obtenerUsuarioPorNombre(req.params.nombre_usuario);
   } catch (e) {
-    throw new Error(e);
+    throw new Error(e.message);
   }
   res.status(200).send(respuesta);
 });

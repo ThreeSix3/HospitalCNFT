@@ -788,7 +788,7 @@ export async function obtenerUsuarioPorNombre(nombre_usuario) {
     const [respuesta] = await pool.query("SELECT * FROM usuarios WHERE nombre_usuario = ?",[nombre_usuario]);
     return respuesta[0];
   } catch (e) {
-    return e.message;
+    return 'Error al obtener usuario por nombre '+ e.message;
   }
 }
 
