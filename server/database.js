@@ -312,12 +312,15 @@ export async function obtenerLlamadosDeUnEnfermero(id_enfermero, filtroAtendido,
  * @async
  * @function obtenerTiempoPromedioDeAtencionDeLLamados
  * @category Llamados
- * @desc SELECT - Obtiene el tiempo promedio de atención de los llamados en formato hh:mm:ss.
+ * @desc SELECT - Obtiene el tiempo promedio de atención de los llamados atendidos generales o por un enfermero específico.
+ * @param {number|undefined} id_enfermero - El ID del enfermero para el cual se calculará el tiempo promedio de atención (opcional).
  * @returns {string} Tiempo promedio de atención en formato hh:mm:ss.
  * @throws {Error} Error en caso de fallo.
  */
 
-export async function obtenerTiempoPromedioDeAtencionDeLLamados(){
+export async function obtenerTiempoPromedioDeAtencionDeLLamados(id_enfermero){
+    let filtro = id_enfermero !== undefined ? `AND id_enfermero = ${id_enfermero}` : ''; 
+    console.log(filtro);
     try{
         const [respuesta] = await pool.query(`
         SELECT 
@@ -332,49 +335,14 @@ export async function obtenerTiempoPromedioDeAtencionDeLLamados(){
             SELECT 
                 TIME_TO_SEC(TIMEDIFF(fhora_atencion_llamado, fhora_llamado)) AS total_segundos
             FROM llamados
-            WHERE fhora_atencion_llamado IS NOT NULL
+            INNER JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
+            WHERE fhora_atencion_llamado IS NOT NULL ${filtro}
         ) AS subquery;`)
         return respuesta[0].tiempo_en_formato_hh_mm_ss;
     }catch(e){
         return e.message;
     }
 }
-
-/**
- * @async
- * @function obtenerTiempoPromedioDeAtencionDeLlamadosDeEnfermero
- * @category Llamados
- * @desc SELECT - Obtiene el tiempo promedio de atención de los llamados atendidos por un enfermero en formato hh:mm:ss.
- * @param {number} id_enfermero - El ID del enfermero para el cual se calcula el tiempo promedio de atención.
- * @returns {string} Tiempo promedio de atención en formato hh:mm:ss.
- * @throws {Error} Error en caso de fallo.
- */
-
-
-export async function obtenerTiempoPromedioDeAtencionDeLlamadosDeEnfermero(id_enfermero){
-    try{
-        const [respuesta] = await pool.query(`
-        SELECT 
-    CONCAT(
-        LPAD(FLOOR(AVG(total_segundos) / 3600), 2, '0'),
-        ':',
-        LPAD(FLOOR((AVG(total_segundos) % 3600) / 60), 2, '0'),
-        ':',
-        LPAD(AVG(total_segundos) % 60, 2, '0')
-    ) AS tiempo_en_formato_hh_mm_ss
-FROM (
-    SELECT 
-        TIME_TO_SEC(TIMEDIFF(fhora_atencion_llamado, fhora_llamado)) AS total_segundos
-    FROM llamados
-    INNER JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
-    WHERE fhora_atencion_llamado IS NOT NULL AND id_enfermero = ?
-) AS subquery;`,[id_enfermero])
-return respuesta[0].tiempo_en_formato_hh_mm_ss;
-    }catch(e){
-        return e.message;
-    }
-}
-
 /**
  * @async
  * @function crearLlamado

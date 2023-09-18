@@ -259,16 +259,37 @@ app.get("/llamados/:id/:filtroAtendido/:filtroPaciente", async (req, res) => {
     }
     res.status(200).send(respuesta);
   });
-app.get("/llamados/tPromedio", async (req, res) => {
+  app.get("/tiempoPromedio/llamados", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerTiempoPromedioDeAtencionDeLLamados();
+      
+    } catch (e) {
+      console.log(e.message);
+    }
+    res.status(200).send(respuesta);
+  });
+  app.get("/tiempoPromedio/llamados/:id_enfermero", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerTiempoPromedioDeAtencionDeLLamados(req.params.id_enfermero);
+      
+    } catch (e) {
+      console.log(e.message);
+    }
+    res.status(200).send(respuesta);
+  });
+/*app.get("/llamados/tPromedio", async (req, res) => {
   let respuesta;
   try {
     respuesta = await db.obtenerTiempoPromedioDeAtencionDeLLamados();
+    
   } catch (e) {
     throw new Error(e);
   }
   res.status(200).send(respuesta);
 });
-app.get("/llamados/tPromedio/:id", async (req, res) => {
+/*app.get("/llamados/enfermero/tPromedio/:id/", async (req, res) => {
   let respuesta;
   try {
     respuesta = await db.obtenerTiempoPromedioDeAtencionDeLlamadosDeEnfermero(
@@ -278,7 +299,7 @@ app.get("/llamados/tPromedio/:id", async (req, res) => {
     throw new Error(e);
   }
   res.status(200).send(respuesta);
-});
+});*/
 
 app.post("/llamados", async (req, res) => {
   let { id_tipo_llamado, id_ubicacion, id_origen_llamado, id_paciente } =
