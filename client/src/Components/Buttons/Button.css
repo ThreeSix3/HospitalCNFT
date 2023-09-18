@@ -48,3 +48,22 @@
     border: transparent;
     transition: all 0.25s ease-out;
 }
+
+.docsButton {
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    color: #2D3748;
+    border-radius: 15px;
+    width: 90%;
+    height: 40px;
+    background-color: white;
+    border: transparent;
+    transition: all 0.25s ease-in;
+}
+
+.docsButton:hover {
+    background-color: #07D5A1;
+    color: white;
+    transition: all 0.25s ease-out;
+}

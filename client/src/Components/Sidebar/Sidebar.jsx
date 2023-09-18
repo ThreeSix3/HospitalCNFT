@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './Sidebar.css';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import SidebarElement from './SidebarElement';
+import DocsPanel from '../Cards/DocsPanel/DocsPanel';
 
 export default function Sidebar({ user }) {
     const [isActive, setIsActive] = useState(true);
@@ -63,6 +64,7 @@ export default function Sidebar({ user }) {
                         <a onClick={() => setStateOfActiveElement(4)}>
                             <SidebarElement text={'Gestion de áreas'} icon={<ChevronLeftIcon />} isActive={activeElement === 4} />
                         </a>
+                        <DocsPanel />
                     </div>
                 </div>
 

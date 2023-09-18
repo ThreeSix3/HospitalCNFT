@@ -1,0 +1,24 @@
+.docsCard {
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    background-color: #2E2E2E;
+    border-radius: 15px;
+}
+
+.docsTitle {
+    padding-top: 10px;
+    font-size: 12px;
+    color: white;
+    width: 100% !important;
+    margin: 0;
+}
+
+.docsText {
+    color: white;
+    font-size: 12px;
+    margin: 0;
+}
