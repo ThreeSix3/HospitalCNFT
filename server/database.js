@@ -250,6 +250,7 @@ export async function obtenerLlamados() {
     SELECT 
         id_llamado,
         desc_tipo_llamado, 
+        estado_llamado,
         fhora_llamado, 
         fhora_atencion_llamado, 
         nombre_ubicacion, 
@@ -262,6 +263,44 @@ export async function obtenerLlamados() {
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
     LEFT JOIN origen_llamados ON llamados.id_origen_llamado = origen_llamados.id_origen_llamado
     LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente;`);
+    return respuesta[0];
+  } catch (e) {
+    return e.message;
+  }
+}
+
+/**
+ * @async
+ * @function obtenerLlamadosDeUnEnfermero
+ * @category Llamados
+ * @desc SELECT - Obtiene los llamados atendidos por un enfermero específico.
+ * @param {number} id_enfermero - El ID del enfermero cuyos llamados se desean obtener.
+ * @returns {Array} Un array de objetos con información de los llamados atendidos por el enfermero.
+ * @throws {Error} Error en caso de fallo.
+ */
+export async function obtenerLlamadosDeUnEnfermero(id_enfermero, filtroAtendido, filtroPorPaciente) {
+  console.log(filtroPorPaciente);
+  let filtroAtentido_valor = filtroAtendido !== null? `AND estado_llamado = ${filtroAtendido}` : '', filtroPorPaciente_valor = filtroPorPaciente !== null? `AND llamados.id_paciente = ${filtroPorPaciente}` : '';
+
+  try {
+    const respuesta = await pool.query(`
+    SELECT 
+        id_llamado,
+        estado_llamado,
+        desc_tipo_llamado, 
+        fhora_llamado, 
+        fhora_atencion_llamado, 
+        nombre_ubicacion, 
+        numero_ubicacion, 
+        desc_origen_llamado,
+        llamados.id_paciente
+    FROM llamados
+    INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
+    INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
+    LEFT JOIN origen_llamados ON llamados.id_origen_llamado = origen_llamados.id_origen_llamado
+    LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
+    WHERE id_enfermero = ? ${filtroAtentido_valor} ${filtroPorPaciente_valor}
+    ;`, [id_enfermero]);
     return respuesta[0];
   } catch (e) {
     return e.message;

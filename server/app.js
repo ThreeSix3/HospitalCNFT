@@ -222,6 +222,43 @@ app.get("/llamados", async (req, res) => {
   }
   res.status(200).send(respuesta);
 });
+app.get("/llamados/:id", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerLlamadosDeUnEnfermero(req.params.id, null, null);
+    } catch (e) {
+      throw new Error(e);
+    }
+    res.status(200).send(respuesta);
+  });
+
+app.get("/llamados/:id/fAtendido/:filtroAtendido", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerLlamadosDeUnEnfermero(req.params.id, req.params.filtroAtendido, null);
+    } catch (e) {
+      throw new Error(e);
+    }
+    res.status(200).send(respuesta);
+  });
+  app.get("/llamados/:id/fPaciente/:filtroPaciente", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerLlamadosDeUnEnfermero(req.params.id, null, req.params.filtroPaciente);
+    } catch (e) {
+      throw new Error(e);
+    }
+    res.status(200).send(respuesta);
+  });
+app.get("/llamados/:id/:filtroAtendido/:filtroPaciente", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerLlamadosDeUnEnfermero(req.params.id, req.params.filtroAtendido, req.params.filtroPaciente);
+    } catch (e) {
+      throw new Error(e);
+    }
+    res.status(200).send(respuesta);
+  });
 app.get("/llamados/tPromedio", async (req, res) => {
   let respuesta;
   try {

@@ -20,8 +20,10 @@
 
     <table style="border-collapse: collapse; margin-top: 5%" border="1">
       <thead>
+        <caption>Llamados</caption>
         <tr>
           <th>id_llamado</th>
+          <th>estado_llamado</th>
           <th>desc_tipo_llamado</th>
           <th>fecha_y_hora_llamado</th>
           <th>fecha_y_hora_atencion_llamado</th>
@@ -34,6 +36,24 @@
       </thead>
       <tbody id="tabla"></tbody>
     </table>
+
+    <table style="border-collapse: collapse; margin-top: 5%" border="1">
+        <caption>Llamados del enfermero 1</caption>
+        <thead>
+          <tr>
+            <th>id_llamado</th>
+            <th>estado_llamado</th>
+            <th>desc_tipo_llamado</th>
+            <th>fecha_y_hora_llamado</th>
+            <th>fecha_y_hora_atencion_llamado</th>
+            <th>nombre_ubicacion</th>
+            <th>numero_ubicacion</th>
+            <th>desc_origen_llamado</th>
+            <th>id_paciente</th>
+          </tr>
+        </thead>
+        <tbody id="tabla1"></tbody>
+      </table>
 
     <script>
       async function comprobar(e) {
@@ -102,6 +122,7 @@
             return `
             <tr>
                 <td>${dato.id_llamado}</td>
+                <td>${dato.estado_llamado}</td>
                 <td>${dato.desc_tipo_llamado}</td>
                 <td>${dato.fhora_llamado}</td>
                 <td>${dato.fhora_atencion_llamado}</td>
@@ -115,6 +136,31 @@
           .join(""); // Convierte el array en una cadena HTML
 
         document.getElementById("tabla").innerHTML = tablaHtml;
+      })();
+      (async()=>{
+        //MOSTRAR LLAMADOS
+        const llamados = await fetch("http://localhost:8080/llamados/1");
+        const datos_llamados = await llamados.json();
+        console.log(datos_llamados);
+
+        const tablaHtml = datos_llamados
+          .map((dato, index) => {
+            return `
+            <tr>
+                <td>${dato.id_llamado}</td>
+                <td>${dato.estado_llamado}</td>
+                <td>${dato.desc_tipo_llamado}</td>
+                <td>${dato.fhora_llamado}</td>
+                <td>${dato.fhora_atencion_llamado}</td>
+                <td>${dato.nombre_ubicacion}</td>
+                <td>${dato.numero_ubicacion}</td>
+                <td>${dato.desc_origen_llamado}</td>
+                <td>${dato.id_paciente}</td>
+            </tr>`;
+          })
+          .join(""); // Convierte el array en una cadena HTML
+
+        document.getElementById("tabla1").innerHTML = tablaHtml;
       })();
     </script>
   </body>
