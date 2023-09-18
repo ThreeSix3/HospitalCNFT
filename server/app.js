@@ -65,7 +65,7 @@ app.post("/iniciarSesion", async (req, res) => {
     }
     res.status(200).send({token: token.textoEncriptado});
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send({error: error.message});
   }
 });
 
