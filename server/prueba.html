@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>INICIAR SESION</h1>
+    <p>
+      Usuario: admin <br />
+      Contraseña: admin
+    </p>
+    <h4 id="iniciado"></h4>
+    <form onsubmit="comprobar(event)">
+      <input type="text" name="usuario" id="usuario" />
+      <input type="password" name="contrasena" id="contrasena" />
+      <input type="submit" value="enter" />
+    </form>
+
+    <table style="border-collapse: collapse; margin-top: 5%" border="1">
+      <thead>
+        <tr>
+          <th>id_llamado</th>
+          <th>desc_tipo_llamado</th>
+          <th>fecha_y_hora_llamado</th>
+          <th>fecha_y_hora_atencion_llamado</th>
+          <th>nombre_ubicacion</th>
+          <th>numero_ubicacion</th>
+          <th>desc_origen_llamado</th>
+          <th>id_paciente</th>
+          <th>id_enfermero</th>
+        </tr>
+      </thead>
+      <tbody id="tabla"></tbody>
+    </table>
+
+    <script>
+      async function comprobar(e) {
+        e.preventDefault(); // Prevenir el comportamiento predeterminado del evento
+        //INICIAR SESION
+        /**
+         * ¡¡¡ATENCION!!!
+         * este es un codigo de ejemplo super simple, NO TIENE MANEJO DE EXCEPCIONES
+         * ES UNA MUESTRA.
+         */
+        let usuario = document.getElementById("usuario").value,
+          contrasena = document.getElementById("contrasena").value;
+        const prueba = await fetch("http://localhost:8080/encriptar", {
+          headers: {
+            "Content-Type": "application/json",
+            cache: "no-cache",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            textoAEncriptar: usuario,
+          }),
+        });
+        const prueba3 = await fetch("http://localhost:8080/encriptar", {
+          headers: {
+            "Content-Type": "application/json",
+            cache: "no-cache",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            textoAEncriptar: contrasena,
+          }),
+        });
+        const data1 = await prueba3.json();
+        contrasena = data1.textoEncriptado;
+        const data = await prueba.json();
+        usuario = data.textoEncriptado;
+        const prueba2 = await fetch("http://localhost:8080/iniciarSesion", {
+          headers: {
+            "Content-Type": "application/json",
+            cache: "no-cache",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            nombre_usuario: usuario,
+            contrasena: contrasena,
+          }),
+        });
+        const data2 = await prueba2.json();
+        console.log("TOKEN: " + data2.token);
+        if (data2.token) {
+          let panel = document.getElementById("iniciado");
+          panel.innerText = "Inicio sesión correctamente";
+        }
+        //A PARTIR DE ACA ALAMACENAR TOKEN WEB O MOBILE
+
+        
+      }
+      (async()=>{
+        //MOSTRAR LLAMADOS
+        const llamados = await fetch("http://localhost:8080/llamados");
+        const datos_llamados = await llamados.json();
+        console.log(datos_llamados);
+
+        const tablaHtml = datos_llamados
+          .map((dato, index) => {
+            return `
+            <tr>
+                <td>${dato.id_llamado}</td>
+                <td>${dato.desc_tipo_llamado}</td>
+                <td>${dato.fhora_llamado}</td>
+                <td>${dato.fhora_atencion_llamado}</td>
+                <td>${dato.nombre_ubicacion}</td>
+                <td>${dato.numero_ubicacion}</td>
+                <td>${dato.desc_origen_llamado}</td>
+                <td>${dato.id_paciente}</td>
+                <td>${dato.id_enfermero}</td>
+            </tr>`;
+          })
+          .join(""); // Convierte el array en una cadena HTML
+
+        document.getElementById("tabla").innerHTML = tablaHtml;
+      })();
+    </script>
+  </body>
+</html>

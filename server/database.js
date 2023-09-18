@@ -1,36 +1,38 @@
-import mysql from 'mysql2';
-import{
-    MYSQL_HOST,
-    MYSQL_USER,
-    MYSQL_PASSWORD,
-    MYSQL_DATABASE,
-    MYSQL_PORT,
-} from './config.js';
+import mysql from "mysql2";
+import {
+  MYSQL_HOST,
+  MYSQL_USER,
+  MYSQL_PASSWORD,
+  MYSQL_DATABASE,
+  MYSQL_PORT,
+} from "./config.js";
 
-const pool = mysql.createPool({
-    host: MYSQL_HOST, 
+const pool = mysql
+  .createPool({
+    host: MYSQL_HOST,
     user: MYSQL_USER,
     password: MYSQL_PASSWORD,
     database: MYSQL_DATABASE,
-    port: MYSQL_PORT
-}).promise();
+    port: MYSQL_PORT,
+  })
+  .promise();
 /*./node_modules/.bin/jsdoc -c jsdoc-conf.json -t ./node_modules/better-docs database.js*/
 /**
  * @async
- * @function obtenerAreas 
+ * @function obtenerAreas
  * @category Áreas
  * @subcategory All
  * @desc SELECT - Obtiene todos los registros de la tabla areas
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerAreas(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM areas');
-        return (respuesta);
-    }catch(e){
-        throw new Error(e);
-    }
+export async function obtenerAreas() {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM areas");
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -38,17 +40,20 @@ export async function obtenerAreas(){
  * @function crearArea
  * @category Áreas
  * @desc INSERT - Crea un registro en la tabla areas
- * @param {string} nombre_area 
+ * @param {string} nombre_area
  * @returns {number} id del registro ingresado
  * @throws {Error} Error
  */
-export async function crearArea({nombre_area}){
-    try{
-        const respuesta = await pool.query('INSERT INTO areas (nombre_area) VALUES (?)',[nombre_area]);
-        return (respuesta.insertId);
-    }catch(e){
-        throw new Error(e);
-    }
+export async function crearArea({ nombre_area }) {
+  try {
+    const respuesta = await pool.query(
+      "INSERT INTO areas (nombre_area) VALUES (?)",
+      [nombre_area]
+    );
+    return respuesta.insertId;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -60,13 +65,15 @@ export async function crearArea({nombre_area}){
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la eliminación.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
-export async function borrarArea({id_area}){
-    try{
-        const respuesta = await pool.query('DELETE FROM areas WHERE id_area = ?;', [id_area]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function borrarArea({ id_area }) {
+  try {
+    const respuesta = await pool.query("DELETE FROM areas WHERE id_area = ?;", [
+      id_area,
+    ]);
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -79,17 +86,20 @@ export async function borrarArea({id_area}){
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la actualización.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
-export async function actualizarArea({id_area, nombre_area}){
-    try{
-        const respuesta = await pool.query('UPDATE usuarios SET nombre_area = ? WHERE id_area = ?', [nombre_area, id_area]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarArea({ id_area, nombre_area }) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE usuarios SET nombre_area = ? WHERE id_area = ?",
+      [nombre_area, id_area]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 /**
  * @async
- * @function obtenerEnfermeros 
+ * @function obtenerEnfermeros
  * @category Enfermeros
  * @subcategory Enfermeros
  * @desc SELECT - Obtiene todos los registros de la tabla enfermeros
@@ -97,13 +107,13 @@ export async function actualizarArea({id_area, nombre_area}){
  * @throws {Error} Error
  */
 
-export async function obtenerEnfermeros(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM enfermeros');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerEnfermeros() {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM enfermeros");
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
 }
 
 /**
@@ -116,13 +126,16 @@ export async function obtenerEnfermeros(){
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
 
-export async function borrarEnfermero({id_enfermero}){
-    try{
-        const respuesta = await pool.query('DELETE FROM enfermeros WHERE id_enfermero = ?;', [id_enfermero]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function borrarEnfermero({ id_enfermero }) {
+  try {
+    const respuesta = await pool.query(
+      "DELETE FROM enfermeros WHERE id_enfermero = ?;",
+      [id_enfermero]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -130,22 +143,37 @@ export async function borrarEnfermero({id_enfermero}){
  * @function crearEnfermero
  * @category Enfermeros
  * @desc INSERT - Crea un registro en la tabla enfermeros
- * @param {number} id_usuario 
- * @param {string} nombre_enfermero 
- * @param {string} apellido_enfermero 
- * @param {string} dni_enfermero 
- * @param {string} telefono_enfermero 
+ * @param {number} id_usuario
+ * @param {string} nombre_enfermero
+ * @param {string} apellido_enfermero
+ * @param {string} dni_enfermero
+ * @param {string} telefono_enfermero
  * @returns {number} id del registro ingresado
  * @throws {Error} Error
  */
 
-export async function crearEnfermero({id_usuario, nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero}){
-    try{
-        const respuesta = await pool.query('INSERT INTO enefermeros (id_usuario, nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero) VALUES (?,?,?,?,?)',[id_usuario, nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero]);
-        return (respuesta.insertId);
-    }catch(e){
-        throw new Error(e);
-    }
+export async function crearEnfermero({
+  id_usuario,
+  nombre_enfermero,
+  apellido_enfermero,
+  dni_enfermero,
+  telefono_enfermero,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "INSERT INTO enefermeros (id_usuario, nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero) VALUES (?,?,?,?,?)",
+      [
+        id_usuario,
+        nombre_enfermero,
+        apellido_enfermero,
+        dni_enfermero,
+        telefono_enfermero,
+      ]
+    );
+    return respuesta.insertId;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -154,6 +182,7 @@ export async function crearEnfermero({id_usuario, nombre_enfermero, apellido_enf
  * @category Enfermeros
  * @desc Actualiza un registro en la tabla de enfermeros.
  * @param {number} id_enfermero - El ID del enfermero que se va a actualizar.
+ * @param {number} id_usuario
  * @param {string} nombre_enfermero - El nuevo nombre del enfermero.
  * @param {string} apellido_enfermero - El nuevo apellido del enfermero.
  * @param {string} dni_enfermero - El nuevo DNI (Documento Nacional de Identidad) del enfermero.
@@ -162,48 +191,147 @@ export async function crearEnfermero({id_usuario, nombre_enfermero, apellido_enf
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
 
-export async function actualizarEnfermeros({id_enfermero, nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero}){
-    try{
-        const respuesta = await pool.query('UPDATE usuarios SET nombre_enfermero = ?, apellido_enfermero = ?, dni_enfermero = ?, telefono_enfermero = ? WHERE id_enfermero = ?', [nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero, id_enfermero]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarEnfermeros({
+  id_enfermero,
+  id_usuario,
+  nombre_enfermero,
+  apellido_enfermero,
+  dni_enfermero,
+  telefono_enfermero,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE usuarios SET id_usuario=?,nombre_enfermero = ?, apellido_enfermero = ?, dni_enfermero = ?, telefono_enfermero = ? WHERE id_enfermero = ?",
+      [
+        id_usuario,
+        nombre_enfermero,
+        apellido_enfermero,
+        dni_enfermero,
+        telefono_enfermero,
+        id_enfermero,
+      ]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
  * @async
- * @function obtenerGrupoFactor 
+ * @function obtenerGrupoFactor
  * @category Grupo y factor
  * @subcategory All
  * @desc SELECT - Obtiene todos los registros de la tabla grupo_factor
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerGrupoFactor(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM grupo_factor');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerGrupoFactor() {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM grupo_factor");
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
 }
 
 /**
  * @async
- * @function obtenerLlamados 
+ * @function obtenerLlamados
  * @category Llamados
  * @subcategory All
  * @desc SELECT - Obtiene todos los registros de la tabla llamados
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerLlamados(){
+export async function obtenerLlamados() {
+  try {
+    const respuesta = await pool.query(`
+    SELECT 
+        id_llamado,
+        desc_tipo_llamado, 
+        fhora_llamado, 
+        fhora_atencion_llamado, 
+        nombre_ubicacion, 
+        numero_ubicacion, 
+        desc_origen_llamado,
+        llamados.id_paciente,
+        id_enfermero
+    FROM llamados
+    INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
+    INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
+    LEFT JOIN origen_llamados ON llamados.id_origen_llamado = origen_llamados.id_origen_llamado
+    LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente;`);
+    return respuesta[0];
+  } catch (e) {
+    return e.message;
+  }
+}
+
+/**
+ * @async
+ * @function obtenerTiempoPromedioDeAtencionDeLLamados
+ * @category Llamados
+ * @desc SELECT - Obtiene el tiempo promedio de atención de los llamados en formato hh:mm:ss.
+ * @returns {string} Tiempo promedio de atención en formato hh:mm:ss.
+ * @throws {Error} Error en caso de fallo.
+ */
+
+export async function obtenerTiempoPromedioDeAtencionDeLLamados(){
     try{
-        const [respuesta] = await pool.query('SELECT * FROM llamados');
-        return (respuesta);
+        const [respuesta] = await pool.query(`
+        SELECT 
+            CONCAT(
+                LPAD(FLOOR(AVG(total_segundos) / 3600), 2, '0'),
+                ':',
+                LPAD(FLOOR((AVG(total_segundos) % 3600) / 60), 2, '0'),
+                ':',
+                LPAD(AVG(total_segundos) % 60, 2, '0')
+            ) AS tiempo_en_formato_hh_mm_ss
+        FROM (
+            SELECT 
+                TIME_TO_SEC(TIMEDIFF(fhora_atencion_llamado, fhora_llamado)) AS total_segundos
+            FROM llamados
+            WHERE fhora_atencion_llamado IS NOT NULL
+        ) AS subquery;`)
+        return respuesta[0].tiempo_en_formato_hh_mm_ss;
     }catch(e){
-        return (e.message);
+        return e.message;
+    }
+}
+
+/**
+ * @async
+ * @function obtenerTiempoPromedioDeAtencionDeLlamadosDeEnfermero
+ * @category Llamados
+ * @desc SELECT - Obtiene el tiempo promedio de atención de los llamados atendidos por un enfermero en formato hh:mm:ss.
+ * @param {number} id_enfermero - El ID del enfermero para el cual se calcula el tiempo promedio de atención.
+ * @returns {string} Tiempo promedio de atención en formato hh:mm:ss.
+ * @throws {Error} Error en caso de fallo.
+ */
+
+
+export async function obtenerTiempoPromedioDeAtencionDeLlamadosDeEnfermero(id_enfermero){
+    try{
+        const [respuesta] = await pool.query(`
+        SELECT 
+    CONCAT(
+        LPAD(FLOOR(AVG(total_segundos) / 3600), 2, '0'),
+        ':',
+        LPAD(FLOOR((AVG(total_segundos) % 3600) / 60), 2, '0'),
+        ':',
+        LPAD(AVG(total_segundos) % 60, 2, '0')
+    ) AS tiempo_en_formato_hh_mm_ss
+FROM (
+    SELECT 
+        TIME_TO_SEC(TIMEDIFF(fhora_atencion_llamado, fhora_llamado)) AS total_segundos
+    FROM llamados
+    INNER JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
+    WHERE fhora_atencion_llamado IS NOT NULL AND id_enfermero = ?
+) AS subquery;`,[id_enfermero])
+return respuesta[0].tiempo_en_formato_hh_mm_ss;
+    }catch(e){
+        return e.message;
     }
 }
 
@@ -220,20 +348,31 @@ export async function obtenerLlamados(){
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la inserción.
  */
 
-export async function crearLlamado({id_tipo_llamado, id_ubicacion, id_origen_llamado, id_paciente}){
-    try{
-        if(id_origen_llamado && id_paciente){
-            // Si se proporcionan id_origen_llamado y id_paciente, ejecuta una consulta SQL con esos valores.
-            const respuesta = await pool.query('INSERT INTO llamados (id_tipo_llamado, id_ubicacion, id_origen_llamado, id_paciente) VALUES (?,?,?,?)',[id_tipo_llamado, id_ubicacion, id_origen_llamado, id_paciente]);
-            return respuesta.insertId;
-        }else{
-            // Si no se proporcionan id_origen_llamado y id_paciente, ejecuta una consulta SQL sin esos valores.
-            const respuesta = await pool.query('INSERT INTO llamados (id_tipo_llamado, id_ubicacion) VALUES (?,?)',[id_tipo_llamado, id_ubicacion]);
-            return respuesta.insertId;
-        }
-    }catch(e){
-        throw new Error(e);
+export async function crearLlamado({
+  id_tipo_llamado,
+  id_ubicacion,
+  id_origen_llamado,
+  id_paciente,
+}) {
+  try {
+    if (id_origen_llamado && id_paciente) {
+      // Si se proporcionan id_origen_llamado y id_paciente, ejecuta una consulta SQL con esos valores.
+      const respuesta = await pool.query(
+        "INSERT INTO llamados (id_tipo_llamado, id_ubicacion, id_origen_llamado, id_paciente) VALUES (?,?,?,?)",
+        [id_tipo_llamado, id_ubicacion, id_origen_llamado, id_paciente]
+      );
+      return respuesta.insertId;
+    } else {
+      // Si no se proporcionan id_origen_llamado y id_paciente, ejecuta una consulta SQL sin esos valores.
+      const respuesta = await pool.query(
+        "INSERT INTO llamados (id_tipo_llamado, id_ubicacion) VALUES (?,?)",
+        [id_tipo_llamado, id_ubicacion]
+      );
+      return respuesta.insertId;
     }
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -247,13 +386,20 @@ export async function crearLlamado({id_tipo_llamado, id_ubicacion, id_origen_lla
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la actualización.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
-export async function actualizarLlamado({id_llamado, estado_llamado,fhora_atencion_llamado}){
-    try{
-        const respuesta = await pool.query('UPDATE llamados SET estado_llamado = ?, fhora_atencion_llamado = ? WHERE id_llamado = ?', [estado_llamado,fhora_atencion_llamado, id_llamado]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarLlamado({
+  id_llamado,
+  estado_llamado,
+  fhora_atencion_llamado,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE llamados SET estado_llamado = ?, fhora_atencion_llamado = ? WHERE id_llamado = ?",
+      [estado_llamado, fhora_atencion_llamado, id_llamado]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -265,49 +411,52 @@ export async function actualizarLlamado({id_llamado, estado_llamado,fhora_atenci
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la eliminación.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
-export async function borrarLlamado({id_llamado}){
-    try{
-        const respuesta = await pool.query('DELETE FROM llamados WHERE id_llamado = ?;', [id_llamado]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function borrarLlamado({ id_llamado }) {
+  try {
+    const respuesta = await pool.query(
+      "DELETE FROM llamados WHERE id_llamado = ?;",
+      [id_llamado]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
  * @async
- * @function obtenerOrigenLlamados 
+ * @function obtenerOrigenLlamados
  * @category Origen llamados
  * @subcategory All
  * @desc SELECT - Obtiene todos los registros de la tabla origen_llamados
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerOrigenLlamados(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM llamados');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerOrigenLlamados() {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM llamados");
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
 }
 
 /**
  * @async
- * @function obtenerTiposLLamados 
+ * @function obtenerTiposLLamados
  * @category Tipos llamados
  * @subcategory All
  * @desc SELECT - Obtiene todos los registros de la tabla tipos_llamados
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerTiposLLamados(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM tipos_llamados');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerTiposLLamados() {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM tipos_llamados");
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
 }
 /**
  * @async
@@ -318,13 +467,31 @@ export async function obtenerTiposLLamados(){
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerPacientes(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM pacientes');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerPacientes() {
+  try {
+    const [respuesta] = await pool.query(`
+    SELECT 
+        id_paciente,
+        nombre_paciente,
+        apellido_paciente,
+        dni_paciente,
+        telefono_paciente,
+        desc_grupo_factor,
+        fnac_paciente,
+        domicilio_paciente,
+        historia_clinica_paciente,
+        motivo_ingreso_paciente,
+        nombre_ubicacion, 
+        numero_ubicacion, 
+        id_enfermero
+    FROM pacientes
+    INNER JOIN grupo_factor ON pacientes.id_grupo_factor_paciente = grupo_factor.id_grupo_factor
+    INNER JOIN ubicaciones ON pacientes.id_ubicacion = ubicaciones.id_ubicacion 
+    `);
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
 }
 
 /**
@@ -347,13 +514,40 @@ export async function obtenerPacientes(){
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la inserción.
  */
 
-export async function crearPaciente({nombre_paciente, apellido_paciente, dni_paciente, telefono_paciente, id_grupo_factor_paciente, fnac_paciente, domicilio_paciente, historia_clinica_paciente, motivo_ingreso_paciente, id_ubicacion, id_enfermero}){
-    try{
-        const respuesta = await pool.query('INSERT INTO pacientes (nombre_paciente, apellido_paciente, dni_paciente, telefono_paciente, id_grupo_factor_paciente, fnac_paciente, domicilio_paciente, historia_clinica_paciente, motivo_ingreso_paciente, id_ubicacion, id_enfermero) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',[nombre_paciente, apellido_paciente, dni_paciente, telefono_paciente, id_grupo_factor_paciente, fnac_paciente, domicilio_paciente, historia_clinica_paciente, motivo_ingreso_paciente, id_ubicacion, id_enfermero]);
-        return respuesta.insertId;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function crearPaciente({
+  nombre_paciente,
+  apellido_paciente,
+  dni_paciente,
+  telefono_paciente,
+  id_grupo_factor_paciente,
+  fnac_paciente,
+  domicilio_paciente,
+  historia_clinica_paciente,
+  motivo_ingreso_paciente,
+  id_ubicacion,
+  id_enfermero,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "INSERT INTO pacientes (nombre_paciente, apellido_paciente, dni_paciente, telefono_paciente, id_grupo_factor_paciente, fnac_paciente, domicilio_paciente, historia_clinica_paciente, motivo_ingreso_paciente, id_ubicacion, id_enfermero) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+      [
+        nombre_paciente,
+        apellido_paciente,
+        dni_paciente,
+        telefono_paciente,
+        id_grupo_factor_paciente,
+        fnac_paciente,
+        domicilio_paciente,
+        historia_clinica_paciente,
+        motivo_ingreso_paciente,
+        id_ubicacion,
+        id_enfermero,
+      ]
+    );
+    return respuesta.insertId;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -366,13 +560,16 @@ export async function crearPaciente({nombre_paciente, apellido_paciente, dni_pac
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
 
-export async function borrarPaciente({id_paciente}){
-    try{
-        const respuesta = await pool.query('DELETE FROM pacientes WHERE id_paciente = ?;', [id_paciente]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function borrarPaciente({ id_paciente }) {
+  try {
+    const respuesta = await pool.query(
+      "DELETE FROM pacientes WHERE id_paciente = ?;",
+      [id_paciente]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -396,13 +593,44 @@ export async function borrarPaciente({id_paciente}){
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la actualización.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
-export async function actualizarPaciente({id_paciente, nombre_paciente, apellido_paciente, dni_paciente, telefono_paciente, id_grupo_factor_paciente, fnac_paciente, falta_paciente, domicilio_paciente, historia_clinica_paciente, motivo_ingreso_paciente, id_ubicacion, id_enfermero}){
-    try{
-        const respuesta = await pool.query('UPDATE pacientes SET nombre_paciente =?, apellido_paciente=?, dni_paciente=?, telefono_paciente=?, id_grupo_factor_paciente=?, fnac_paciente=?, falta_paciente=?, domicilio_paciente=?, historia_clinica_paciente=?, motivo_ingreso_paciente=?, id_ubicacion=?, id_enfermero=? WHERE id_paciente = ?', [nombre_paciente, apellido_paciente, dni_paciente, telefono_paciente, id_grupo_factor_paciente, fnac_paciente, falta_paciente, domicilio_paciente, historia_clinica_paciente, motivo_ingreso_paciente, id_ubicacion, id_enfermero, id_paciente]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarPaciente({
+  id_paciente,
+  nombre_paciente,
+  apellido_paciente,
+  dni_paciente,
+  telefono_paciente,
+  id_grupo_factor_paciente,
+  fnac_paciente,
+  falta_paciente,
+  domicilio_paciente,
+  historia_clinica_paciente,
+  motivo_ingreso_paciente,
+  id_ubicacion,
+  id_enfermero,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE pacientes SET nombre_paciente =?, apellido_paciente=?, dni_paciente=?, telefono_paciente=?, id_grupo_factor_paciente=?, fnac_paciente=?, falta_paciente=?, domicilio_paciente=?, historia_clinica_paciente=?, motivo_ingreso_paciente=?, id_ubicacion=?, id_enfermero=? WHERE id_paciente = ?",
+      [
+        nombre_paciente,
+        apellido_paciente,
+        dni_paciente,
+        telefono_paciente,
+        id_grupo_factor_paciente,
+        fnac_paciente,
+        falta_paciente,
+        domicilio_paciente,
+        historia_clinica_paciente,
+        motivo_ingreso_paciente,
+        id_ubicacion,
+        id_enfermero,
+        id_paciente,
+      ]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -417,13 +645,20 @@ export async function actualizarPaciente({id_paciente, nombre_paciente, apellido
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
 
-export async function actualizarAltaEHistoriaClinicaPaciente({id_paciente, falta_paciente, historia_clinica_paciente}){
-    try{
-        const respuesta = await pool.query('UPDATE pacientes SET falta_paciente=?, historia_clinica_paciente=? WHERE id_paciente = ?', [falta_paciente, historia_clinica_paciente, id_paciente]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarAltaEHistoriaClinicaPaciente({
+  id_paciente,
+  falta_paciente,
+  historia_clinica_paciente,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE pacientes SET falta_paciente=?, historia_clinica_paciente=? WHERE id_paciente = ?",
+      [falta_paciente, historia_clinica_paciente, id_paciente]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 /**
  * @async
@@ -434,13 +669,13 @@ export async function actualizarAltaEHistoriaClinicaPaciente({id_paciente, falta
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerUbicaciones(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM ubicaciones');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerUbicaciones() {
+  try {
+    const [respuesta] = await pool.query("SELECT id_ubicacion, ubicaciones.id_area, nombre_area, nombre_ubicacion, numero_ubicacion FROM ubicaciones INNER JOIN areas ON ubicaciones.id_area = areas.id_area");
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
 }
 
 /**
@@ -453,13 +688,16 @@ export async function obtenerUbicaciones(){
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
 
-export async function borrarUbicacion({id_ubicacion}){
-    try{
-        const respuesta = await pool.query('DELETE FROM ubicaciones WHERE id_ubicacion = ?;', [id_ubicacion]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function borrarUbicacion({ id_ubicacion }) {
+  try {
+    const respuesta = await pool.query(
+      "DELETE FROM ubicaciones WHERE id_ubicacion = ?;",
+      [id_ubicacion]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -473,13 +711,20 @@ export async function borrarUbicacion({id_ubicacion}){
  * @returns {number} - El ID del registro ingresado.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la inserción.
  */
-export async function crearUbicacion({id_area, nombre_ubicacion, numero_ubicacion}){
-    try{
-        const respuesta = await pool.query('INSERT INTO ubicaciones (id_area, nombre_ubicacion, numero_ubicacion) VALUES (?,?,?)',[id_area, nombre_ubicacion, numero_ubicacion]);
-        return respuesta.insertId;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function crearUbicacion({
+  id_area,
+  nombre_ubicacion,
+  numero_ubicacion,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "INSERT INTO ubicaciones (id_area, nombre_ubicacion, numero_ubicacion) VALUES (?,?,?)",
+      [id_area, nombre_ubicacion, numero_ubicacion]
+    );
+    return respuesta.insertId;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -495,13 +740,21 @@ export async function crearUbicacion({id_area, nombre_ubicacion, numero_ubicacio
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
 
-export async function actualizarUbicacion({id_ubicacion, id_area, nombre_ubicacion, numero_ubicacion}){
-    try{
-        const respuesta = await pool.query('UPDATE ubicaciones SET id_area=?, nombre_ubicacion=?, numero_ubicacion=? WHERE id_ubicacion = ?', [id_area, nombre_ubicacion, numero_ubicacion, id_ubicacion]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarUbicacion({
+  id_ubicacion,
+  id_area,
+  nombre_ubicacion,
+  numero_ubicacion,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE ubicaciones SET id_area=?, nombre_ubicacion=?, numero_ubicacion=? WHERE id_ubicacion = ?",
+      [id_area, nombre_ubicacion, numero_ubicacion, id_ubicacion]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -513,13 +766,22 @@ export async function actualizarUbicacion({id_ubicacion, id_area, nombre_ubicaci
  * @returns {Array} Registros
  * @throws {Error} Error
  */
-export async function obtenerUsuarios(){
-    try{
-        const [respuesta] = await pool.query('SELECT * FROM usuarios');
-        return (respuesta);
-    }catch(e){
-        return (e.message);
-    }
+export async function obtenerUsuarios() {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM usuarios");
+    return respuesta;
+  } catch (e) {
+    return e.message;
+  }
+}
+
+export async function obtenerUsuarioPorNombre(nombre_usuario) {
+  try {
+    const [respuesta] = await pool.query("SELECT * FROM usuarios WHERE nombre_usuario = ?",[nombre_usuario]);
+    return respuesta[0];
+  } catch (e) {
+    return e.message;
+  }
 }
 
 /**
@@ -533,13 +795,20 @@ export async function obtenerUsuarios(){
  * @returns {number} - El ID del registro ingresado.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la inserción.
  */
-export async function crearUsuario({nombre_usuario, contrasena_usuario, super_usuario}){
-    try{
-        const respuesta = await pool.query('INSERT INTO usuarios (nombre_usuario, contrasena_usuario, super_usuario) VALUES (?,?,?)',[nombre_usuario, contrasena_usuario, super_usuario]);
-        return respuesta.insertId;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function crearUsuario({
+  nombre_usuario,
+  contrasena_usuario,
+  super_usuario,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "INSERT INTO usuarios (nombre_usuario, contrasena_usuario, super_usuario) VALUES (?,?,?)",
+      [nombre_usuario, contrasena_usuario, super_usuario]
+    );
+    return respuesta.insertId;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -551,13 +820,16 @@ export async function crearUsuario({nombre_usuario, contrasena_usuario, super_us
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la eliminación.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
-export async function borrarUsuario({id_usuario}){
-    try{
-        const respuesta = await pool.query('DELETE FROM usuarios WHERE id_usuario = ?;', [id_usuario]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function borrarUsuario({ id_usuario }) {
+  try {
+    const respuesta = await pool.query(
+      "DELETE FROM usuarios WHERE id_usuario = ?;",
+      [id_usuario]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
 
 /**
@@ -572,11 +844,19 @@ export async function borrarUsuario({id_usuario}){
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la actualización.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la actualización.
  */
-export async function actualizarUsuario({id_usuario, nombre_usuario, contrasena_usuario, super_usuario}){
-    try{
-        const respuesta = await pool.query('UPDATE usuarios SET nombre_usuario = ?, contrasena_usuario = ?, super_usuario =? WHERE id_usuario = ?', [nombre_usuario, contrasena_usuario, super_usuario, id_usuario]);
-        return respuesta;
-    }catch(e){
-        throw new Error(e);
-    }
+export async function actualizarUsuario({
+  id_usuario,
+  nombre_usuario,
+  contrasena_usuario,
+  super_usuario,
+}) {
+  try {
+    const respuesta = await pool.query(
+      "UPDATE usuarios SET nombre_usuario = ?, contrasena_usuario = ?, super_usuario =? WHERE id_usuario = ?",
+      [nombre_usuario, contrasena_usuario, super_usuario, id_usuario]
+    );
+    return respuesta;
+  } catch (e) {
+    throw new Error(e);
+  }
 }
