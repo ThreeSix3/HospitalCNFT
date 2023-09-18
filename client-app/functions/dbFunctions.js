@@ -1,6 +1,6 @@
 export async function iniciarSesion(usuario, contrasena) {
   try {
-    const respuesta = await fetch("http://192.168.1.111:8080/iniciarSesion", {
+    const respuesta = await fetch("https://api-olimpiada-g1.up.railway.app/iniciarSesion", {
       headers: {
         "Content-Type": "application/json",
         cache: "no-cache",
