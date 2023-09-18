@@ -273,15 +273,16 @@ export async function obtenerLlamados() {
  * @async
  * @function obtenerLlamadosDeUnEnfermero
  * @category Llamados
- * @desc SELECT - Obtiene los llamados atendidos por un enfermero específico.
+ * @desc SELECT - Obtiene los llamados atendidos por un enfermero específico con filtros opcionales.
  * @param {number} id_enfermero - El ID del enfermero cuyos llamados se desean obtener.
- * @returns {Array} Un array de objetos con información de los llamados atendidos por el enfermero.
+ * @param {number|null} filtroAtendido - Filtro opcional para el estado de los llamados (null si no se aplica).
+ * @param {number|null} filtroPorPaciente - Filtro opcional para el ID del paciente (null si no se aplica).
+ * @returns {Array} Un array de objetos con información de los llamados atendidos por el enfermero, filtrados según los parámetros opcionales.
  * @throws {Error} Error en caso de fallo.
  */
 export async function obtenerLlamadosDeUnEnfermero(id_enfermero, filtroAtendido, filtroPorPaciente) {
-  console.log(filtroPorPaciente);
-  let filtroAtentido_valor = filtroAtendido !== null? `AND estado_llamado = ${filtroAtendido}` : '', filtroPorPaciente_valor = filtroPorPaciente !== null? `AND llamados.id_paciente = ${filtroPorPaciente}` : '';
 
+  let filtroAtentido_valor = filtroAtendido !== null? `AND estado_llamado = ${filtroAtendido}` : '', filtroPorPaciente_valor = filtroPorPaciente !== null? `AND llamados.id_paciente = ${filtroPorPaciente}` : '';
   try {
     const respuesta = await pool.query(`
     SELECT 
