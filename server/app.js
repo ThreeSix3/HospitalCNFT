@@ -32,7 +32,7 @@ async function generarTokenAleatorio() {
     token += caracterAleatorio;
   }
   try {
-    let token_encriptado = await axios.post("http://192.168.1.111:8080/encriptar", {
+    let token_encriptado = await axios.post("https://api-olimpiada-g1/encriptar", {
       textoAEncriptar: token.toString(),
     });
     return token_encriptado.data;
@@ -45,7 +45,7 @@ app.post("/iniciarSesion", async (req, res) => {
   const { nombre_usuario, contrasena } = req.body;
   try {
     const usuarioValidadoPorNombre = await axios.get(
-      `http://192.168.1.111:8080/usuarios/${nombre_usuario}`
+      `https://api-olimpiada-g1/usuarios/${nombre_usuario}`
     );
     if (!usuarioValidadoPorNombre) {
       throw new Error("Usuario no válido");
