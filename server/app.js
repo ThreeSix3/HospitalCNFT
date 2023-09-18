@@ -32,7 +32,7 @@ async function generarTokenAleatorio() {
     token += caracterAleatorio;
   }
   try {
-    let token_encriptado = await axios.post("http://localhost:8080/encriptar", {
+    let token_encriptado = await axios.post("http://192.168.1.111:8080/encriptar", {
       textoAEncriptar: token.toString(),
     });
     return token_encriptado.data;
@@ -44,12 +44,8 @@ async function generarTokenAleatorio() {
 app.post("/iniciarSesion", async (req, res) => {
   const { nombre_usuario, contrasena } = req.body;
   try {
-    console.log(nombre_usuario);
-    console.log(contrasena);
-    const usuarioDesencriptado = await desencriptar(nombre_usuario);
-    console.log(usuarioDesencriptado);
     const usuarioValidadoPorNombre = await axios.get(
-      `http://localhost:8080/usuarios/${usuarioDesencriptado}`
+      `http://192.168.1.111:8080/usuarios/${nombre_usuario}`
     );
     if (!usuarioValidadoPorNombre) {
       throw new Error("Usuario no válido");
@@ -57,9 +53,8 @@ app.post("/iniciarSesion", async (req, res) => {
     const contrasenaUsuarioValidado = await desencriptar(
       usuarioValidadoPorNombre.data.contrasena_usuario
     );
-    const contrasenaDesencriptada = await desencriptar(contrasena);
     let token;
-    if (contrasenaUsuarioValidado != contrasenaDesencriptada) {
+    if (contrasenaUsuarioValidado != contrasena) {
       throw new Error("Contraseña incorrecta");
     } else {
       try {
