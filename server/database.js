@@ -6,7 +6,7 @@ import {
   MYSQL_DATABASE,
   MYSQL_PORT,
 } from "./config.js";
-
+//
 const pool = mysql
   .createPool({
     host: MYSQL_HOST,
