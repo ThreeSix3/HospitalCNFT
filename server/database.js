@@ -330,10 +330,12 @@ export async function obtenerLlamadosDeUnEnfermero(id_enfermero, filtroAtendido,
         nombre_ubicacion, 
         numero_ubicacion, 
         desc_origen_llamado,
-        llamados.id_paciente
+        llamados.id_paciente,
+        nombre_area
     FROM llamados
     INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
+    INNER JOIN areas ON ubicaciones.id_area = areas.id_area
     LEFT JOIN origen_llamados ON llamados.id_origen_llamado = origen_llamados.id_origen_llamado
     LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
     WHERE id_enfermero = ? ${filtroAtentido_valor} ${filtroPorPaciente_valor}
