@@ -843,11 +843,12 @@ export async function crearUsuario({
   nombre_usuario,
   contrasena_usuario,
   super_usuario,
+  id_enfermero
 }) {
   try {
     const respuesta = await pool.query(
-      "INSERT INTO usuarios (nombre_usuario, contrasena_usuario, super_usuario) VALUES (?,?,?)",
-      [nombre_usuario, contrasena_usuario, super_usuario]
+      "INSERT INTO usuarios (nombre_usuario, contrasena_usuario, super_usuario, id_enfermero) VALUES (?,?,?,?)",
+      [nombre_usuario, contrasena_usuario, super_usuario,id_enfermero]
     );
     return respuesta.insertId;
   } catch (e) {
@@ -893,11 +894,12 @@ export async function actualizarUsuario({
   nombre_usuario,
   contrasena_usuario,
   super_usuario,
+  id_enfermero
 }) {
   try {
     const respuesta = await pool.query(
-      "UPDATE usuarios SET nombre_usuario = ?, contrasena_usuario = ?, super_usuario =? WHERE id_usuario = ?",
-      [nombre_usuario, contrasena_usuario, super_usuario, id_usuario]
+      "UPDATE usuarios SET nombre_usuario = ?, contrasena_usuario = ?, super_usuario =?, id_enfermero=? WHERE id_usuario = ?",
+      [nombre_usuario, contrasena_usuario, super_usuario,id_enfermero, id_usuario]
     );
     return respuesta;
   } catch (e) {
