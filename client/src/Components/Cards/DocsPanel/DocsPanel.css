@@ -1,5 +1,6 @@
 .docsCard {
     margin: 0 auto;
+    margin-top: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: center;

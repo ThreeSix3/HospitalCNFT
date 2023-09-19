@@ -1,37 +1,42 @@
 import { Chart } from "react-google-charts";
+import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
 
 export default function CallingBarStats({ data }) {
-    const dataOld = [
-        ["Tipo de llamado", "Cantidad"],
-        ["Normales", 500],
-        ["Normales", 500],
-        ["Emergencia", 700],
-        ["Emergencia", 700],
-    ];
+    const [showFilters, setShowFilters] = useState(false);
+    const [activeLink, setActiveLink] = useState(false);
 
-    const dataNew = [
-        ["Estado", "Cantidad"],
-        ["Normales Atendido", 250],
-        ["Normales No atendido", 250],
-        ["Emergencia Atendido", 600],
-        ["Emergencia No atendido", 100],
-
-    ];
-
-    const diffdata = {
-        old: dataOld,
-        new: dataNew,
+    const handleLinkClick = (index) => {
+        setActiveLink(index);
     };
 
-    return (
-        <div style={{ width: '100%' }}>
-            <Chart
-                chartType="ColumnChart"
-                width="100%"
-                height="800px"
-                diffdata={diffdata}
-            />
-        </div>
+    function setStateOfFilters() {
+        setShowFilters(prevState => !prevState);
+    }
 
+    const options = {
+        legend: { position: "none" }
+    };
+
+
+    return (
+        <div style={{ width: '100%', display: "flex" }}>
+            <Chart chartType="ColumnChart" width="100%" height="400px" data={data} options={options} />
+            <div className="chartFilter">
+                <button className={`chartFilterBtn ${showFilters ? 'active' : ''}`} onClick={setStateOfFilters}>
+                    <AdjustmentsHorizontalIcon style={{ width: '20px', height: '20px', margin: '2px' }} />
+                    Filtros
+                </button>
+                <div style={{ opacity: showFilters ? '' : '0' }}>
+                    <a className={activeLink === 0 ? 'active' : ''} onClick={() => handleLinkClick(0)}>Por área</a>
+                    <a className={activeLink === 1 ? 'active' : ''} onClick={() => handleLinkClick(1)}>Por origen de llamado</a>
+                    <div className="inputGroup">
+                        <input type="date" className="inputDate" />
+                        <input type="date" className="inputDate" />
+                    </div>
+                    <a className="cleanFilters" onClick={() => handleLinkClick(false)}>Limpiar filtros</a>
+                </div>
+            </div>
+        </div >
     );
 }

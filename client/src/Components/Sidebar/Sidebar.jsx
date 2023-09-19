@@ -18,7 +18,7 @@ export default function Sidebar({ user }) {
     }
 
     return (
-        <div style={{ display: 'flex', height: '100vh' }}>
+        <div style={{ display: 'flex', height: '160vh' }}>
             <aside className={`sidebar ${isActive ? '' : 'inactive'}`}>
                 {/*Titulo y flecha*/}
                 <div className='sidebarInfo'>

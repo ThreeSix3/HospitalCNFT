@@ -31,8 +31,6 @@
     font-weight: 800;
 }
 
-
-
 .inactiveBtn {
     border: transparent;
     transform: translateX(35px) rotateY(180deg);
