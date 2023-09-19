@@ -16,23 +16,26 @@ export default function Menu({navigation, setToken, onLayout}){
 
     const CodigoAzul = () => {
         return (
-        <View style={styles.codigoAzul}>
-            <Text>Codigo Azul</Text>
-        </View> )
+        <TouchableOpacity style={styles.codigoAzul}>
+            <Text style={styles.textModal}>CÓDIGO AZUL</Text>
+            <Image source={require("../assets/images/modal.png")} style={styles.imageModal} />
+        </TouchableOpacity> )
     }
 
     const NoAtendidos = () => {
         return (
-        <View style={styles.noAtendidos}>
-            <Text>NoAtendidos</Text>
-        </View> )
+        <TouchableOpacity style={styles.noAtendidos}>
+            <Text style={styles.textModal}>No Atendidos</Text>
+            <Image source={require("../assets/images/modal.png")} style={styles.imageModal} />
+        </TouchableOpacity> )
     }
 
     const Atendidos = () => {
         return (
-        <View style={styles.atendidos}>
-            <Text>Atendidos</Text>
-        </View> )
+        <TouchableOpacity style={styles.atendidos}>
+            <Text style={styles.textModal}>Atendidos</Text>
+            <Image source={require("../assets/images/modal.png")} style={styles.imageModal} />
+        </TouchableOpacity> )
     }
     async function cerrarSesion() {
         await deleteData('token');
@@ -43,9 +46,11 @@ export default function Menu({navigation, setToken, onLayout}){
     const Footer = () => {
         return (
         <View style={styles.footer}>
-            <TouchableOpacity style={styles.imageButton}>
-                <Image style={styles.imageFooter} source={require("../assets/images/lupa.png")}/>
-            </TouchableOpacity>
+            <View style={styles.footerCircle}>
+                <TouchableOpacity style={styles.imageButton}>
+                    <Image style={styles.imageFooter} source={require("../assets/images/lupa.png")}/>
+                </TouchableOpacity>
+            </View>
         </View> )
     }
 
@@ -100,38 +105,58 @@ const styles = StyleSheet.create({
     },
     codigoAzul:{
         width:"96%",
-        height:"10%",
-        borderRadius:25,
+        height:"12%",
+        borderRadius:35,
         backgroundColor:"#F33",
         alignItems:"center",
-        justifyContent:"center",
         marginBottom:7,
+        flexDirection:"row",
+        justifyContent:"space-between",
+        padding:5
     },
     noAtendidos: {
         width:"96%",
+<<<<<<< Updated upstream
         height:"10%",
         borderRadius:25,
+=======
+        height:"12%",
+        borderRadius:35,
+>>>>>>> Stashed changes
         backgroundColor:"#07D5A1",
         alignItems:"center",
-        justifyContent:"center",
+        justifyContent:"space-between",
         marginBottom:7,
+        flexDirection:"row",
+        padding:5
     },
     atendidos: {
         width:"96%",
+<<<<<<< Updated upstream
         height:"10%",
         borderRadius:25,
+=======
+        height:"12%",
+        borderRadius:35,
+>>>>>>> Stashed changes
         backgroundColor:"#07D5A1",
         alignItems:"center",
-        justifyContent:"center",
+        justifyContent:"space-between",
         marginBottom:7,
+        flexDirection:"row",
+        padding:5
     },
     footer: {
         height:"10%",
         width:"100%",
+<<<<<<< Updated upstream
         backgroundColor:"#07D5A1",
         justifyContent:"center",
+=======
+>>>>>>> Stashed changes
         alignItems:"center",
-        flexDirection:"row"
+        flexDirection:"row",
+        justifyContent:"flex-end"
     },
     imageButton:{
         width:"30%",
@@ -141,15 +166,13 @@ const styles = StyleSheet.create({
         margin:"5%"
     },
     imageFooter:{
-        width:"50%",
-        height:"100%"
+        
     },
     textNavBar:{
         fontSize:40,
         fontFamily: "Montserrat-Bold",
         color:"#f8f8f8",
         margin:10,
-
         textShadowColor: "#000",
         textShadowOffset: {
             width: 0,
@@ -160,5 +183,29 @@ const styles = StyleSheet.create({
     imageNavBar:{
         margin:10,
     },
-
+    footerCircle:{
+        width:80,
+        height:80,
+        borderRadius:40,
+        backgroundColor:"#07D5A1",
+        marginRight:20,
+        marginBottom:20,
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    textModal:{
+        fontSize:40,
+        fontFamily: "Montserrat-Bold",
+        color:"#f8f8f8",
+        marginLeft:"2%",
+        textShadowColor: "#000",
+        textShadowOffset: {
+            width: 0,
+            height: 1
+        },
+        textShadowRadius: 1,
+    },
+    imageModal:{
+        marginRight:"3%"
+    },
 })
