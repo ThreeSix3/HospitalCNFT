@@ -17,3 +17,23 @@ export async function iniciarSesion(usuario, contrasena) {
     return e.message;
   }
 }
+
+export async function obtenerLlamados(){
+  try{
+    const llamados = await fetch("https://api-olimpiada-g1.up.railway.app/llamados/noatendidos/codigoazul");
+    const data = await llamados.json();
+    return data;
+  }catch(e){
+    return e.message;
+  }
+}
+
+export async function obtenerLlamadosNoAtendidosPorEnfermero(id_enfermero, filtro_atendido){
+  try{
+    const llamados = await fetch(`https://api-olimpiada-g1.up.railway.app/llamados/${id_enfermero}/fAtendido/${filtro_atendido}`);
+    const data = await llamados.json();
+    return data;
+  }catch(e){
+    return e.message;
+  }
+}

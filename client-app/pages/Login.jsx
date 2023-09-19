@@ -17,7 +17,7 @@ import { iniciarSesion } from "../functions/dbFunctions";
 import { storeData, getData } from "../functions/asyncStorageFunctions";
 import Alert from "../components/Alert";
 
-export default function Login({ onLayout, setToken }) {
+export default function Login({ onLayout, setToken, setId_enfermero }) {
   const [isCheked, setIsCheked] = useState(false);
   const [nombre_usuario, setNombre_usuario] = useState("");
   const [contrasena, setContrasena] = useState("");
@@ -49,13 +49,15 @@ export default function Login({ onLayout, setToken }) {
   async function validarDatosSesion() {
     try {
       const data = await iniciarSesion(nombre_usuario, contrasena);
-
+      console.log(data);
       if (typeof data === "object" && data.hasOwnProperty("token")) {
         if (isCheked) {
           await storeData("sesion", 1);
         }
-        setToken(data);
+        setToken(data.token);
+        setId_enfermero(data.id_enfermero);
         await storeData("token", data.token);
+        await storeData("id_enfermero", data.id_enfermero);
       } else {
         throw new Error("Los datos ingresados no son válidos");
       }

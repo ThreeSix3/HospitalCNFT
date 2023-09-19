@@ -12,12 +12,15 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   
   const [token, setToken] = useState({});
+  const [id_enfermero, setId_enfermero] = useState(null);
   useEffect(() => {
     (async () => {
       const sesion = await getData("sesion");
       if (sesion && sesion.length !== 0) {
         const tokenAux = await getData("token");
         setToken(tokenAux);
+        const id_enfermeroAux = await getData("id_enfermero");
+        setId_enfermero(id_enfermeroAux);
       }
     })();
   
@@ -25,8 +28,14 @@ export default function App() {
       const sesion = await getData("sesion");
       if (!sesion || sesion.length === 0) {
         setToken({});
+        setId_enfermero(null);
         try {
           await deleteData("token");
+        } catch (error) {
+          console.error("Error:", error);
+        }
+        try {
+          await deleteData("id_enfermero");
         } catch (error) {
           console.error("Error:", error);
         }
@@ -39,6 +48,7 @@ export default function App() {
     Montserrat: require("./assets/fonts/Montserrat-Regular.ttf"),
     "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Bold-Italic": require("./assets/fonts/Montserrat-BoldItalic.ttf"),
     "Montserrat-Black": require("./assets/fonts/Montserrat-Black.ttf"),
     "Montserrat-ExtraBold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
     "Montserrat-Thin": require("./assets/fonts/Montserrat-Thin.ttf"),
@@ -67,6 +77,7 @@ export default function App() {
                 {...props}
                 onLayout={onLayoutRootView}
                 setToken={setToken}
+                setId_enfermero={setId_enfermero}
               />
             )}
           </Stack.Screen>
@@ -81,6 +92,7 @@ export default function App() {
                   {...props}
                   onLayout={onLayoutRootView}
                   setToken={setToken}
+                  id_enfermero={id_enfermero}
                 />
               )}
             </Stack.Screen>
