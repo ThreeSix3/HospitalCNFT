@@ -144,7 +144,6 @@ export async function borrarEnfermero({ id_enfermero }) {
  * @function crearEnfermero
  * @category Enfermeros
  * @desc INSERT - Crea un registro en la tabla enfermeros
- * @param {number} id_usuario
  * @param {string} nombre_enfermero
  * @param {string} apellido_enfermero
  * @param {string} dni_enfermero
@@ -154,7 +153,6 @@ export async function borrarEnfermero({ id_enfermero }) {
  */
 
 export async function crearEnfermero({
-  id_usuario,
   nombre_enfermero,
   apellido_enfermero,
   dni_enfermero,
@@ -162,9 +160,8 @@ export async function crearEnfermero({
 }) {
   try {
     const respuesta = await pool.query(
-      "INSERT INTO enefermeros (id_usuario, nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero) VALUES (?,?,?,?,?)",
+      "INSERT INTO enefermeros (nombre_enfermero, apellido_enfermero, dni_enfermero, telefono_enfermero) VALUES (?,?,?,?,?)",
       [
-        id_usuario,
         nombre_enfermero,
         apellido_enfermero,
         dni_enfermero,
@@ -183,7 +180,6 @@ export async function crearEnfermero({
  * @category Enfermeros
  * @desc Actualiza un registro en la tabla de enfermeros.
  * @param {number} id_enfermero - El ID del enfermero que se va a actualizar.
- * @param {number} id_usuario
  * @param {string} nombre_enfermero - El nuevo nombre del enfermero.
  * @param {string} apellido_enfermero - El nuevo apellido del enfermero.
  * @param {string} dni_enfermero - El nuevo DNI (Documento Nacional de Identidad) del enfermero.
@@ -194,7 +190,6 @@ export async function crearEnfermero({
 
 export async function actualizarEnfermeros({
   id_enfermero,
-  id_usuario,
   nombre_enfermero,
   apellido_enfermero,
   dni_enfermero,
@@ -202,9 +197,8 @@ export async function actualizarEnfermeros({
 }) {
   try {
     const respuesta = await pool.query(
-      "UPDATE usuarios SET id_usuario=?,nombre_enfermero = ?, apellido_enfermero = ?, dni_enfermero = ?, telefono_enfermero = ? WHERE id_enfermero = ?",
+      "UPDATE usuarios SET nombre_enfermero = ?, apellido_enfermero = ?, dni_enfermero = ?, telefono_enfermero = ? WHERE id_enfermero = ?",
       [
-        id_usuario,
         nombre_enfermero,
         apellido_enfermero,
         dni_enfermero,
