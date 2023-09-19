@@ -282,12 +282,13 @@ export async function obtenerLlamadosCodigoAzul(atendidos) {
         desc_tipo_llamado, 
         estado_llamado,
         fhora_llamado, 
-        fhora_atencion_llamado, 
+        nombre_area,
         nombre_ubicacion, 
         numero_ubicacion
     FROM llamados
     INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
+    INNER JOIN areas ON ubicaciones.id_area = areas.id_area
     WHERE id_paciente IS NULL ${filtroAtentido_valor} 
 ;`);
     return respuesta[0];
