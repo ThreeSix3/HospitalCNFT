@@ -238,7 +238,7 @@ app.get("/llamados/noAtendidos/codigoAzul", async (req, res) => {
 app.get("/llamados/llamado/:id", async (req, res) => {
     let respuesta;
     try {
-      respuesta = await db.obtenerLlamadosPorId(req.params.id);
+      respuesta = await db.obtenerLlamadoPorId(req.params.id);
     } catch (e) {
       throw new Error(e);
     }
