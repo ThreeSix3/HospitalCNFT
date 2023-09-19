@@ -283,7 +283,7 @@ export async function obtenerLlamadosCodigoAzul(atendidos) {
         fhora_llamado, 
         fhora_atencion_llamado, 
         nombre_ubicacion, 
-        numero_ubicacion, 
+        numero_ubicacion
     FROM llamados
     INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
