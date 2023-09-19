@@ -290,6 +290,7 @@ export async function obtenerLlamadosCodigoAzul(atendidos) {
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
     INNER JOIN areas ON ubicaciones.id_area = areas.id_area
     WHERE id_paciente IS NULL ${filtroAtentido_valor} 
+    ORDER BY fhora_llamado DESC
 ;`);
     return respuesta[0];
   } catch (e) {
