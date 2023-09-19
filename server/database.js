@@ -244,6 +244,7 @@ export async function obtenerGrupoFactor() {
  * @returns {Array} Registros
  * @throws {Error} Error
  */
+//PARA QUE VUELVA A BUILDEAR
 export async function obtenerLlamados(atendidos) {
   let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : ''
   try {
