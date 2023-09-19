@@ -245,8 +245,8 @@ export async function obtenerGrupoFactor() {
  * @throws {Error} Error
  */
 //PARA QUE VUELVA A BUILDEAR
-export async function obtenerLlamados(atendidos) {
-  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : ''
+export async function obtenerLlamados(atendidos, codigoAzul) {
+  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : '', filtroEmergencia = codigoAzul !== null? `AND id_paciente = NULL` : ''
   try {
     const respuesta = await pool.query(`
     SELECT 
@@ -265,7 +265,7 @@ export async function obtenerLlamados(atendidos) {
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
     LEFT JOIN origen_llamados ON llamados.id_origen_llamado = origen_llamados.id_origen_llamado
     LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
-    ${filtroAtentido_valor}
+    ${filtroAtentido_valor} ${filtroEmergencia}
 ;`);
     return respuesta[0];
   } catch (e) {
