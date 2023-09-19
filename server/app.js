@@ -211,7 +211,16 @@ app.get("/grupoYFactor", async (req, res) => {
 app.get("/llamados", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados();
+    respuesta = await db.obtenerLlamados(null);
+  } catch (e) {
+    throw new Error(e);
+  }
+  res.status(200).send(respuesta);
+});
+app.get("/llamados/atendidos", async (req, res) => {
+  let respuesta;
+  try {
+    respuesta = await db.obtenerLlamados(0);
   } catch (e) {
     throw new Error(e);
   }
