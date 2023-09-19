@@ -245,7 +245,7 @@ export async function obtenerGrupoFactor() {
  * @throws {Error} Error
  */
 export async function obtenerLlamados(atendidos) {
-  let filtroAtentido_valor = atendidos !== null? `WHERER estado_llamado = ${atendidos}` : ''
+  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : ''
   try {
     const respuesta = await pool.query(`
     SELECT 
