@@ -90,7 +90,7 @@ export async function borrarArea({ id_area }) {
 export async function actualizarArea({ id_area, nombre_area }) {
   try {
     const respuesta = await pool.query(
-      "UPDATE usuarios SET nombre_area = ? WHERE id_area = ?",
+      "UPDATE areas SET nombre_area = ? WHERE id_area = ?",
       [nombre_area, id_area]
     );
     return respuesta;
@@ -197,7 +197,7 @@ export async function actualizarEnfermeros({
 }) {
   try {
     const respuesta = await pool.query(
-      "UPDATE usuarios SET nombre_enfermero = ?, apellido_enfermero = ?, dni_enfermero = ?, telefono_enfermero = ? WHERE id_enfermero = ?",
+      "UPDATE enfermeros SET nombre_enfermero = ?, apellido_enfermero = ?, dni_enfermero = ?, telefono_enfermero = ? WHERE id_enfermero = ?",
       [
         nombre_enfermero,
         apellido_enfermero,
@@ -827,6 +827,8 @@ export async function obtenerUsuarioPorNombre(nombre_usuario) {
     return 'Error al obtener usuario por nombre '+ e.message;
   }
 }
+
+
 
 /**
  * @async
