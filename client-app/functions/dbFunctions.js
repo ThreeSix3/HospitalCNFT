@@ -12,7 +12,7 @@ export async function iniciarSesion(usuario, contrasena) {
       }),
     });
     const data = await respuesta.json();
-    
+    console.log(data);
     return data;
   } catch (e) {
     return e.message;

@@ -7,7 +7,10 @@ export default function Menu({navigation, setToken, onLayout}){
     const NavBar = () => {
         return (
         <View style={styles.navBar}>
-            <Text>Header</Text>
+            <Text style={styles.textNavBar}>Hospital</Text>
+            <TouchableOpacity style={styles.imageNavBar} onPress={()=>{cerrarSesion();}}>
+                <Image source={require("../assets/images/cerrarSesion.png")}/>
+            </TouchableOpacity>
         </View> )
     }
 
@@ -41,13 +44,7 @@ export default function Menu({navigation, setToken, onLayout}){
         return (
         <View style={styles.footer}>
             <TouchableOpacity style={styles.imageButton}>
-                <Image style={styles.imageFooter} source={require("../assets/images/campana.png")}/>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.imageButton}>
-                <Image style={styles.imageFooter} source={require("../assets/images/llamadas.png")}/>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.imageButton} onPress={()=>{cerrarSesion();}}>
-                <Image style={styles.imageFooter} source={require("../assets/images/cerrar.webp")}/>
+                <Image style={styles.imageFooter} source={require("../assets/images/lupa.png")}/>
             </TouchableOpacity>
         </View> )
     }
@@ -91,8 +88,9 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor:"#70FBD8",
         alignItems:"center",
-        justifyContent:"center",
-        marginBottom:15
+        marginBottom:15,
+        flexDirection:"row",
+        justifyContent:"space-between"
     },
     content: {
         flex: 1,
@@ -145,4 +143,22 @@ const styles = StyleSheet.create({
         width:"50%",
         height:"100%"
     },
+    textNavBar:{
+        fontSize:40,
+        fontFamily: "Montserrat-Bold",
+        color:"#f8f8f8",
+        margin:10,
+        marginTop:40,
+        textShadowColor: "#000",
+        textShadowOffset: {
+            width: 0,
+            height: 1
+        },
+        textShadowRadius: 1,
+    },
+    imageNavBar:{
+        margin:10,
+        marginTop:45
+    },
+
 })
