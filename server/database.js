@@ -245,8 +245,8 @@ export async function obtenerGrupoFactor() {
  * @throws {Error} Error
  */
 //PARA QUE VUELVA A BUILDEAR
-export async function obtenerLlamados(atendidos, codigoAzul) {
-  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : '', filtroEmergencia = codigoAzul !== null? `AND llamados.id_paciente = NULL` : ''
+export async function obtenerLlamados(atendidos) {
+  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : ''
   try {
     const respuesta = await pool.query(`
     SELECT 
@@ -265,14 +265,49 @@ export async function obtenerLlamados(atendidos, codigoAzul) {
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
     LEFT JOIN origen_llamados ON llamados.id_origen_llamado = origen_llamados.id_origen_llamado
     LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
-    ${filtroAtentido_valor} ${filtroEmergencia}
+    ${filtroAtentido_valor}
 ;`);
     return respuesta[0];
   } catch (e) {
     return e.message;
   }
 }
-
+export async function obtenerLlamadosCodigoAzul(atendidos) {
+  let filtroAtentido_valor = atendidos !== null? `AND estado_llamado = ${atendidos}` : ''
+  try {
+    const respuesta = await pool.query(`
+    SELECT 
+        id_llamado,
+        desc_tipo_llamado, 
+        estado_llamado,
+        fhora_llamado, 
+        fhora_atencion_llamado, 
+        nombre_ubicacion, 
+        numero_ubicacion, 
+    FROM llamados
+    INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
+    INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
+    WHERE id_paciente IS NULL ${filtroAtentido_valor} 
+;`);
+    return respuesta[0];
+  } catch (e) {
+    return e.message;
+  }
+}
+export async function obtenerLlamadoPorId(id_llamado) {
+ 
+  try {
+    const respuesta = await pool.query(`
+    SELECT 
+       *
+    FROM llamados
+    WHERE id_llamado = ?
+;`,[id_llamado]);
+    return respuesta[0];
+  } catch (e) {
+    return e.message;
+  }
+}
 /**
  * @async
  * @function obtenerLlamadosDeUnEnfermero
