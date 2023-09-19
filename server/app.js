@@ -217,7 +217,16 @@ app.get("/llamados", async (req, res) => {
   }
   res.status(200).send(respuesta);
 });
-app.get("/llamados/atendidos", async (req, res) => {
+app.get("/llamados/noAtendidos", async (req, res) => {
+  let respuesta;
+  try {
+    respuesta = await db.obtenerLlamados(0);
+  } catch (e) {
+    throw new Error(e);
+  }
+  res.status(200).send(respuesta);
+});
+app.get("/llamados/noAtendidos/codigoAzul", async (req, res) => {
   let respuesta;
   try {
     respuesta = await db.obtenerLlamados(0);
