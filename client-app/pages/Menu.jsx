@@ -39,7 +39,7 @@ export default function Menu({navigation, setToken, onLayout}){
         await deleteData('sesion');
         setToken({});
     }
-   
+
     const Footer = () => {
         return (
         <View style={styles.footer}>
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
         alignItems:"center",
         marginBottom:15,
         flexDirection:"row",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        paddingTop:25,
     },
     content: {
         flex: 1,
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat-Bold",
         color:"#f8f8f8",
         margin:10,
-        marginTop:40,
+
         textShadowColor: "#000",
         textShadowOffset: {
             width: 0,
@@ -158,7 +159,6 @@ const styles = StyleSheet.create({
     },
     imageNavBar:{
         margin:10,
-        marginTop:45
     },
 
 })
