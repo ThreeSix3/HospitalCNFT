@@ -344,7 +344,7 @@ export async function obtenerLlamadosDeUnEnfermero(id_enfermero, filtroAtendido,
     LEFT JOIN pacientes ON llamados.id_paciente = pacientes.id_paciente
     WHERE id_enfermero = ? ${filtroAtentido_valor} ${filtroPorPaciente_valor}
     ;`, [id_enfermero]);
-    return respuesta;
+    return respuesta[0];
   } catch (e) {
     return e.message;
   }
