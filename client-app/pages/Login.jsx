@@ -15,6 +15,7 @@ import {
 import Input from "../components/Input";
 import { iniciarSesion } from "../functions/dbFunctions";
 import { storeData, getData } from "../functions/asyncStorageFunctions";
+import Alert from "../components/Alert";
 
 export default function Login({ onLayout, setToken }) {
   const [isCheked, setIsCheked] = useState(false);
@@ -34,7 +35,7 @@ export default function Login({ onLayout, setToken }) {
     }, 400);
   };
   const show = () => {
-    opacityErrorVisible.value = withTiming(1, { duration: 200 });
+    opacityErrorVisible.value = withTiming(1, { duration: 300 });
     setErrorVisible(true);
   };
   const Header = () => {
@@ -54,85 +55,52 @@ export default function Login({ onLayout, setToken }) {
           await storeData("sesion", 1);
         }
         setToken(data);
-        await storeData("token", data.token); // Almacenar solo el valor del token
+        await storeData("token", data.token);
       } else {
         throw new Error("Los datos ingresados no son válidos");
       }
     } catch (e) {
       show();
     }
-    
   }
   useEffect(() => {
     if (errorVisible) {
       setTimeout(() => {
         hide();
-      }, 2500);
+      }, 3500);
     }
   }, [errorVisible]);
   return (
     <View style={styles.container} onLayout={onLayout}>
       <Header />
-      <Animated.View
-        style={[
-          {
-            position: "absolute",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            width: "100%",
-            height: Dimensions.get("window").height + 100,
-            zIndex: 2,
-            display: errorVisible ? "flex" : "none",
-            justifyContent: "center",
-            alignItems: "center",
-          },
-          opacityBoxErrorVisible,
-        ]}
-      >
-        <View
-          style={{
-            width: "85%",
-            height: "35%",
-            backgroundColor: "white",
-            borderRadius: 30,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 10,
-          }}
-        >
-          <View style={{ position: "absolute", left: "90%", bottom: "90%" }}>
-            <TouchableOpacity
-              onPress={() => {
-                hide();
-              }}
+      <Alert
+        content={
+          <>
+            <Image
+              source={require("../assets/images/cerrar.webp")}
+              style={{ width: 100, height: 100 }}
+            />
+            <Text style={{ fontFamily: "Montserrat-Bold", fontSize: 35 }}>
+              Error
+            </Text>
+            <Text
+              style={{ fontFamily: "Montserrat", fontSize: 20, marginTop: 20 }}
             >
-              <Image
-                source={require("../assets/images/cerrarNegro.png")}
-                style={{ width: 25, height: 25 }}
-              />
-            </TouchableOpacity>
-          </View>
-          <Image
-            source={require("../assets/images/cerrar.webp")}
-            style={{ width: 100, height: 100 }}
-          />
-          <Text style={{ fontFamily: "Montserrat-Bold", fontSize: 35 }}>
-            Error
-          </Text>
-          <Text
-            style={{ fontFamily: "Montserrat", fontSize: 20, marginTop: 20 }}
-          >
-            Los datos son incorrectos
-          </Text>
-        </View>
-      </Animated.View>
+              Los datos son incorrectos
+            </Text>
+          </>
+        }
+        hide={hide}
+        state={errorVisible}
+        stateOpacity={opacityBoxErrorVisible}
+      />
       <Image
         style={styles.backgroundImage}
         source={require("../assets/images/Cargando.png")}
       />
       <View style={styles.boxContainer}>
         <View style={styles.boxIniciaSesion}>
-          <Text style={styles.textIniciaSesion}>Inicia Sesion</Text>
+          <Text style={styles.textIniciaSesion}>Inicia Sesión</Text>
         </View>
 
         <View style={styles.boxUsuario}>
@@ -173,8 +141,9 @@ export default function Login({ onLayout, setToken }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.boxMantenerSesionIniciada}>
-          <TouchableOpacity onPress={() => setIsCheked(!isCheked)}>
+        <TouchableOpacity style={styles.boxMantenerSesionIniciada} onPress={() => setIsCheked(!isCheked)}>
+          
+          <View >
             {isCheked ? (
               <Image
                 style={styles.checkBox}
@@ -186,11 +155,11 @@ export default function Login({ onLayout, setToken }) {
                 source={require("../assets/images/uncheked.png")}
               />
             )}
-          </TouchableOpacity>
+          </View>
           <Text style={styles.textMantenerSesionIniciada}>
-            Mantener sesion iniciada
+            Mantener sesión iniciada
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -199,7 +168,7 @@ export default function Login({ onLayout, setToken }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#70FBD8",
+    backgroundColor: "#07D5A1",
     alignItems: "center",
   },
   backgroundImage: {
@@ -247,7 +216,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderRadius: 15,
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: "rgba(255,255,255,0.95)",
   },
   boxContraseña: {
     width: "80%",
@@ -258,7 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderRadius: 15,
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: "rgba(255,255,255,0.95)",
     marginTop: 40,
   },
   boxIniciaSesion: {
@@ -300,7 +269,7 @@ const styles = StyleSheet.create({
   },
   textMantenerSesionIniciada: {
     fontSize: 18,
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat-Bold"
   },
   imagen: {
     width: "9%",

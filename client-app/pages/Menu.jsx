@@ -9,7 +9,7 @@ export default function Menu({navigation, setToken, onLayout}){
         <View style={styles.navBar}>
             <Text style={styles.textNavBar}>Hospital</Text>
             <TouchableOpacity style={styles.imageNavBar} onPress={()=>{cerrarSesion();}}>
-                <Image source={require("../assets/images/cerrarSesion.png")}/>
+                <Image source={require("../assets/images/cerrarSesion.png")} style={{width: 50, height:50}}/>
             </TouchableOpacity>
         </View> )
     }
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     navBar: {
         height: "13%",
         width: "100%",
-        backgroundColor:"#70FBD8",
+        backgroundColor:"#07D5A1",
         alignItems:"center",
         marginBottom:15,
         flexDirection:"row",
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         width:"96%",
         height:"10%",
         borderRadius:25,
-        backgroundColor:"#70FBD8",
+        backgroundColor:"#07D5A1",
         alignItems:"center",
         justifyContent:"center",
         marginBottom:7,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         width:"96%",
         height:"10%",
         borderRadius:25,
-        backgroundColor:"#70FBD8",
+        backgroundColor:"#07D5A1",
         alignItems:"center",
         justifyContent:"center",
         marginBottom:7,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     footer: {
         height:"10%",
         width:"100%",
-        backgroundColor:"#70FBD8",
+        backgroundColor:"#07D5A1",
         justifyContent:"center",
         alignItems:"center",
         flexDirection:"row"

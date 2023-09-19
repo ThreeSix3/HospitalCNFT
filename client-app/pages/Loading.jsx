@@ -18,7 +18,7 @@ export default function Loading({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#70FBD8",
+        backgroundColor: "#07D5A1",
         alignItems:"center",
         justifyContent:"flex-end",
     },
