@@ -211,7 +211,7 @@ app.get("/grupoYFactor", async (req, res) => {
 app.get("/llamados", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados(null, null);
+    respuesta = await db.obtenerLlamados(null);
   } catch (e) {
     throw new Error(e);
   }
@@ -220,8 +220,7 @@ app.get("/llamados", async (req, res) => {
 app.get("/llamados/noAtendidos", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados(0, null);
-  } catch (e) {
+    respuesta = await db.obtenerLlamados(0);
     throw new Error(e);
   }
   res.status(200).send(respuesta);
@@ -229,12 +228,21 @@ app.get("/llamados/noAtendidos", async (req, res) => {
 app.get("/llamados/noAtendidos/codigoAzul", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados(0,1);
+    respuesta = await db.obtenerLlamadosCodigoAzul(0);
   } catch (e) {
     throw new Error(e);
   }
   res.status(200).send(respuesta);
 });
+app.get("/llamados/llamado/:id", async (req, res) => {
+    let respuesta;
+    try {
+      respuesta = await db.obtenerLlamadosPorId(req.params.id);
+    } catch (e) {
+      throw new Error(e);
+    }
+    res.status(200).send(respuesta);
+  });
 app.get("/llamados/:id", async (req, res) => {
     let respuesta;
     try {
