@@ -1,4 +1,4 @@
-import Animated, {
+import {
   useAnimatedStyle,
   useSharedValue,
   withTiming,

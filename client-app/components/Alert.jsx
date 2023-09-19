@@ -22,6 +22,7 @@ export default function Alert({content, hide, state, stateOpacity}){
           },
           stateOpacity,
         ]}
+        
       >
         <View
           style={{

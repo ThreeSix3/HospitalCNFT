@@ -1,14 +1,46 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { deleteData, getData } from '../functions/asyncStorageFunctions';
+import Animated, { withTiming, useSharedValue, useAnimatedStyle} from 'react-native-reanimated';
+import Alert from "../components/Alert";
 
 export default function Menu({navigation, setToken, onLayout}){
+    const [confirmacionCerrarSesion, setConfirmacionCerrarSesion] = useState(false);
+    const opacityConfirmacionCerrarSesion = useSharedValue(1);
+    const opacityBoxConfirmacionCerrarSesion = useAnimatedStyle(() => {
+    return {
+        opacity: opacityConfirmacionCerrarSesion.value,
+    };
+    });
+    const hide = () => {
+    opacityConfirmacionCerrarSesion.value = withTiming(0, { duration: 400 });
+    setTimeout(() => {
+        setConfirmacionCerrarSesion(false);
+    }, 400);
+  };
+  const show = () => {
+    opacityConfirmacionCerrarSesion.value = withTiming(1, { duration: 300 });
+    setConfirmacionCerrarSesion(true);
+  };
+    const codigoAzulVisible = useSharedValue(false)
+
+    const toggleCodigoAzul = () => {
+        codigoAzulVisible.value = !codigoAzulVisible.value
+    }
     
+    const codigoAzulStyle = useAnimatedStyle(() => {
+        return {
+            height: withTiming(codigoAzulVisible.value ? 150 : 0, { duration: 300 }),
+            opacity: withTiming(codigoAzulVisible.value ? 1 : 0, { duration: 300 }),
+        }
+
+    })
+
     const NavBar = () => {
         return (
         <View style={styles.navBar}>
             <Text style={styles.textNavBar}>Hospital</Text>
-            <TouchableOpacity style={styles.imageNavBar} onPress={()=>{cerrarSesion();}}>
+            <TouchableOpacity style={styles.imageNavBar} onPress={()=>{/*cerrarSesion();*/setConfirmacionCerrarSesion(true)}}>
                 <Image source={require("../assets/images/cerrarSesion.png")} style={{width: 50, height:50}}/>
             </TouchableOpacity>
         </View> )
@@ -16,7 +48,7 @@ export default function Menu({navigation, setToken, onLayout}){
 
     const CodigoAzul = () => {
         return (
-        <TouchableOpacity style={styles.codigoAzul}>
+        <TouchableOpacity style={styles.codigoAzul} onPress={toggleCodigoAzul}>
             <Text style={styles.textModal}>CÓDIGO AZUL</Text>
             <Image source={require("../assets/images/modal.png")} style={styles.imageModal} />
         </TouchableOpacity> )
@@ -56,10 +88,42 @@ export default function Menu({navigation, setToken, onLayout}){
 
     return (
         <View style={styles.container} onLayout={onLayout}>
+            <Alert content={
+                <>
+                    <Text style={{ fontFamily: "Montserrat-Bold", fontSize: 35, textAlign: 'center', color:'#333333' }}>
+                        ¿Estás seguro/a de cerrar sesión?
+                    </Text>
+                    <TouchableOpacity onPress={()=>{hide(); setTimeout(()=>{cerrarSesion()},400)}} style={{width: '80%', marginTop: '10%', backgroundColor: 'rgba(95, 255, 214, 1)', height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 15}}>
+                        <Text style={{ fontFamily: "Montserrat-Bold", fontSize: 22, textAlign: 'center' }}>Confirmar</Text>
+                    </TouchableOpacity>
+                </>
+            }   
+            hide={hide}
+            state={confirmacionCerrarSesion}
+            stateOpacity={opacityBoxConfirmacionCerrarSesion}
+            />
             <NavBar/>
             <Image style={styles.backgroundImage} source={require("../assets/images/Cargando.png")}/>
             <View style={styles.content}>
+                
                 <CodigoAzul/>
+                
+                <Animated.View style={[codigoAzulStyle]}>
+                    <ScrollView style={styles.scrollView}>
+                        <View style={styles.animationBoxCodigoAzul}>
+                            <Text style={styles.ubicacionText}>Quirofano 8</Text>
+                            <Text style={styles.atendidoText}>NO ATENDIDO</Text>
+                            <Text style={styles.areaText}>Area de emergencias</Text>
+                            <TouchableOpacity style={styles.marcarAtendidoBox}><Text style={styles.marcarAtendidoText}>Marcar como atendido</Text></TouchableOpacity>
+                        </View>
+                        <View style={styles.animationBoxCodigoAzul}>
+                            <Text style={styles.ubicacionText}>Quirofano 8</Text>
+                            <Text style={styles.atendidoText}>NO ATENDIDO</Text>
+                            <Text style={styles.areaText}>Area de emergencias</Text>
+                            <TouchableOpacity style={styles.marcarAtendidoBox}><Text style={styles.marcarAtendidoText}>Marcar como atendido</Text></TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </Animated.View>
                 <NoAtendidos/>
                 <Atendidos/>
             </View>
@@ -116,13 +180,8 @@ const styles = StyleSheet.create({
     },
     noAtendidos: {
         width:"96%",
-<<<<<<< Updated upstream
-        height:"10%",
-        borderRadius:25,
-=======
         height:"12%",
         borderRadius:35,
->>>>>>> Stashed changes
         backgroundColor:"#07D5A1",
         alignItems:"center",
         justifyContent:"space-between",
@@ -132,13 +191,8 @@ const styles = StyleSheet.create({
     },
     atendidos: {
         width:"96%",
-<<<<<<< Updated upstream
-        height:"10%",
-        borderRadius:25,
-=======
         height:"12%",
         borderRadius:35,
->>>>>>> Stashed changes
         backgroundColor:"#07D5A1",
         alignItems:"center",
         justifyContent:"space-between",
@@ -149,11 +203,7 @@ const styles = StyleSheet.create({
     footer: {
         height:"10%",
         width:"100%",
-<<<<<<< Updated upstream
-        backgroundColor:"#07D5A1",
         justifyContent:"center",
-=======
->>>>>>> Stashed changes
         alignItems:"center",
         flexDirection:"row",
         justifyContent:"flex-end"
@@ -207,5 +257,37 @@ const styles = StyleSheet.create({
     },
     imageModal:{
         marginRight:"3%"
+    },
+    animationBoxCodigoAzul:{
+        width:"100%",
+        alignItems:"center",
+        justifyContent:"center",
+        backgroundColor:"#07D5A1",
+        borderRadius:25,
+        marginBottom:7,
+    },
+    ubicacionText:{
+        fontFamily:"Montserrat-Bold",
+        color:"#f8f8f8",
+        fontSize:20
+    },
+    atendidoText:{
+        fontFamily:"Montserrat-Bold",
+        color:"#f8f8f8",
+        fontSize:32
+    },
+    areaText:{
+        fontFamily:"Montserrat-Bold",
+        color:"#f8f8f8"
+    },
+    marcarAtendidoText:{
+        fontFamily:"Montserrat-Bold",
+        color:"#f8f8f8"
+    },
+    marcarAtendidoBox:{
+
+    },
+    scrollView:{
+    
     },
 })
