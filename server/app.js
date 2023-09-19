@@ -154,7 +154,6 @@ app.delete("/enfermeros/:id", async (req, res) => {
 });
 app.post("/enfermeros", async (req, res) => {
   let {
-    id_usuario,
     nombre_enfermero,
     apellido_enfermero,
     dni_enfermero,
@@ -163,7 +162,6 @@ app.post("/enfermeros", async (req, res) => {
   let respuesta;
   try {
     respuesta = await db.crearEnfermero(
-      id_usuario,
       nombre_enfermero,
       apellido_enfermero,
       dni_enfermero,
@@ -176,7 +174,7 @@ app.post("/enfermeros", async (req, res) => {
 });
 app.put("/enfermeros/:id", async (req, res) => {
   let {
-    id_usuario,
+
     nombre_enfermero,
     apellido_enfermero,
     dni_enfermero,
@@ -186,7 +184,7 @@ app.put("/enfermeros/:id", async (req, res) => {
   try {
     respuesta = await db.actualizarEnfermeros(
       req.params.id,
-      id_usuario,
+
       nombre_enfermero,
       apellido_enfermero,
       dni_enfermero,
@@ -594,7 +592,7 @@ app.put("/usuarios/:id", async (req, res) => {
   let { nombre_usuario, contrasena_usuario, super_usuario } = req.body;
   let respuesta;
   try {
-    respuesta = await db.actualizarUbicacion(
+    respuesta = await db.actualizarUsuario(
       req.params.id,
       nombre_usuario,
       contrasena_usuario,
