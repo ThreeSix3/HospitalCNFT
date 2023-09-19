@@ -564,13 +564,14 @@ app.get("/usuarios/:nombre_usuario", async (req, res) => {
 });
 
 app.post("/usuarios", async (req, res) => {
-  let { nombre_usuario, contrasena_usuario, super_usuario } = req.body;
+  let { nombre_usuario, contrasena_usuario, super_usuario, id_enfermero } = req.body;
   let respuesta;
   try {
     respuesta = await db.crearUsuario(
       nombre_usuario,
       contrasena_usuario,
-      super_usuario
+      super_usuario,
+      id_enfermero
     );
   } catch (e) {
     throw new Error(e);
@@ -589,14 +590,15 @@ app.delete("/usuarios/:id", async (req, res) => {
 });
 
 app.put("/usuarios/:id", async (req, res) => {
-  let { nombre_usuario, contrasena_usuario, super_usuario } = req.body;
+  let { nombre_usuario, contrasena_usuario, super_usuario, id_enfermero } = req.body;
   let respuesta;
   try {
     respuesta = await db.actualizarUsuario(
       req.params.id,
       nombre_usuario,
       contrasena_usuario,
-      super_usuario
+      super_usuario,
+      id_enfermero
     );
   } catch (e) {
     throw new Error(e);
