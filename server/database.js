@@ -246,7 +246,7 @@ export async function obtenerGrupoFactor() {
  */
 //PARA QUE VUELVA A BUILDEAR
 export async function obtenerLlamados(atendidos, codigoAzul) {
-  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : '', filtroEmergencia = codigoAzul !== null? `AND id_paciente = NULL` : ''
+  let filtroAtentido_valor = atendidos !== null? `WHERE estado_llamado = ${atendidos}` : '', filtroEmergencia = codigoAzul !== null? `AND llamados.id_paciente = NULL` : ''
   try {
     const respuesta = await pool.query(`
     SELECT 
