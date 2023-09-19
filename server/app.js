@@ -211,7 +211,7 @@ app.get("/grupoYFactor", async (req, res) => {
 app.get("/llamados", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados(null);
+    respuesta = await db.obtenerLlamados(null, null);
   } catch (e) {
     throw new Error(e);
   }
@@ -220,7 +220,7 @@ app.get("/llamados", async (req, res) => {
 app.get("/llamados/noAtendidos", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados(0);
+    respuesta = await db.obtenerLlamados(0, null);
   } catch (e) {
     throw new Error(e);
   }
@@ -229,7 +229,7 @@ app.get("/llamados/noAtendidos", async (req, res) => {
 app.get("/llamados/noAtendidos/codigoAzul", async (req, res) => {
   let respuesta;
   try {
-    respuesta = await db.obtenerLlamados(0);
+    respuesta = await db.obtenerLlamados(0,1);
   } catch (e) {
     throw new Error(e);
   }
