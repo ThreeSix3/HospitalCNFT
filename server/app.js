@@ -222,6 +222,8 @@ app.get("/llamados/noAtendidos", async (req, res) => {
   try {
     respuesta = await db.obtenerLlamados(0);
     throw new Error(e);
+  }catch (e) {
+    throw new Error(e);
   }
   res.status(200).send(respuesta);
 });
