@@ -3,7 +3,7 @@
     background-color: #07D5A1;
     transition: all 0.3s ease-out;
     transform: translateX(0);
-    height: 100%;
+    height: 110%;
 }
 
 .inactive {
@@ -40,11 +40,12 @@
 
 .sidebarInfo {
     display: flex;
+    justify-content: center;
     width: 100%;
 }
 
 .sidebarInfo h3 {
-    width: 200px;
+    width: 100%;
     font-size: 20px;
     text-align: center;
     color: white;

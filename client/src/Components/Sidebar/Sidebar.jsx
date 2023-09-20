@@ -9,27 +9,18 @@ export default function Sidebar({ user }) {
     const [isActive, setIsActive] = useState(true);
     const [activeElement, setActiveElement] = useState(0);
 
-    function setStateOfSidebar() {
-        setIsActive(prevState => !prevState);
-    }
-
     function setStateOfActiveElement(index) {
         setActiveElement(index);
     }
 
     return (
-        <div style={{ display: 'flex', height: '160vh' }}>
+        <div style={{ display: 'flex' }}>
             <aside className={`sidebar ${isActive ? '' : 'inactive'}`}>
                 {/*Titulo y flecha*/}
                 <div className='sidebarInfo'>
                     <span>
                         <h3>Alerta Azul</h3>
                     </span>
-                    <div className='toggleButtonSidebarContainer'>
-                        <button onClick={setStateOfSidebar} className={`toggleButtonSidebar ${isActive ? '' : 'inactiveBtn'}`}>
-                            <ChevronLeftIcon />
-                        </button>
-                    </div>
                 </div>
                 {/*Resto de informacion con flex-direction column*/}
                 <div className='sidebarInteractionMenu'>

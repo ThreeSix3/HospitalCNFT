@@ -1,3 +1,23 @@
+.patientsControls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.patientsBrowser {
+    padding-left: 10px;
+    background-color: #a0a0a040;
+    border: transparent;
+    border-radius: 100px;
+    width: 50%;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.patientsBrowser:focus {
+    outline: 2px solid #07D5A1;
+}
+
 .patientsTable {
     text-align: center;
     font-size: 14px;
@@ -11,4 +31,19 @@
 .patientsTable td {
     padding: 5px 20px;
     border-bottom: 1px solid #d9d9d9;
+}
+
+.patientsBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    border-radius: 15px;
+    background-color: white;
+    padding: 8px;
+    color: #07D5A1;
+    border: 1px solid #07D5A1;
+    margin: 0 5px;
+    height: 35px;
+    width: 25%;
 }

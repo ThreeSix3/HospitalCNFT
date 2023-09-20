@@ -91,3 +91,34 @@
         transform: translateX(0);
     }
 }
+
+.deleteButton {
+    color: #FF3333;
+    font-size: 14px;
+    margin: 0;
+    width: 70px;
+    height: 35px;
+    background-color: transparent;
+    border-radius: 100px;
+    border: 1px solid #FF3333;
+    transition: all .2s ease-in;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    transform: translateY(-1px) translateX(1px) scale(1.05);
+    background-color: #FF3333;
+    color: #fff;
+    transition: all .2s ease-out;
+    box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.patientsControls .buttonWrapper {
+    margin: 0;
+    width: 25%;
+}
+
+.patientsControls .button {
+    font-size: 14px;
+    width: 90%;
+}
