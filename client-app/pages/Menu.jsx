@@ -22,11 +22,11 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     });
   }
   async function renderizarLlamadosPorEnfermeroNoAtendidos() {
-    if(id_enfermero !== null){
+    if (id_enfermero !== null) {
       await obtenerLlamadosPorEnfermero(id_enfermero, 0).then((data) => {
         setNoAtendidosEnfermero(data);
       });
-    }else{
+    } else {
       await obtenerTodosLosLlamados().then((data) => {
         setNoAtendidosEnfermero(data);
       });
@@ -59,28 +59,27 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
 
     if (noAtendidosHook && id_enfermero !== null) {
       if (noAtendidosEnfermero.length === 1) {
-        setHeightCardNoAtendidos("30%");
+        setHeightCardNoAtendidos("38%");
       } else if (noAtendidosEnfermero.length !== 0) {
-        setHeightCardNoAtendidos("60%");
+        setHeightCardNoAtendidos("70%");
       } else {
         setHeightCardNoAtendidos("0%");
       }
-    }else if(id_enfermero !== null){
+    } else if (id_enfermero !== null) {
       setHeightCardNoAtendidos("0%");
-    }else{
-      setHeightCardNoAtendidos("70%");//aca cambias la altura del scrollview cuando sos admin2
+    } else {
+      setHeightCardNoAtendidos("70%"); //aca cambias la altura del scrollview cuando sos admin2
     }
 
-    if(atendidosHook){
+    if (atendidosHook) {
       if (atendidosEnfermero.length !== 0) {
         setHeightCardAtendidos("87%");
       } else {
         setHeightCardAtendidos("0%");
       }
-    }else {
+    } else {
       setHeightCardAtendidos("0%");
     }
-    
   }, [codigoAzulLlamados, atendidosEnfermero, noAtendidosEnfermero, codigoAzulVisibleHook, noAtendidosHook, atendidosHook]);
 
   const opacityConfirmacionCerrarSesion = useSharedValue(1);
@@ -203,6 +202,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       </TouchableOpacity>
     );
   };
+
   async function cerrarSesion() {
     await deleteData("token");
     await deleteData("sesion");
@@ -214,11 +214,11 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     renderizarLlamadosPorEnfermeroNoAtendidos();
     renderizarLlamadosPorEnfermeroAtendidos();
   }
-  useEffect(()=>{
+  useEffect(() => {
     setTimeout(() => {
-      toggleCodigoAzul()
-    }, 1000); 
-  },[])
+      toggleCodigoAzul();
+    }, 1000);
+  }, []);
   return (
     <View style={styles.container} onLayout={onLayout}>
       <Alert
@@ -303,16 +303,20 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                   {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
                 </Text>
                 <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
-                {id_enfermero !== null ? ( 
-                <TouchableOpacity
-                  style={styles.marcarAtendidoBox}
-                  onPress={() => {
-                    setearAtendido(llamado.id_llamado);
-                  }}
-                >
-                  <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
-                </TouchableOpacity>  ) : (<></>) }
-              </View> 
+
+                {id_enfermero !== null ? (
+                  <TouchableOpacity
+                    style={styles.marcarAtendidoBox}
+                    onPress={() => {
+                      setearAtendido(llamado.id_llamado);
+                    }}
+                  >
+                    <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <></>
+                )}
+              </View>
             ))}
           </ScrollView>
         </Animated.View>
@@ -331,30 +335,20 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
               >
                 {noAtendidosEnfermero.map((llamado) => (
                   <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
-                    <View style ={styles.innerBoxLlamados}>
+                    <Text style={styles.ubicacionText}>
+                      {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
+                    </Text>
+                    <View style={styles.innerBoxLlamados}>
                       <Text style={styles.origenText}>
-                        {llamado.nombre_ubicacion} {llamado.numero_ubicacion}  
-                      </Text>
-                      <Text style={styles.origenText}>
-                        {llamado.fhora_llamado.split("T")[1].split(".")[0].substring(0, 5)} 
+                        HORA :{" "}
+                        <Text style={{ backgroundColor: "rgba(217, 217, 217, 0.50)" }}>
+                          {" "}
+                          {llamado.fhora_llamado.split("T")[1].split(".")[0].substring(0, 5)}{" "}
+                        </Text>
                       </Text>
                     </View>
-                    <Text style={styles.atendidoText}>
-                      {llamado.desc_origen_llamado} 
-                    </Text>
-                    <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
-                    <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
-                    <View style ={styles.innerBoxLlamados}>
-                      <Text style={styles.origenText}>
-                        {llamado.nombre_ubicacion} {llamado.numero_ubicacion}  
-                      </Text>
-                      <Text style={styles.origenText}>
-                        {llamado.fhora_llamado.split("T")[1].split(".")[0].substring(0, 5)} 
-                      </Text>
-                    </View>
-                    <Text style={styles.atendidoText}>
-                      {llamado.desc_origen_llamado} 
-                    </Text>
+                    <Text style={styles.atendidoText}>{llamado.desc_origen_llamado}</Text>
+
                     <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
                     <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
                     <TouchableOpacity
@@ -380,17 +374,18 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
               >
                 {atendidosEnfermero.map((llamado) => (
                   <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
-                      <View style ={styles.innerBoxLlamados}>
-                        <Text style={styles.origenTextAtendidos}>
-                          {llamado.nombre_ubicacion} {llamado.numero_ubicacion}  
-                        </Text>
-                        <Text style={styles.origenTextAtendidos}>
-                        {llamado.fhora_llamado.split('T').map((part, index) => index === 0 ? part : part.split('.')[0].substring(0, 5)).join(' ')}
-                        </Text>
+                    <View style={styles.innerBoxLlamados}>
+                      <Text style={[styles.origenTextAtendidos]}>
+                        {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
+                      </Text>
+                      <Text style={styles.origenTextAtendidos}>
+                        {llamado.fhora_llamado
+                          .split("T")
+                          .map((part, index) => (index === 0 ? part : part.split(".")[0].substring(0, 5)))
+                          .join(" ")}
+                      </Text>
                     </View>
-                    <Text style={styles.atendidoText}>
-                      {llamado.desc_origen_llamado} 
-                    </Text>
+                    <Text style={styles.atendidoText}>{llamado.desc_origen_llamado}</Text>
                     <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
                     <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
                   </View>
@@ -415,22 +410,51 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                   alignItems: "center",
                 }}
               >
-                {noAtendidosEnfermero.map((llamado) => (
-                  <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
-                  <View style ={styles.innerBoxLlamados}>
-                    <Text style={styles.origenTextAtendidos}>
-                      {llamado.nombre_ubicacion} {llamado.numero_ubicacion}  
-                    </Text>
-                    <Text style={styles.origenTextAtendidos}>
-                    {llamado.fhora_llamado.split('T').map((part, index) => index === 0 ? part : part.split('.')[0].substring(0, 5)).join(' ')}
-                    </Text>
-                </View>
-                <Text style={styles.atendidoText}>
-                  {llamado.desc_origen_llamado} 
-                </Text>
-                <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
-                <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
-              </View>
+                {noAtendidosEnfermero.map((llamado, index) => (
+                  <>
+                    <View style={styles.animationBoxNoAtendidos} key={index}>
+                      <Text style={styles.areaText}>{llamado.estado_llamado === 0 ? "NO ATENDIDO" : "ATENDIDO"}</Text>
+                      <View style={styles.innerBoxLlamados}>
+                        {llamado.id_paciente !== null && (
+                          <Text style={styles.origenTextAtendidos}>
+                            {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
+                          </Text>
+                        )}
+                        {llamado.id_paciente === null && <Text style={styles.origenTextAtendidos}>Fecha y hora:</Text>}
+                        <Text style={styles.origenTextAtendidos}>
+                          {llamado.fhora_llamado
+                            .split("T")
+                            .map((part, index) => (index === 0 ? part : part.split(".")[0].substring(0, 5)))
+                            .join(" ")}
+                        </Text>
+                      </View>
+                      <View style={styles.innerBoxLlamados}>
+                        {llamado.fhora_atencion_llamado !== null && (
+                          <>
+                            <Text style={styles.origenTextAtendidos}>Fecha de atención:</Text>
+                            <Text style={styles.origenTextAtendidos}>
+                              {llamado.fhora_atencion_llamado
+                                .split("T")
+                                .map((part, index) => (index === 0 ? part : part.split(".")[0].substring(0, 5)))
+                                .join(" ")}
+                            </Text>
+                          </>
+                        )}
+                      </View>
+                      {llamado.id_paciente === null && (
+                        <Text style={styles.atendidoText}>
+                          {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
+                        </Text>
+                      )}
+
+                      {llamado.id_paciente !== null && (
+                        <>
+                          <Text style={styles.atendidoText}>{llamado.desc_origen_llamado}</Text>
+                          <Text style={styles.areaText}>Dni paciente: {llamado.dni_paciente}</Text>
+                        </>
+                      )}
+                    </View>
+                  </>
                 ))}
               </ScrollView>
             </Animated.View>
@@ -600,22 +624,22 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(217, 217, 217, 0.50)",
     margin: 20,
   },
-  origenText:{
+  origenText: {
     fontFamily: "Montserrat-SemiBold",
     color: "#f8f8f8",
     fontSize: 18,
-    marginLeft:50,
-    marginRight:50
+    marginLeft: 50,
+    marginRight: 50,
   },
-  innerBoxLlamados:{
-    flexDirection:"row",
-    justifyContent:"space-between"
+  innerBoxLlamados: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-  origenTextAtendidos:{
+  origenTextAtendidos: {
     fontFamily: "Montserrat-SemiBold",
     color: "#f8f8f8",
     fontSize: 18,
-    marginLeft:20,
-    marginRight:20
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
