@@ -254,7 +254,8 @@ export async function obtenerLlamados(atendidos) {
         numero_ubicacion, 
         desc_origen_llamado,
         llamados.id_paciente,
-        id_enfermero
+        id_enfermero,
+        dni_paciente
     FROM llamados
     INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
@@ -331,7 +332,8 @@ export async function obtenerLlamadosDeUnEnfermero(id_enfermero, filtroAtendido,
         numero_ubicacion, 
         desc_origen_llamado,
         llamados.id_paciente,
-        nombre_area
+        nombre_area,
+        dni_paciente
     FROM llamados
     INNER JOIN tipos_llamados ON llamados.id_tipo_llamado = tipos_llamados.id_tipo_llamado
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
