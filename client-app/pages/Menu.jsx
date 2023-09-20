@@ -412,7 +412,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
               >
                 {noAtendidosEnfermero.map((llamado, index) => (
                   <>
-                    <View style={styles.animationBoxNoAtendidos} key={index}>
+                    <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
                       <Text style={styles.areaText}>{llamado.estado_llamado === 0 ? "NO ATENDIDO" : "ATENDIDO"}</Text>
                       <View style={styles.innerBoxLlamados}>
                         {llamado.id_paciente !== null && (
