@@ -311,8 +311,8 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                   }}
                 >
                   <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
-                </TouchableOpacity>
-              </View>
+                </TouchableOpacity>  ) : (<></>) }
+              </View> 
             ))}
           </ScrollView>
         </Animated.View>
