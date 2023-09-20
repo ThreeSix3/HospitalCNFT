@@ -177,6 +177,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
           style={styles.imageModal}
         />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -198,6 +202,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
 
   const Atendidos = () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
 =======
     
 >>>>>>> Stashed changes
@@ -212,6 +220,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     );
   };
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -316,6 +328,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 </Text>
                 <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                {id_enfermero !== null ? ( 
+>>>>>>> Stashed changes
 =======
                 {id_enfermero !== null ? ( 
 >>>>>>> Stashed changes
@@ -326,8 +342,13 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                   }}
                 >
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
                 </TouchableOpacity>
+=======
+                  <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text> 
+                </TouchableOpacity> ) : (<></>)}
+>>>>>>> Stashed changes
 =======
                   <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text> 
                 </TouchableOpacity> ) : (<></>)}
@@ -352,11 +373,28 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 {noAtendidosEnfermero.map((llamado) => (
                   <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     <Text style={styles.atendidoText}>NO ATENDIDO</Text>
                     <Text style={styles.ubicacionText}>
                       {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
                     </Text>
                     <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
+=======
+                    <View style ={styles.innerBoxLlamados}>
+                      <Text style={styles.origenText}>
+                        {llamado.nombre_ubicacion} {llamado.numero_ubicacion}  
+                      </Text>
+                      <Text style={styles.origenText}>
+                        {llamado.fhora_llamado.split("T")[1].split(".")[0].substring(0, 5)} 
+                      </Text>
+                    </View>
+                    <Text style={styles.atendidoText}>
+                      {llamado.desc_origen_llamado} 
+                    </Text>
+                    
+                    <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
+                    <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
+>>>>>>> Stashed changes
 =======
                     <View style ={styles.innerBoxLlamados}>
                       <Text style={styles.origenText}>
@@ -386,6 +424,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
               </ScrollView>
             </Animated.View>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -401,12 +443,15 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 {atendidosEnfermero.map((llamado) => (
                   <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     <Text style={styles.atendidoText}>ATENDIDO</Text>
                     <Text style={styles.ubicacionText}>
                       {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
                     </Text>
                     <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
 =======
+=======
+>>>>>>> Stashed changes
                       <View style ={styles.innerBoxLlamados}>
                         <Text style={styles.origenTextAtendidos}>
                           {llamado.nombre_ubicacion} {llamado.numero_ubicacion}  
@@ -420,6 +465,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                     </Text>
                     <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
                     <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                   </View>
                 ))}
@@ -445,10 +493,13 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
               >
                 {noAtendidosEnfermero.map((llamado) => (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   <View style={styles.animationBoxCodigoAzul} key={llamado.id_llamado}>
                     <Text>{JSON.stringify(llamado)}</Text>
                   </View>
 =======
+=======
+>>>>>>> Stashed changes
                   <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
                   <View style ={styles.innerBoxLlamados}>
                     <Text style={styles.origenTextAtendidos}>
@@ -464,6 +515,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
                 <Text style={styles.areaText}>Dni Paciente: {llamado.dni_paciente}</Text>
               </View>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 ))}
               </ScrollView>
@@ -584,7 +638,11 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Bold",
     color: "#f8f8f8",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     fontSize: 20,
+=======
+    fontSize: 32,
+>>>>>>> Stashed changes
 =======
     fontSize: 32,
 >>>>>>> Stashed changes
@@ -639,7 +697,10 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
   origenText:{
     fontFamily: "Montserrat-SemiBold",
     color: "#f8f8f8",
@@ -658,5 +719,8 @@ const styles = StyleSheet.create({
     marginLeft:20,
     marginRight:20
   },
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 });
