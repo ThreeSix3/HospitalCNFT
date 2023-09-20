@@ -4,8 +4,8 @@ PD: estaría piola que diga la id_paciente o el dni. fijate lo que te guste más
 
 ## ATENCION
 ## para ver como si fueras un enfermero (usuario: admin, contraseña: admin)
-<br />
+
 ## para ver como si fueras un administrador (usuario: admin2, contraseña: admin)
-<br />
+
 en la vista como admin2 te deje en el panel "mostrar todos" un card de cada uno con el json de los datos que tienen para mostrar fijate que algunos tienen todos los datos completos, otros no. cualquier cosa sino dejame lo que necesitas que tome ej: dni_paciente, nombre_ubicacion etc. ahora si nos vemos js
 
