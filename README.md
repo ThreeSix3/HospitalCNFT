@@ -8,4 +8,5 @@ PD: estaría piola que diga la id_paciente o el dni. fijate lo que te guste más
 ## para ver como si fueras un administrador (usuario: admin2, contraseña: admin)
 
 en la vista como admin2 te deje en el panel "mostrar todos" un card de cada uno con el json de los datos que tienen para mostrar fijate que algunos tienen todos los datos completos, otros no. cualquier cosa sino dejame lo que necesitas que tome ej: dni_paciente, nombre_ubicacion etc. ahora si nos vemos js
-
+# IMPORTANTE
+el administrador no deberia tener el control de marcar como atendido, habria que sacarle los botones para cuando estas como admin {id_enfermero !== null ? <componenteMarcarComoCompletado> : ''} <- en 'codigo azul'
