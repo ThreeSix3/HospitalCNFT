@@ -28,6 +28,16 @@ export async function obtenerLlamados() {
   }
 }
 
+export async function obtenerTodosLosLlamados() {
+  try {
+    const llamados = await fetch("https://api-olimpiada-g1.up.railway.app/llamados/");
+    const data = await llamados.json();
+    return data;
+  } catch (e) {
+    return e.message;
+  }
+}
+
 export async function obtenerLlamadosPorEnfermero(id_enfermero, filtro_atendido) {
   try {
     const llamados = await fetch(`https://api-olimpiada-g1.up.railway.app/llamados/${id_enfermero}/fAtendido/${filtro_atendido}`);
@@ -38,7 +48,6 @@ export async function obtenerLlamadosPorEnfermero(id_enfermero, filtro_atendido)
   }
 }
 function obtenerFechaHoraActualSQL() {
-  // Obtener la fecha y hora actual en UTC
   const fechaHoraActualUTC = new Date();
 
   // Calcular el desplazamiento de tiempo para la zona horaria -3 en milisegundos
