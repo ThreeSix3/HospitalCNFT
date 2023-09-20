@@ -347,8 +347,9 @@ app.put("/llamados/:id", async (req, res) => {
       estado_llamado,
       fhora_atencion_llamado
     );
+    console.log(fhora_atencion_llamado)
   } catch (e) {
-    throw new Error(e);
+    console.log(e.message);
   }
   res.status(200).send(respuesta);
 });
