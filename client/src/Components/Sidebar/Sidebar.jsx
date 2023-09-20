@@ -5,11 +5,12 @@ import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import SidebarElement from './SidebarElement';
 import DocsPanel from '../Cards/DocsPanel/DocsPanel';
 
-export default function Sidebar({ user }) {
+export default function Sidebar({ user, setActiveElement }) {
     const [isActive, setIsActive] = useState(true);
-    const [activeElement, setActiveElement] = useState(0);
+    const [activeElementState, setActiveElementState] = useState(0);
 
     function setStateOfActiveElement(index) {
+        setActiveElementState(index);
         setActiveElement(index);
     }
 
@@ -41,19 +42,19 @@ export default function Sidebar({ user }) {
                         </svg>
 
                         <a onClick={() => setStateOfActiveElement(0)}>
-                            <SidebarElement text={'Panel de control'} icon={<ChevronLeftIcon />} isActive={activeElement === 0} />
+                            <SidebarElement text={'Panel de control'} icon={<ChevronLeftIcon />} isActive={activeElementState === 0} />
                         </a>
                         <a onClick={() => setStateOfActiveElement(1)}>
-                            <SidebarElement text={'Informes'} icon={<ChevronLeftIcon />} isActive={activeElement === 1} />
+                            <SidebarElement text={'Informes'} icon={<ChevronLeftIcon />} isActive={activeElementState === 1} />
                         </a>
                         <a onClick={() => setStateOfActiveElement(2)}>
-                            <SidebarElement text={'Pacientes'} icon={<ChevronLeftIcon />} isActive={activeElement === 2} />
+                            <SidebarElement text={'Pacientes'} icon={<ChevronLeftIcon />} isActive={activeElementState === 2} />
                         </a>
                         <a onClick={() => setStateOfActiveElement(3)}>
-                            <SidebarElement text={'Usuarios'} icon={<ChevronLeftIcon />} isActive={activeElement === 3} />
+                            <SidebarElement text={'Usuarios'} icon={<ChevronLeftIcon />} isActive={activeElementState === 3} />
                         </a>
                         <a onClick={() => setStateOfActiveElement(4)}>
-                            <SidebarElement text={'Gestion de áreas'} icon={<ChevronLeftIcon />} isActive={activeElement === 4} />
+                            <SidebarElement text={'Gestion de áreas'} icon={<ChevronLeftIcon />} isActive={activeElementState === 4} />
                         </a>
                         <DocsPanel />
                     </div>
