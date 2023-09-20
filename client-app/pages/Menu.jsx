@@ -1,27 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { deleteData, getData } from "../functions/asyncStorageFunctions";
-import Animated, {
-  useSharedValue,
-  withTiming,
-  Easing,
-  useAnimatedStyle,
-  withRepeat,
-  withSequence,
-} from "react-native-reanimated";
+import Animated, { useSharedValue, withTiming, Easing, useAnimatedStyle, withRepeat, withSequence } from "react-native-reanimated";
 import Alert from "../components/Alert";
-import { obtenerLlamados, obtenerLlamadosPorEnfermero } from "../functions/dbFunctions";
+import { obtenerLlamados, obtenerLlamadosPorEnfermero, marcarLlamadoComoAtendido } from "../functions/dbFunctions";
 
 export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
-  console.log(id_enfermero);
   const [codigoAzulVisibleHook, setCodigoAzulVisibleHook] = useState(false);
   const [noAtendidosEnfermero, setNoAtendidosEnfermero] = useState([]);
   const [atendidosEnfermero, setAtendidosEnfermero] = useState([]);
@@ -31,37 +15,65 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
   const [heightCardNoAtendidos, setHeightCardNoAtendidos] = useState("");
   const [heightCardAtendidos, setHeightCardAtendidos] = useState("");
   const [codigoAzulLlamados, setCodigoAzulLlamados] = useState([]);
-  const [confirmacionCerrarSesion, setConfirmacionCerrarSesion] =
-    useState(false);
+  const [confirmacionCerrarSesion, setConfirmacionCerrarSesion] = useState(false);
+  async function renderizarLlamadosCodigoAzul() {
+    await obtenerLlamados().then((data) => {
+      setCodigoAzulLlamados(data);
+    });
+  }
+  async function renderizarLlamadosPorEnfermeroNoAtendidos() {
+    await obtenerLlamadosPorEnfermero(id_enfermero, 0).then((data) => {
+      setNoAtendidosEnfermero(data);
+    });
+  }
+  async function renderizarLlamadosPorEnfermeroAtendidos() {
+    await obtenerLlamadosPorEnfermero(id_enfermero, 1).then((data) => {
+      setAtendidosEnfermero(data);
+    });
+  }
   useEffect(() => {
-    (async () => {
-      obtenerLlamados().then((data) => {
-        setCodigoAzulLlamados(data);
-      });
-      obtenerLlamadosPorEnfermero(id_enfermero, 0).then((data) => {
-        setNoAtendidosEnfermero(data);
-      })
-      obtenerLlamadosPorEnfermero(id_enfermero, 1).then((data) => {
-        setAtendidosEnfermero(data);
-      })
-    })();
-    if (codigoAzulLlamados.length === 1) {
-      setHeightCard("43%");
-    } else if(codigoAzulLlamados.length === 2){
-      setHeightCard("100.5%");
-    }else if(codigoAzulLlamados.length === 0){
-      setHeightCard("0");
-    }else{
-      setHeightCard('87%')
-    }
-
-    if(noAtendidosEnfermero.length === 1){
-      setHeightCardNoAtendidos('30%')
-    }else{
-      setHeightCardNoAtendidos('60%')
-    }
-
+    renderizarLlamadosCodigoAzul();
+    renderizarLlamadosPorEnfermeroNoAtendidos();
+    renderizarLlamadosPorEnfermeroAtendidos();
   }, [codigoAzulVisibleHook, noAtendidosHook, atendidosHook]);
+  useEffect(() => {
+    if (codigoAzulVisible) {
+      if (codigoAzulLlamados.length === 1) {
+        setHeightCard("40%");
+      } else if (codigoAzulLlamados.length === 2) {
+        setHeightCard("100.5%");
+      } else if (codigoAzulLlamados.length === 0) {
+        setHeightCard("0%");
+      } else {
+        setHeightCard("87%");
+      }
+    } else {
+      setHeightCard("0%");
+    }
+
+    if (noAtendidosHook) {
+      if (noAtendidosEnfermero.length === 1) {
+        setHeightCardNoAtendidos("30%");
+      } else if (noAtendidosEnfermero.length !== 0) {
+        setHeightCardNoAtendidos("60%");
+      } else {
+        setHeightCardNoAtendidos("0%");
+      }
+    }else{
+      setHeightCardNoAtendidos("0%");
+    }
+
+    if(atendidosHook){
+      if (atendidosEnfermero.length !== 0) {
+        setHeightCardAtendidos("87%");
+      } else {
+        setHeightCardAtendidos("0%");
+      }
+    }else {
+      setHeightCardAtendidos("0%");
+    }
+    
+  }, [codigoAzulLlamados, atendidosEnfermero, noAtendidosEnfermero, codigoAzulVisibleHook, noAtendidosHook, atendidosHook]);
 
   const opacityConfirmacionCerrarSesion = useSharedValue(1);
   const opacityBoxConfirmacionCerrarSesion = useAnimatedStyle(() => {
@@ -74,10 +86,6 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     setTimeout(() => {
       setConfirmacionCerrarSesion(false);
     }, 400);
-  };
-  const show = () => {
-    opacityConfirmacionCerrarSesion.value = withTiming(1, { duration: 300 });
-    setConfirmacionCerrarSesion(true);
   };
   const codigoAzulVisible = useSharedValue(false);
 
@@ -102,7 +110,6 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
   const noAtendidos = useSharedValue(false);
 
   const toggleNoAtendidos = () => {
-    
     setAtendidosHook(false);
     atendidos.value = false;
     setCodigoAzulVisibleHook(false);
@@ -113,7 +120,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
 
   const noAtendidosStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(noAtendidos.value ?  heightCardNoAtendidos : 0, { duration: 300 }),
+      height: withTiming(noAtendidos.value ? heightCardNoAtendidos : 0, { duration: 300 }),
       opacity: withTiming(noAtendidos.value ? 1 : 0, { duration: 300 }),
     };
   });
@@ -131,7 +138,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
 
   const atendidosStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(atendidos.value ? '60%' : 0, {
+      height: withTiming(atendidos.value ? "60%" : 0, {
         duration: 300,
       }),
       opacity: withTiming(atendidos.value ? 1 : 0, { duration: 300 }),
@@ -147,10 +154,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
             /*cerrarSesion();*/ setConfirmacionCerrarSesion(true);
           }}
         >
-          <Image
-            source={require("../assets/images/cerrarSesion.png")}
-            style={{ width: 50, height: 50 }}
-          />
+          <Image source={require("../assets/images/cerrarSesion.png")} style={{ width: 50, height: 50 }} />
         </TouchableOpacity>
       </View>
     );
@@ -161,11 +165,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       <TouchableOpacity style={styles.codigoAzul} onPress={toggleCodigoAzul}>
         <Text style={styles.textModal}>CÓDIGO AZUL</Text>
         <Image
-          source={
-            !codigoAzulVisibleHook
-              ? require("../assets/images/modal.png")
-              : require("../assets/images/modalInvertido.png")
-          }
+          source={!codigoAzulVisibleHook ? require("../assets/images/modal.png") : require("../assets/images/modalInvertido.png")}
           style={styles.imageModal}
         />
       </TouchableOpacity>
@@ -177,11 +177,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       <TouchableOpacity style={styles.noAtendidos} onPress={toggleNoAtendidos}>
         <Text style={styles.textModal}>No Atendidos</Text>
         <Image
-          source={
-            !noAtendidosHook
-              ? require("../assets/images/modal.png")
-              : require("../assets/images/modalInvertido.png")
-          }
+          source={!noAtendidosHook ? require("../assets/images/modal.png") : require("../assets/images/modalInvertido.png")}
           style={styles.imageModal}
         />
       </TouchableOpacity>
@@ -193,11 +189,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       <TouchableOpacity style={styles.noAtendidos} onPress={toggleAtendidos}>
         <Text style={styles.textModal}>Atendidos</Text>
         <Image
-          source={
-            !atendidosHook
-              ? require("../assets/images/modal.png")
-              : require("../assets/images/modalInvertido.png")
-          }
+          source={!atendidosHook ? require("../assets/images/modal.png") : require("../assets/images/modalInvertido.png")}
           style={styles.imageModal}
         />
       </TouchableOpacity>
@@ -208,14 +200,17 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     await deleteData("sesion");
     setToken({});
   }
-
-  
-  useEffect(() => {
-    
+  async function setearAtendido(id_llamado) {
+    await marcarLlamadoComoAtendido(id_llamado);
+    renderizarLlamadosCodigoAzul();
+    renderizarLlamadosPorEnfermeroNoAtendidos();
+    renderizarLlamadosPorEnfermeroAtendidos();
+  }
+  useEffect(()=>{
     setTimeout(() => {
-      toggleCodigoAzul();
-    }, 700);
-  }, []);
+      toggleCodigoAzul()
+    }, 1000); 
+  },[])
   return (
     <View style={styles.container} onLayout={onLayout}>
       <Alert
@@ -267,15 +262,12 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
         stateOpacity={opacityBoxConfirmacionCerrarSesion}
       />
       <NavBar />
-      <Image
-        style={styles.backgroundImage}
-        source={require("../assets/images/Cargando.png")}
-      />
+      <Image style={styles.backgroundImage} source={require("../assets/images/Cargando.png")} />
       <View style={styles.content}>
         <CodigoAzul />
 
         <Animated.View style={[codigoAzulStyle]}>
-          <ScrollView 
+          <ScrollView
             style={styles.scrollView}
             contentContainerStyle={{
               justifyContent: "center",
@@ -283,10 +275,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
             }}
           >
             {codigoAzulLlamados.map((llamado) => (
-              <View
-                style={styles.animationBoxCodigoAzul}
-                key={llamado.id_llamado}
-              >
+              <View style={styles.animationBoxCodigoAzul} key={llamado.id_llamado}>
                 <View
                   style={[
                     {
@@ -299,14 +288,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                     },
                   ]}
                 >
-                  <Image
-                    source={require("../assets/images/emergencia.webp")}
-                    style={{ width: 50, height: 50 }}
-                  />
+                  <Image source={require("../assets/images/emergencia.webp")} style={{ width: 50, height: 50 }} />
                 </View>
-                <Text style={styles.atendidoText}>
-                  {!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}
-                </Text>
+                <Text style={styles.atendidoText}>{!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}</Text>
                 <Text style={styles.ubicacionText}>
                   {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
                 </Text>
@@ -314,12 +298,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 <TouchableOpacity
                   style={styles.marcarAtendidoBox}
                   onPress={() => {
-                    console.log(llamado.id_llamado);
+                    setearAtendido(llamado.id_llamado);
                   }}
                 >
-                  <Text style={styles.marcarAtendidoText}>
-                    Marcar como atendido
-                  </Text>
+                  <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -339,28 +321,21 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 }}
               >
                 {noAtendidosEnfermero.map((llamado) => (
-                  <View
-                    style={styles.animationBoxNoAtendidos}
-                    key={llamado.id_llamado}
-                  >
-                <Text style={styles.atendidoText}>
-                  {!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}
-                </Text>
-                <Text style={styles.ubicacionText}>
-                  {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
-                </Text>
-                <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
-                <TouchableOpacity
-                  style={styles.marcarAtendidoBoxAtendidos}
-                  onPress={() => {
-                    console.log(llamado.id_llamado);
-                  }}
-                >
-                  <Text style={styles.marcarAtendidoText}>
-                    Marcar como atendido
-                  </Text>
-                </TouchableOpacity>
-                </View>
+                  <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
+                    <Text style={styles.atendidoText}>NO ATENDIDO</Text>
+                    <Text style={styles.ubicacionText}>
+                      {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
+                    </Text>
+                    <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
+                    <TouchableOpacity
+                      style={styles.marcarAtendidoBoxAtendidos}
+                      onPress={() => {
+                        setearAtendido(llamado.id_llamado);
+                      }}
+                    >
+                      <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
+                    </TouchableOpacity>
+                  </View>
                 ))}
               </ScrollView>
             </Animated.View>
@@ -373,30 +348,13 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                   alignItems: "center",
                 }}
               >
-                {codigoAzulLlamados.map((llamado) => (
-                  <View
-                    style={styles.animationBoxNoAtendidos}
-                    key={llamado.id_llamado}
-                  >
-                    <Text style={styles.atendidoText}>
-                      {!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}
-                    </Text>
+                {atendidosEnfermero.map((llamado) => (
+                  <View style={styles.animationBoxNoAtendidos} key={llamado.id_llamado}>
+                    <Text style={styles.atendidoText}>ATENDIDO</Text>
                     <Text style={styles.ubicacionText}>
                       {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
                     </Text>
-                    <Text style={styles.areaText}>
-                      Área: {llamado.nombre_area}
-                    </Text>
-                    <TouchableOpacity
-                      style={styles.marcarAtendidoBoxAtendidos}
-                      onPress={() => {
-                        console.log(llamado.id_llamado);
-                      }}
-                    >
-                      <Text style={styles.marcarAtendidoText}>
-                        Marcar como atendido
-                      </Text>
-                    </TouchableOpacity>
+                    <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
                   </View>
                 ))}
               </ScrollView>
@@ -404,17 +362,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
           </>
         ) : (
           <>
-            <TouchableOpacity
-              style={styles.noAtendidos}
-              onPress={toggleNoAtendidos}
-            >
+            <TouchableOpacity style={styles.noAtendidos} onPress={toggleNoAtendidos}>
               <Text style={styles.textModal}>Mostrar todos</Text>
               <Image
-                source={
-                  !noAtendidosHook
-                    ? require("../assets/images/modal.png")
-                    : require("../assets/images/modalInvertido.png")
-                }
+                source={!noAtendidosHook ? require("../assets/images/modal.png") : require("../assets/images/modalInvertido.png")}
                 style={styles.imageModal}
               />
             </TouchableOpacity>
@@ -427,10 +378,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 }}
               >
                 {codigoAzulLlamados.map((llamado) => (
-                  <View
-                    style={styles.animationBoxCodigoAzul}
-                    key={llamado.id_llamado}
-                  >
+                  <View style={styles.animationBoxCodigoAzul} key={llamado.id_llamado}>
                     <View
                       style={[
                         {
@@ -443,29 +391,20 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                         },
                       ]}
                     >
-                      <Image
-                        source={require("../assets/images/emergencia.webp")}
-                        style={{ width: 50, height: 50 }}
-                      />
+                      <Image source={require("../assets/images/emergencia.webp")} style={{ width: 50, height: 50 }} />
                     </View>
-                    <Text style={styles.atendidoText}>
-                      {!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}
-                    </Text>
+                    <Text style={styles.atendidoText}>{!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}</Text>
                     <Text style={styles.ubicacionText}>
                       {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
                     </Text>
-                    <Text style={styles.areaText}>
-                      Área: {llamado.nombre_area}
-                    </Text>
+                    <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
                     <TouchableOpacity
                       style={styles.marcarAtendidoBox}
                       onPress={() => {
                         console.log(llamado.id_llamado);
                       }}
                     >
-                      <Text style={styles.marcarAtendidoText}>
-                        Marcar como atendido
-                      </Text>
+                      <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -518,7 +457,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 5,
-    marginLeft: '2%'
+    marginLeft: "2%",
   },
   noAtendidos: {
     width: "96%",
@@ -530,7 +469,7 @@ const styles = StyleSheet.create({
     marginBottom: 7,
     flexDirection: "row",
     padding: 5,
-    marginLeft: '2%'
+    marginLeft: "2%",
   },
   imageButton: {
     width: "30%",
@@ -617,7 +556,7 @@ const styles = StyleSheet.create({
   scrollView: {
     display: "flex",
   },
-  animationBoxNoAtendidos:{
+  animationBoxNoAtendidos: {
     width: "90%",
     paddingTop: 20,
     paddingBottom: 20,
@@ -627,7 +566,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 7,
   },
-  marcarAtendidoBoxAtendidos:{
+  marcarAtendidoBoxAtendidos: {
     width: "80%",
     padding: 5,
     paddingTop: 10,

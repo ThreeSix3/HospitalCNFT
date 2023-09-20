@@ -7,6 +7,7 @@ import Menu from "./pages/Menu";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { getData, deleteData } from "./functions/asyncStorageFunctions";
+import { StatusBar } from "expo-status-bar";
 const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
 export default function App() {
@@ -65,6 +66,8 @@ export default function App() {
   
   
   return (
+    <>
+    <StatusBar />
     <NavigationContainer>
       <Stack.Navigator>
         {Object.keys(token).length <= 0 ? (
@@ -105,5 +108,7 @@ export default function App() {
         )}
       </Stack.Navigator>
     </NavigationContainer>
+    </>
+    
   );
 }
