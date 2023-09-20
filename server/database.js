@@ -439,8 +439,8 @@ export async function actualizarLlamado({
 }) {
   try {
     const respuesta = await pool.query(
-      "UPDATE llamados SET estado_llamado = ?, fhora_atencion_llamado = ? WHERE id_llamado = ?",
-      [estado_llamado, fhora_atencion_llamado, id_llamado]
+      `UPDATE llamados SET estado_llamado = ?, fhora_atencion_llamado = ${fhora_atencion_llamado} WHERE id_llamado = ?`,
+      [estado_llamado, id_llamado]
     );
     return respuesta;
   } catch (e) {
