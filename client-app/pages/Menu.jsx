@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions
 import { deleteData, getData } from "../functions/asyncStorageFunctions";
 import Animated, { useSharedValue, withTiming, Easing, useAnimatedStyle, withRepeat, withSequence } from "react-native-reanimated";
 import Alert from "../components/Alert";
-import { obtenerLlamados, obtenerLlamadosPorEnfermero, marcarLlamadoComoAtendido } from "../functions/dbFunctions";
+import { obtenerLlamados, obtenerLlamadosPorEnfermero, marcarLlamadoComoAtendido, obtenerTodosLosLlamados } from "../functions/dbFunctions";
 
 export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
   const [codigoAzulVisibleHook, setCodigoAzulVisibleHook] = useState(false);
@@ -22,9 +22,15 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     });
   }
   async function renderizarLlamadosPorEnfermeroNoAtendidos() {
-    await obtenerLlamadosPorEnfermero(id_enfermero, 0).then((data) => {
-      setNoAtendidosEnfermero(data);
-    });
+    if(id_enfermero !== null){
+      await obtenerLlamadosPorEnfermero(id_enfermero, 0).then((data) => {
+        setNoAtendidosEnfermero(data);
+      });
+    }else{
+      await obtenerTodosLosLlamados().then((data) => {
+        setNoAtendidosEnfermero(data);
+      });
+    }
   }
   async function renderizarLlamadosPorEnfermeroAtendidos() {
     await obtenerLlamadosPorEnfermero(id_enfermero, 1).then((data) => {
@@ -51,7 +57,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       setHeightCard("0%");
     }
 
-    if (noAtendidosHook) {
+    if (noAtendidosHook && id_enfermero !== null) {
       if (noAtendidosEnfermero.length === 1) {
         setHeightCardNoAtendidos("30%");
       } else if (noAtendidosEnfermero.length !== 0) {
@@ -59,8 +65,10 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       } else {
         setHeightCardNoAtendidos("0%");
       }
-    }else{
+    }else if(id_enfermero !== null){
       setHeightCardNoAtendidos("0%");
+    }else{
+      setHeightCardNoAtendidos("70%");//aca cambias la altura del scrollview cuando sos admin2
     }
 
     if(atendidosHook){
@@ -377,35 +385,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                   alignItems: "center",
                 }}
               >
-                {codigoAzulLlamados.map((llamado) => (
+                {noAtendidosEnfermero.map((llamado) => (
                   <View style={styles.animationBoxCodigoAzul} key={llamado.id_llamado}>
-                    <View
-                      style={[
-                        {
-                          height: 60,
-                          width: 60,
-                          backgroundColor: "white",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderRadius: 100,
-                        },
-                      ]}
-                    >
-                      <Image source={require("../assets/images/emergencia.webp")} style={{ width: 50, height: 50 }} />
-                    </View>
-                    <Text style={styles.atendidoText}>{!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}</Text>
-                    <Text style={styles.ubicacionText}>
-                      {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
-                    </Text>
-                    <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
-                    <TouchableOpacity
-                      style={styles.marcarAtendidoBox}
-                      onPress={() => {
-                        console.log(llamado.id_llamado);
-                      }}
-                    >
-                      <Text style={styles.marcarAtendidoText}>Marcar como atendido</Text>
-                    </TouchableOpacity>
+                    <Text>{JSON.stringify(llamado)}</Text>
                   </View>
                 ))}
               </ScrollView>
