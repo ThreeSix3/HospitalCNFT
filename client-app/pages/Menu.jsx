@@ -18,13 +18,18 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 import Alert from "../components/Alert";
-import { obtenerLlamados } from "../functions/dbFunctions";
+import { obtenerLlamados, obtenerLlamadosPorEnfermero } from "../functions/dbFunctions";
 
 export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
   console.log(id_enfermero);
   const [codigoAzulVisibleHook, setCodigoAzulVisibleHook] = useState(false);
+  const [noAtendidosEnfermero, setNoAtendidosEnfermero] = useState([]);
+  const [atendidosEnfermero, setAtendidosEnfermero] = useState([]);
   const [noAtendidosHook, setNoAtendidosHook] = useState(false);
+  const [atendidosHook, setAtendidosHook] = useState(false);
   const [heightCard, setHeightCard] = useState("");
+  const [heightCardNoAtendidos, setHeightCardNoAtendidos] = useState("");
+  const [heightCardAtendidos, setHeightCardAtendidos] = useState("");
   const [codigoAzulLlamados, setCodigoAzulLlamados] = useState([]);
   const [confirmacionCerrarSesion, setConfirmacionCerrarSesion] =
     useState(false);
@@ -33,14 +38,31 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
       obtenerLlamados().then((data) => {
         setCodigoAzulLlamados(data);
       });
+      obtenerLlamadosPorEnfermero(id_enfermero, 0).then((data) => {
+        setNoAtendidosEnfermero(data);
+      })
+      obtenerLlamadosPorEnfermero(id_enfermero, 1).then((data) => {
+        setAtendidosEnfermero(data);
+      })
     })();
     if (codigoAzulLlamados.length === 1) {
-      console.log(codigoAzulLlamados.length);
       setHeightCard("43%");
-    } else {
+    } else if(codigoAzulLlamados.length === 2){
       setHeightCard("100.5%");
+    }else if(codigoAzulLlamados.length === 0){
+      setHeightCard("0");
+    }else{
+      setHeightCard('87%')
     }
-  }, [codigoAzulVisibleHook]);
+
+    if(noAtendidosEnfermero.length === 1){
+      setHeightCardNoAtendidos('30%')
+    }else{
+      setHeightCardNoAtendidos('60%')
+    }
+
+  }, [codigoAzulVisibleHook, noAtendidosHook, atendidosHook]);
+
   const opacityConfirmacionCerrarSesion = useSharedValue(1);
   const opacityBoxConfirmacionCerrarSesion = useAnimatedStyle(() => {
     return {
@@ -60,6 +82,8 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
   const codigoAzulVisible = useSharedValue(false);
 
   const toggleCodigoAzul = () => {
+    setAtendidosHook(false);
+    atendidos.value = false;
     setNoAtendidosHook(false);
     noAtendidos.value = false;
     setCodigoAzulVisibleHook(!codigoAzulVisibleHook);
@@ -78,6 +102,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
   const noAtendidos = useSharedValue(false);
 
   const toggleNoAtendidos = () => {
+    
+    setAtendidosHook(false);
+    atendidos.value = false;
     setCodigoAzulVisibleHook(false);
     codigoAzulVisible.value = false;
     setNoAtendidosHook(!noAtendidosHook);
@@ -86,8 +113,28 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
 
   const noAtendidosStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(noAtendidos.value ? heightCard : 0, { duration: 300 }),
+      height: withTiming(noAtendidos.value ?  heightCardNoAtendidos : 0, { duration: 300 }),
       opacity: withTiming(noAtendidos.value ? 1 : 0, { duration: 300 }),
+    };
+  });
+
+  const atendidos = useSharedValue(false);
+
+  const toggleAtendidos = () => {
+    setNoAtendidosHook(false);
+    noAtendidos.value = false;
+    setCodigoAzulVisibleHook(false);
+    codigoAzulVisible.value = false;
+    setAtendidosHook(!atendidosHook);
+    atendidos.value = !atendidos.value;
+  };
+
+  const atendidosStyle = useAnimatedStyle(() => {
+    return {
+      height: withTiming(atendidos.value ? '60%' : 0, {
+        duration: 300,
+      }),
+      opacity: withTiming(atendidos.value ? 1 : 0, { duration: 300 }),
     };
   });
   const NavBar = () => {
@@ -143,10 +190,14 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
 
   const Atendidos = () => {
     return (
-      <TouchableOpacity style={styles.noAtendidos}>
+      <TouchableOpacity style={styles.noAtendidos} onPress={toggleAtendidos}>
         <Text style={styles.textModal}>Atendidos</Text>
         <Image
-          source={require("../assets/images/modal.png")}
+          source={
+            !atendidosHook
+              ? require("../assets/images/modal.png")
+              : require("../assets/images/modalInvertido.png")
+          }
           style={styles.imageModal}
         />
       </TouchableOpacity>
@@ -158,21 +209,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
     setToken({});
   }
 
-  const Footer = () => {
-    return (
-      <View style={styles.footer}>
-        <View style={styles.footerCircle}>
-          <TouchableOpacity style={styles.imageButton}>
-            <Image
-              style={styles.imageFooter}
-              source={require("../assets/images/filtro.png")}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
+  
   useEffect(() => {
+    
     setTimeout(() => {
       toggleCodigoAzul();
     }, 700);
@@ -236,7 +275,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
         <CodigoAzul />
 
         <Animated.View style={[codigoAzulStyle]}>
-          <ScrollView
+          <ScrollView 
             style={styles.scrollView}
             contentContainerStyle={{
               justifyContent: "center",
@@ -290,7 +329,43 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
         {id_enfermero !== null ? (
           <>
             <NoAtendidos />
+
             <Animated.View style={[noAtendidosStyle]}>
+              <ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {noAtendidosEnfermero.map((llamado) => (
+                  <View
+                    style={styles.animationBoxNoAtendidos}
+                    key={llamado.id_llamado}
+                  >
+                <Text style={styles.atendidoText}>
+                  {!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}
+                </Text>
+                <Text style={styles.ubicacionText}>
+                  {llamado.nombre_ubicacion} {llamado.numero_ubicacion}
+                </Text>
+                <Text style={styles.areaText}>Área: {llamado.nombre_area}</Text>
+                <TouchableOpacity
+                  style={styles.marcarAtendidoBoxAtendidos}
+                  onPress={() => {
+                    console.log(llamado.id_llamado);
+                  }}
+                >
+                  <Text style={styles.marcarAtendidoText}>
+                    Marcar como atendido
+                  </Text>
+                </TouchableOpacity>
+                </View>
+                ))}
+              </ScrollView>
+            </Animated.View>
+            <Atendidos />
+            <Animated.View style={[atendidosStyle]}>
               <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={{
@@ -300,26 +375,9 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
               >
                 {codigoAzulLlamados.map((llamado) => (
                   <View
-                    style={styles.animationBoxCodigoAzul}
+                    style={styles.animationBoxNoAtendidos}
                     key={llamado.id_llamado}
                   >
-                    <View
-                      style={[
-                        {
-                          height: 60,
-                          width: 60,
-                          backgroundColor: "white",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderRadius: 100,
-                        },
-                      ]}
-                    >
-                      <Image
-                        source={require("../assets/images/emergencia.webp")}
-                        style={{ width: 50, height: 50 }}
-                      />
-                    </View>
                     <Text style={styles.atendidoText}>
                       {!llamado.estado_llamado ? "NO ATENDIDO" : "ATENDIDO"}
                     </Text>
@@ -330,7 +388,7 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                       Área: {llamado.nombre_area}
                     </Text>
                     <TouchableOpacity
-                      style={styles.marcarAtendidoBox}
+                      style={styles.marcarAtendidoBoxAtendidos}
                       onPress={() => {
                         console.log(llamado.id_llamado);
                       }}
@@ -343,7 +401,6 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
                 ))}
               </ScrollView>
             </Animated.View>
-            <Atendidos />
           </>
         ) : (
           <>
@@ -417,7 +474,6 @@ export default function Menu({ navigation, setToken, onLayout, id_enfermero }) {
           </>
         )}
       </View>
-      <Footer />
     </View>
   );
 }
@@ -448,7 +504,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    
+
     height: Dimensions.get("window").height,
     width: "100%",
   },
@@ -476,14 +532,6 @@ const styles = StyleSheet.create({
     padding: 5,
     marginLeft: '2%'
   },
-  footer: {
-    height: "10%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
   imageButton: {
     width: "30%",
     height: "60%",
@@ -509,16 +557,6 @@ const styles = StyleSheet.create({
   },
   imageNavBar: {
     margin: 10,
-  },
-  footerCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 40,
-    backgroundColor: "#07D5A1",
-    marginRight: 20,
-    marginBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
   },
   textModal: {
     fontSize: 40,
@@ -578,5 +616,25 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     display: "flex",
+  },
+  animationBoxNoAtendidos:{
+    width: "90%",
+    paddingTop: 20,
+    paddingBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#07D5A1",
+    borderRadius: 25,
+    marginBottom: 7,
+  },
+  marcarAtendidoBoxAtendidos:{
+    width: "80%",
+    padding: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    elevation: 5,
+    borderRadius: 30,
+    backgroundColor: "rgba(217, 217, 217, 0.50)",
+    margin: 20,
   },
 });

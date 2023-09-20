@@ -28,7 +28,7 @@ export async function obtenerLlamados(){
   }
 }
 
-export async function obtenerLlamadosNoAtendidosPorEnfermero(id_enfermero, filtro_atendido){
+export async function obtenerLlamadosPorEnfermero(id_enfermero, filtro_atendido){
   try{
     const llamados = await fetch(`https://api-olimpiada-g1.up.railway.app/llamados/${id_enfermero}/fAtendido/${filtro_atendido}`);
     const data = await llamados.json();

@@ -127,7 +127,7 @@ export default function Login({ onLayout, setToken, setId_enfermero }) {
           <Input
             placeholder={"Contraseña"}
             estilo={"TextInputLogin"}
-            contraseña={false}
+            contraseña={true}
             handleChange={setContrasena}
             type={"text"}
           />
