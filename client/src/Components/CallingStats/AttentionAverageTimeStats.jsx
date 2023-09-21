@@ -3,7 +3,7 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 
 export default function AttentionAverageTimeStats({ data }) {
-    const [showFilters, setShowFilters] = useState(false);
+    const [showFilters, setShowFilters] = useState(true);
     const [activeLink, setActiveLink] = useState(false);
 
     const handleLinkClick = (index) => {

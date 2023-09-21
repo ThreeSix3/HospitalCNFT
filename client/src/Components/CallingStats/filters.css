@@ -98,6 +98,10 @@ input:focus {
 
 
 .cardAlert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
     padding: 10px;
     border-radius: 10px;
     margin: 5px;
@@ -143,6 +147,7 @@ input:focus {
 }
 
 .closeAlert {
+    cursor: pointer;
     background-color: transparent;
     border: transparent;
     width: 60px;

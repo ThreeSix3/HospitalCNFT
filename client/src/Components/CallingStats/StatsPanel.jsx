@@ -1,6 +1,6 @@
 import './filters.css'
 import DefaultCard from "../Cards/DefaultCard";
-export default function CallingBarStatsPanel({ title, children }) {
+export default function StatsPanel({ title, children }) {
     return (
         <div className="columnChart">
             <DefaultCard title={title} children={children} />

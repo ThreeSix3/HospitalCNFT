@@ -1,10 +1,8 @@
-.content-container {
-  flex: 1;
-  /* Ancho cuando la barra lateral está abierta */
-  transition: all 0.3s ease-out;
-}
-
-.inactive .content-container {
-  width: 100%;
-  margin-left: 0;
+.content {
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    flex-direction: column;
+    animation: 2s slideIn;
 }

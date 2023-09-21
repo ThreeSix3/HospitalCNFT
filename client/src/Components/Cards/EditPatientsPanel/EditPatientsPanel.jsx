@@ -5,6 +5,7 @@ import EditButton from '../../Buttons/EditButton';
 import FiltersAlert from '../FiltersAlert/FiltersAlert';
 import { useState, useEffect } from 'react';
 import DefaultCard from '../DefaultCard';
+import AddPatientModal from '../AddPatientModal/AddPatientModal';
 
 export default function EditPatientsPanel({ patientsData }) {
     const [inputContent, setInputContent] = useState(null);
@@ -27,13 +28,20 @@ export default function EditPatientsPanel({ patientsData }) {
         setIsFiltersVisible(false);
     };
 
+    const addPatientAlertVisible = () => {
+        setIsAddPatientAlertVisible(true);
+    };
+
+    const closeAddPatientAlertVisible = () => {
+        setIsAddPatientAlertVisible(false);
+    };
 
     return (
-        <div style={{ padding: '20px 40px' }}>
+        <div style={{ padding: '20px' }}>
             <div className="patientsControls">
                 <input type='text' className='patientsBrowser' placeholder='Busca por nombre o DNI a tus pacientes' value={inputContent} onChange={handleInputChange} />
                 <Button text={'Filtrar busqueda'} onClick={alertVisible} />
-                <Button text={'Agregar paciente'} />
+                <Button text={'Agregar paciente'} onClick={addPatientAlertVisible} />
             </div>
             <div>
                 <table className="patientsTable">
@@ -47,6 +55,7 @@ export default function EditPatientsPanel({ patientsData }) {
                             <th>Enfermero</th>
                             <th>Eliminar</th>
                             <th>Editar</th>
+                            <th>Ver detalle</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -66,6 +75,7 @@ export default function EditPatientsPanel({ patientsData }) {
                 </table>
             </div>
             {isFiltersVisible ? <FiltersAlert close={closeAlert} /> : ''}
+            {isAddPatientAlertVisible ? <AddPatientModal close={closeAddPatientAlertVisible} /> : ''}
         </div>
     );
 }

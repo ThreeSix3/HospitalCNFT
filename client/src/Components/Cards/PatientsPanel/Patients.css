@@ -53,3 +53,30 @@
     height: 35px;
     width: 25%;
 }
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px 20px 20px;
+}
+
+.formGroup input {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 10px;
+    background-color: #a0a0a040;
+    border: transparent;
+    border-radius: 100px;
+    width: 90%;
+    height: 30px;
+
+    transition: all .1s ease-in;
+    color: #2D3748;
+
+}
+
+.formGroup input:focus {
+    color: #2D3748;
+    outline: 2px solid #07D5A1;
+    background-color: #fff;
+    transition: all .1s ease-out;
+}
