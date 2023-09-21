@@ -15,6 +15,8 @@ export default function EditPatientsPanel({ patientsData }) {
     const [isAddPatientAlertVisible, setIsAddPatientAlertVisible] = useState(false);
     const [editingPatient, setEditingPatient] = useState(null);
     const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+    const [activeLink, setActiveLink] = useState(null);
+    const [placeholder, setPlaceholder] = useState('');
 
     //!!!!
     //!!!!
@@ -62,10 +64,30 @@ export default function EditPatientsPanel({ patientsData }) {
         setEditingPatient(patient);
         setIsDetailsModalOpen(true);
     };
+
+    const handleActiveLinkChange = (newActiveLink) => {
+        setActiveLink(newActiveLink);
+    };
+
+    const handleChangePlaceholder = (index) => {
+        switch (index) {
+            case 0:
+                setPlaceholder('Haz una busqueda por nombre');
+                break;
+            case 2:
+                setPlaceholder('Haz una busqueda por apellido');
+            case 3:
+                setPlaceholder('Haz una busqueda por DNI');
+            default:
+                break;
+        }
+    }
+
+
     return (
         <div style={{ padding: '20px' }}>
             <div className="patientsControls">
-                <input type='text' className='patientsBrowser' placeholder='Busca por nombre o DNI a tus pacientes' value={inputContent} onChange={handleInputChange} />
+                <input type='text' className='patientsBrowser' placeholder={placeholder} value={inputContent} onChange={handleInputChange} />
                 <Button text={'Filtrar busqueda'} onClick={alertVisible} />
                 <Button text={'Agregar paciente'} onClick={addPatientAlertVisible} />
             </div>
@@ -101,7 +123,7 @@ export default function EditPatientsPanel({ patientsData }) {
                     </tbody>
                 </table>
             </div>
-            {isFiltersVisible ? <FiltersAlert close={closeAlert} /> : ''}
+            {isFiltersVisible ? <FiltersAlert close={closeAlert} onActiveLinkChange={handleActiveLinkChange} /> : ''}
             {isAddPatientAlertVisible ? <AddPatientModal close={closeAddPatientAlert} initialData={editingPatient} /> : ''}
             {isDetailsModalOpen ? <PatientDetailsModal close={() => setIsDetailsModalOpen(false)} data={editingPatient} /> : ''}
         </div>
