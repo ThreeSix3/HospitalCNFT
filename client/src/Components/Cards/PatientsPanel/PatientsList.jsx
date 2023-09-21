@@ -9,8 +9,8 @@ export default function PatientsList({ patientsData }) {
                     <tr>
                         <th>Nombre</th>
                         <th>DNI</th>
-                        <th>ejemplo1</th>
-                        <th>ejemplo2</th>
+                        <th>Fecha Nac.</th>
+                        <th>Telefono</th>
                         <th>Tipo de sangre</th>
                         <th>Enfermero</th>
                     </tr>
@@ -20,8 +20,8 @@ export default function PatientsList({ patientsData }) {
                         <tr key={index}>
                             <td>{patient.name}</td>
                             <td>{patient.dni}</td>
-                            <td>{patient.ejemplo1}</td>
-                            <td>{patient.ejemplo2}</td>
+                            <td>{patient.birthdate}</td>
+                            <td>{patient.phone}</td>
                             <td>{patient.bloodType}</td>
                             <td>{patient.nurse}</td>
                         </tr>

@@ -4,14 +4,26 @@ import Button from '../../Buttons/Button'
 import EditButton from '../../Buttons/EditButton';
 import FiltersAlert from '../FiltersAlert/FiltersAlert';
 import { useState, useEffect } from 'react';
-import DefaultCard from '../DefaultCard';
+import DetailsButton from '../../Buttons/DetailsButton';
 import AddPatientModal from '../AddPatientModal/AddPatientModal';
+import data from '../PatientsPanel/data';
+import PatientDetailsModal from './PatientDetailsModal';
 
 export default function EditPatientsPanel({ patientsData }) {
     const [inputContent, setInputContent] = useState(null);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [isAddPatientAlertVisible, setIsAddPatientAlertVisible] = useState(false);
+    const [editingPatient, setEditingPatient] = useState(null);
+    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
+    //!!!!
+    //!!!!
+    //Seguramente tengas que cambiar los nombres de las propiedades del mapeo.
+    //Para eso tambien hay que editarlas en PatientDetailsModal, en AddPatientModal y PatientsList
+    //!!!!
+    //!!!!
+
+    //Funcion futuro buscador
     useEffect(() => {
         console.log(inputContent);
     }, [inputContent]);
@@ -20,6 +32,7 @@ export default function EditPatientsPanel({ patientsData }) {
         setInputContent(event.target.value);
     };
 
+    //Abrir y cerrar filtros
     const alertVisible = () => {
         setIsFiltersVisible(true);
     };
@@ -28,14 +41,27 @@ export default function EditPatientsPanel({ patientsData }) {
         setIsFiltersVisible(false);
     };
 
+    //Abrir y cerrar modal de edición
     const addPatientAlertVisible = () => {
         setIsAddPatientAlertVisible(true);
     };
 
-    const closeAddPatientAlertVisible = () => {
+    const closeAddPatientAlert = () => {
         setIsAddPatientAlertVisible(false);
     };
 
+    //Setea datos y abre modal de edicion
+    const handleEditPatient = (patient) => {
+        setEditingPatient(patient);
+        addPatientAlertVisible();
+    };
+
+
+    // Setea los datos del paciente en el modal y abre modal de detalle
+    const handleViewDetails = (patient) => {
+        setEditingPatient(patient);
+        setIsDetailsModalOpen(true);
+    };
     return (
         <div style={{ padding: '20px' }}>
             <div className="patientsControls">
@@ -49,8 +75,8 @@ export default function EditPatientsPanel({ patientsData }) {
                         <tr>
                             <th>Nombre</th>
                             <th>DNI</th>
-                            <th>ejemplo1</th>
-                            <th>ejemplo2</th>
+                            <th>Fecha Nac.</th>
+                            <th>Telefono</th>
                             <th>Tipo de sangre</th>
                             <th>Enfermero</th>
                             <th>Eliminar</th>
@@ -63,19 +89,21 @@ export default function EditPatientsPanel({ patientsData }) {
                             <tr key={index}>
                                 <td>{patient.name}</td>
                                 <td>{patient.dni}</td>
-                                <td>{patient.ejemplo1}</td>
-                                <td>{patient.ejemplo2}</td>
+                                <td>{patient.birthdate}</td>
+                                <td>{patient.phone}</td>
                                 <td>{patient.bloodType}</td>
                                 <td>{patient.nurse}</td>
-                                <td><DeleteButton /></td>
-                                <td><EditButton /></td>
+                                <td><DeleteButton /*onClick={funcion que borre}*/ /></td>
+                                <td><EditButton onClick={() => handleEditPatient(patient)} /></td>
+                                <td><DetailsButton onClick={() => handleViewDetails(patient)} /></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
             {isFiltersVisible ? <FiltersAlert close={closeAlert} /> : ''}
-            {isAddPatientAlertVisible ? <AddPatientModal close={closeAddPatientAlertVisible} /> : ''}
+            {isAddPatientAlertVisible ? <AddPatientModal close={closeAddPatientAlert} initialData={editingPatient} /> : ''}
+            {isDetailsModalOpen ? <PatientDetailsModal close={() => setIsDetailsModalOpen(false)} data={editingPatient} /> : ''}
         </div>
     );
 }

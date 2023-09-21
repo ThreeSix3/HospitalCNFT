@@ -1,5 +1,4 @@
 import data from '../Components/Cards/PatientsPanel/data.js';
-import Sidebar from '../Components/Sidebar/Sidebar.jsx'
 import EditPatientsPanel from '../Components/Cards/EditPatientsPanel/EditPatientsPanel.jsx';
 import DefaultCard from '../Components/Cards/DefaultCard.jsx'
 

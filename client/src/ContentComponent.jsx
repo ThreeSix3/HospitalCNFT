@@ -2,6 +2,7 @@ import React from 'react';
 import Dashboard from './Pages/Dashboard';
 import Patients from './Pages/Patients';
 import Stats from './Pages/Stats';
+import PageNotFound from './Pages/404';
 
 const ContentComponent = ({ activeElement }) => {
     let content;
@@ -23,7 +24,7 @@ const ContentComponent = ({ activeElement }) => {
         //     content = <Patients />;
         //     break;
         default:
-            content = <Dashboard />;
+            content = <PageNotFound />;
     }
 
     return <div>{content}</div>;

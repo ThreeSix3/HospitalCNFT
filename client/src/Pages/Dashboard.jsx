@@ -1,5 +1,3 @@
-import DefaultCard from "../Components/Cards/DefaultCard";
-import Sidebar from "../Components/Sidebar/Sidebar";
 import SystemConfigurationPanel from "../Components/Cards/SystemConfigurationPanel/SystemConfigurationPanel";
 import PatientsPanel from "../Components/Cards/PatientsPanel/PatientsPanel";
 import CallingBarStats from "../Components/CallingStats/CallingBarStats";

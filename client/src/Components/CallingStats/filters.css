@@ -10,7 +10,7 @@
     margin-top: 5%;
 }
 
-.chartFilter a {
+.chartFilter select {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,12 +24,19 @@
     color: #525b6d;
     border-radius: 10px;
     cursor: pointer;
+    border: transparent;
 }
 
-.chartFilter a.active {
+.chartFilter select.active {
     background-color: #07D5A1;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.timePicker {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .inputGroup {
@@ -85,6 +92,18 @@ input:focus {
 }
 
 .cleanFilters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+    width: 95%;
+    height: 35px;
+    margin: 5px auto;
+    border-radius: 10px;
+    cursor: pointer;
+    border: transparent;
     background-color: #07D5A1 !important;
     color: white !important;
     transition: all .1s linear;
@@ -163,4 +182,51 @@ input:focus {
 .closeAlert:hover {
     transition: all .1s linear;
     color: #ff8181;
+}
+
+/* Cambiar el color de fondo del TimePicker */
+.react-time-picker__wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Cambiar el color del texto de la hora seleccionada */
+.react-time-picker__inputGroup__input {
+    height: 35px;
+    width: 100%;
+}
+
+.react-time-picker input {
+    background-color: #f3f3f3;
+    color: #2d37488f;
+    width: 25% !important;
+    height: 35px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    border: transparent;
+    margin: 5px 2px;
+    padding: 0 10px;
+    transition: all .15s linear;
+    cursor: pointer;
+}
+
+/* Cambiar el color del texto de las flechas de selección */
+.react-time-picker button {
+    background-color: #07D5A1;
+    color: #fff !important;
+    width: 15% !important;
+    height: 35px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    border: transparent;
+    margin: 5px 2px;
+    padding: 0 10px;
+    transition: all .15s linear;
+    cursor: pointer;
 }

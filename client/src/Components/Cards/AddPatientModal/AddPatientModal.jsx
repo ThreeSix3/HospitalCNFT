@@ -1,21 +1,27 @@
 import '../../CallingStats/filters.css'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import '../PatientsPanel/Patients.css';
+import Button from '../../Buttons/Button';
 
-export default function AddPatientModal({ close }) {
+export default function AddPatientModal({ close, initialData }) {
     const [formData, setFormData] = useState({
-        nombre: '',
-        apellido: '',
-        fechaNacimiento: '',
+        name: '',
+        birthdate: '',
         dni: '',
-        telefono: '',
-        fechaIngreso: '',
-        grupoSanguineo: '',
-        domicilio: '',
-        ubicacion: '',
-        enfermero: '',
+        phone: '',
+        admissionDate: '',
+        bloodType: '',
+        address: '',
+        location: '',
+        nurse: '',
     });
+
+    useEffect(() => {
+        if (initialData) {
+            setFormData(initialData);
+        }
+    }, [initialData]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,10 +33,8 @@ export default function AddPatientModal({ close }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica para enviar los datos del formulario
-        // Por ejemplo, puedes hacer una llamada a una API para guardar los datos en una base de datos
-        // Luego, puedes cerrar el modal
-        console.log(formData); // Puedes quitar esto, es solo para mostrar los datos en la consola
+        //Enviar datos de form
+        console.log(formData);
         close();
     };
 
@@ -46,18 +50,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="text"
                                     id="nombre"
-                                    name="nombre"
-                                    value={formData.nombre}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="formGroup">
-                                <label htmlFor="apellido">Apellido</label>
-                                <input
-                                    type="text"
-                                    id="apellido"
-                                    name="apellido"
-                                    value={formData.apellido}
+                                    name="name"
+                                    value={formData.name}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -66,8 +60,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="date"
                                     id="fechaNacimiento"
-                                    name="fechaNacimiento"
-                                    value={formData.fechaNacimiento}
+                                    name="birthdate"
+                                    value={formData.birthdate}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -86,8 +80,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="text"
                                     id="telefono"
-                                    name="telefono"
-                                    value={formData.telefono}
+                                    name="phone"
+                                    value={formData.phone}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -98,8 +92,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="date"
                                     id="fechaIngreso"
-                                    name="fechaIngreso"
-                                    value={formData.fechaIngreso}
+                                    name="admissionDate"
+                                    value={formData.admissionDate}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -108,8 +102,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="text"
                                     id="grupoSanguineo"
-                                    name="grupoSanguineo"
-                                    value={formData.grupoSanguineo}
+                                    name="bloodType"
+                                    value={formData.bloodType}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -118,8 +112,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="text"
                                     id="domicilio"
-                                    name="domicilio"
-                                    value={formData.domicilio}
+                                    name="address"
+                                    value={formData.address}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -128,8 +122,8 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="text"
                                     id="ubicacion"
-                                    name="ubicacion"
-                                    value={formData.ubicacion}
+                                    name="location"
+                                    value={formData.location}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -138,14 +132,15 @@ export default function AddPatientModal({ close }) {
                                 <input
                                     type="text"
                                     id="enfermero"
-                                    name="enfermero"
-                                    value={formData.enfermero}
+                                    name="nurse"
+                                    value={formData.nurse}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
                     </div>
-                    <button type="submit">Guardar</button>
+
+                    <Button type={'submit'} text="Enviar" onClick={handleSubmit} />
                 </form>
             </div>
         </div>
