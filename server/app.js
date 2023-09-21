@@ -215,6 +215,19 @@ app.get("/llamados", async (req, res) => {
   }
   res.status(200).send(respuesta);
 });
+function formatearCantidad(cantidad){
+  console.log(cantidad.length());
+}
+app.get("/llamados/cantidad/codigoAzul", async(req, res)=>{
+  
+  try {
+    let respuesta = await db.cantidadCodigoAzulNoAtendido();
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
 app.get("/llamados/noAtendidos", async (req, res) => {
   let respuesta;
   try {
