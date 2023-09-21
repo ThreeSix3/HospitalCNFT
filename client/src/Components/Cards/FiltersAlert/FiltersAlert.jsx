@@ -3,13 +3,14 @@ import '../../CallingStats/filters.css'
 import React, { useState } from 'react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
-export default function FiltersAlert({ close, onActiveLinkChange }) {
+export default function FiltersAlert({ close, onActiveLinkChange, onChangePlaceholder }) {
     const [activeLink, setActiveLink] = useState(false);
     let filterName = 'nombre';
 
     const handleLinkClick = (index) => {
         setActiveLink(index);
         onActiveLinkChange(index);
+        onChangePlaceholder(index);
     };
 
     // La idea es que al hacer click en un boton cada caso setee una query diferente para el buscador 

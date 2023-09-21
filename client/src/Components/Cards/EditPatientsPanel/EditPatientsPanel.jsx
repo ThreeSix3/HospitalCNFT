@@ -74,11 +74,14 @@ export default function EditPatientsPanel({ patientsData }) {
             case 0:
                 setPlaceholder('Haz una busqueda por nombre');
                 break;
-            case 2:
+            case 1:
                 setPlaceholder('Haz una busqueda por apellido');
-            case 3:
+                break;
+            case 2:
                 setPlaceholder('Haz una busqueda por DNI');
+                break;
             default:
+                setPlaceholder('Haz una busqueda por nombre');
                 break;
         }
     }
@@ -123,7 +126,7 @@ export default function EditPatientsPanel({ patientsData }) {
                     </tbody>
                 </table>
             </div>
-            {isFiltersVisible ? <FiltersAlert close={closeAlert} onActiveLinkChange={handleActiveLinkChange} /> : ''}
+            {isFiltersVisible ? <FiltersAlert close={closeAlert} onActiveLinkChange={handleActiveLinkChange} onChangePlaceholder={handleChangePlaceholder} /> : ''}
             {isAddPatientAlertVisible ? <AddPatientModal close={closeAddPatientAlert} initialData={editingPatient} /> : ''}
             {isDetailsModalOpen ? <PatientDetailsModal close={() => setIsDetailsModalOpen(false)} data={editingPatient} /> : ''}
         </div>
