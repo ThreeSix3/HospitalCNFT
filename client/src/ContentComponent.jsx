@@ -3,7 +3,6 @@ import Dashboard from './Pages/Dashboard';
 import Patients from './Pages/Patients';
 import Stats from './Pages/Stats';
 import PageNotFound from './Pages/404';
-import AreasPanel from './Components/Cards/AreasPanel/AreasPanel';
 import MedicalAlertsPanel from './Pages/MedicalAlertsPanel';
 import Users from './Pages/Users';
 const ContentComponent = ({ activeElement, token, id_enfermero, nombre_usuario, setActiveElement }) => {
@@ -22,9 +21,9 @@ const ContentComponent = ({ activeElement, token, id_enfermero, nombre_usuario, 
         case 3:
             content = <Users />;
             break;
-        case 4:
-            content = <AreasPanel />;
-            break;
+        //  case 4:
+        //     content = <AreasPanel />;
+        //     break;
         case 5:
             content = <MedicalAlertsPanel />;
             break;

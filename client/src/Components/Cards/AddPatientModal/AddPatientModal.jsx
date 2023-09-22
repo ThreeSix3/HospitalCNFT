@@ -19,12 +19,12 @@ export default function AddPatientModal({ close, initialData }) {
         obtenerUbicaciones().then((data) => (
             setUbicaciones(data)
         ))
-    },[])
+    }, [])
     const [editar, setEditar] = useState(false);
     const [nombre, setNombre] = useState('');
     const [apelldio, setApellido] = useState('');
     const [dni, setDni] = useState('');
-    const [telefono, setTelefono]= useState('');
+    const [telefono, setTelefono] = useState('');
     const [fnac, setFnac] = useState(new Date());
     const [domicilio, setDomicilio] = useState('');
     const [fecha_alta, setFecha_Alta] = useState(new Date());
@@ -101,8 +101,8 @@ export default function AddPatientModal({ close, initialData }) {
         e.preventDefault();
         //Enviar datos de form
         console.log(formData);
-        if(editar){
-            actualizarPaciente(formData.id_paciente, nombre, apelldio, dni, telefono, grupoSanguineo, obtenerFechaHoraActualSQL(), domicilio, historia_clinica, initialData.motivo_ingreso_paciente, ubicacion, enfermero).then((data)=>{
+        if (editar) {
+            actualizarPaciente(formData.id_paciente, nombre, apelldio, dni, telefono, grupoSanguineo, obtenerFechaHoraActualSQL(), domicilio, historia_clinica, initialData.motivo_ingreso_paciente, ubicacion, enfermero).then((data) => {
                 console.log(data);
             })
         }
@@ -110,18 +110,18 @@ export default function AddPatientModal({ close, initialData }) {
     };
     function obtenerFechaHoraActualSQL() {
         const fechaHoraActualUTC = new Date();
-      
+
         // Calcular el desplazamiento de tiempo para la zona horaria -3 en milisegundos
         const desplazamientoHorario = -3 * 60 * 60 * 1000;
-      
+
         // Aplicar el desplazamiento para obtener la fecha y hora en la zona horaria deseada
         const fechaHoraEnZonaHoraria = new Date(fechaHoraActualUTC.getTime() + desplazamientoHorario);
-      
+
         // Formatear la fecha y hora en el formato SQL 'YYYY-MM-DD HH:MM:SS'
         const fechaSQL = fechaHoraEnZonaHoraria.toISOString().slice(0, 19).replace('T', ' ');
-      
+
         return fechaSQL;
-      }
+    }
     return (
         <div className='filtersAlert'>
             <div className="cardAlert">
@@ -156,10 +156,10 @@ export default function AddPatientModal({ close, initialData }) {
                                     id="fechaNacimiento"
                                     name="birthdate"
                                     value={formatearFecha(formData.fnac_paciente)}
-                                    onChange={(e)=>{setFnac(e.target.value)}}
+                                    onChange={(e) => { setFnac(e.target.value) }}
                                 />
                             </div>}
-                            
+
                             <div className="formGroup">
                                 <label htmlFor="dni">DNI</label>
                                 <input
@@ -180,12 +180,12 @@ export default function AddPatientModal({ close, initialData }) {
                                     onChange={handleChange}
                                 />
                             </div>
-                            
+
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <div className="formGroup">
                                 <label htmlFor="grupoSanguineo">Grupo sanguíneo</label>
-                                <select value={grupoSanguineo} onChange={(e) => { setGrupoSanguineo(e.target.value) }}>
+                                <select className='editSelect' value={grupoSanguineo} onChange={(e) => { setGrupoSanguineo(e.target.value) }}>
 
                                     {
                                         gruposSanguineos.map((grupo) => (
@@ -210,7 +210,7 @@ export default function AddPatientModal({ close, initialData }) {
                             </div>
                             <div className="formGroup">
                                 <label htmlFor="ubicacion">Ubicación</label>
-                                <select value={ubicacion} onChange={(e) => { setUbicacion(e.target.value) }}>
+                                <select className='editSelect' value={ubicacion} onChange={(e) => { setUbicacion(e.target.value) }}>
 
                                     {
                                         ubicaciones.map((location) => (
@@ -224,7 +224,7 @@ export default function AddPatientModal({ close, initialData }) {
                             </div>
                             <div className="formGroup">
                                 <label htmlFor="enfermero">Enfermero</label>
-                                <select value={enfermero} onChange={(e) => { setEnfermero(e.target.value) }}>
+                                <select className='editSelect' value={enfermero} onChange={(e) => { setEnfermero(e.target.value) }}>
 
                                     {
                                         enfermeros.map((nurse) => (
@@ -238,9 +238,9 @@ export default function AddPatientModal({ close, initialData }) {
                             </div>
                             <div className="formGroup">
                                 <label htmlFor="enfermero">Historia Clínica</label>
-                               <textarea cols={40} rows={10} defaultValue={historia_clinica} onChange={(e)=>{setHistoria_clinica(e.target.value)}}>
+                                <textarea cols={40} rows={10} defaultValue={historia_clinica} onChange={(e) => { setHistoria_clinica(e.target.value) }}>
 
-                               </textarea>
+                                </textarea>
                             </div>
                         </div>
                     </div>

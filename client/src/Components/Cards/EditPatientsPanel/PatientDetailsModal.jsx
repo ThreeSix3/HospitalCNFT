@@ -11,39 +11,39 @@ export default function PatientDetailsModal({ close, data }) {
                 <div className="details">
                     <div className="detailItem">
                         <label>Nombre:</label>
-                        <span>{data.name}</span>
+                        <span>{data.nombre_paciente}</span>
                     </div>
                     <div className="detailItem">
                         <label>Fecha de Nacimiento:</label>
-                        <span>{data.birthdate}</span>
+                        <span>{data.fnac_paciente}</span>
                     </div>
                     <div className="detailItem">
                         <label>DNI:</label>
-                        <span>{data.dni}</span>
+                        <span>{data.dni_paciente}</span>
                     </div>
                     <div className="detailItem">
                         <label>Teléfono:</label>
-                        <span>{data.phone}</span>
+                        <span>{data.telefono_paciente}</span>
                     </div>
                     <div className="detailItem">
                         <label>Fecha de Ingreso:</label>
-                        <span>{data.admissionDate}</span>
+                        <span>{data.fingreso_paciente}</span>
                     </div>
                     <div className="detailItem">
                         <label>Tipo de Sangre:</label>
-                        <span>{data.bloodType}</span>
+                        <span>{data.desc_grupo_factor}</span>
                     </div>
                     <div className="detailItem">
                         <label>Domicilio:</label>
-                        <span>{data.address}</span>
+                        <span>{data.domicilio_paciente}</span>
                     </div>
                     <div className="detailItem">
                         <label>Ubicación:</label>
-                        <span>{data.location}</span>
+                        <span>{data.nombre_ubicacion}</span>
                     </div>
                     <div className="detailItem">
                         <label>Enfermero:</label>
-                        <span>{data.nurse}</span>
+                        <span>{data.id_enfermero}</span>
                     </div>
                 </div>
             </div>

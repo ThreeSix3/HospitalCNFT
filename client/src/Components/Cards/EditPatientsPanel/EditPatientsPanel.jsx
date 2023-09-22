@@ -64,6 +64,7 @@ export default function EditPatientsPanel({ patientsData }) {
     const handleViewDetails = (patient) => {
         setEditingPatient(patient);
         setIsDetailsModalOpen(true);
+        console.log(editingPatient);
     };
 
     const handleActiveLinkChange = (newActiveLink) => {
@@ -91,7 +92,7 @@ export default function EditPatientsPanel({ patientsData }) {
         const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
         return formattedDate;
     }
-    
+
     return (
         <div style={{ padding: '20px' }}>
             <div className="patientsControls" style={{ marginBottom: 30 }}>

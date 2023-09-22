@@ -81,6 +81,18 @@
     transition: all .1s ease-out;
 }
 
+.editSelect {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 10px;
+    background-color: #a0a0a040;
+    border: transparent;
+    border-radius: 100px;
+    width: 95%;
+    height: 30px;
+    transition: all .1s ease-in;
+    color: #2D3748;
+}
+
 .userSelect {
     font-family: 'Montserrat', sans-serif;
     padding-left: 10px;
@@ -91,4 +103,16 @@
     height: 30px;
     transition: all .1s ease-in;
     color: #2D3748;
+}
+
+.userEditionModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(77, 77, 77, 0.356);
+    width: 100%;
+    height: 115%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
