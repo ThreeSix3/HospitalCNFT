@@ -63,7 +63,7 @@ app.post("/iniciarSesion", async (req, res) => {
         throw new Error("Error al generar token");
       }
     }
-    res.status(200).send({token: token.textoEncriptado, id_enfermero:usuarioValidadoPorNombre.data.id_enfermero});
+    res.status(200).send({token: token.textoEncriptado, id_enfermero:usuarioValidadoPorNombre.data.id_enfermero, nombre_usuario:usuarioValidadoPorNombre.data.nombre_usuario});
   } catch (error) {
     res.status(500).send({error: error.message});
   }
