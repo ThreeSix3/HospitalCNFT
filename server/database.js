@@ -298,7 +298,7 @@ export async function cantidadCodigoAzulNoAtendido(filtro_area, filtro_ubicacion
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
     INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
-    WHERE id_tipo_llamado = 2 AND estado_llamado = 0 ${filtro_ubicacion_valor} $filtro_area_valor};
+    WHERE id_tipo_llamado = 2 AND estado_llamado = 0 ${filtro_ubicacion_valor} {$filtro_area_valor};
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
