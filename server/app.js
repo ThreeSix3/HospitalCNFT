@@ -230,6 +230,37 @@ app.get("/llamados/cantidad/codigoAzul", async(req, res)=>{
     throw new Error(e);
   }  
 })
+app.get("/llamados/cantidad/atendidos", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadLlamadosNormalesAtendidos();
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("/llamados/cantidad/noatendidos", async(req, res)=>{
+  
+  try {
+    let respuesta = await db.cantidadLlamadosNormalesNoAtendidos();
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("/llamados/cantidad/atendidos", async(req, res)=>{
+  
+  try {
+    let respuesta = await db.cantidadCodigoAzulAtendido();
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+
 app.get("/llamados/noAtendidos", async (req, res) => {
   let respuesta;
   try {
