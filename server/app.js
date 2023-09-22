@@ -223,7 +223,29 @@ function formatearCantidad(cantidad){
 app.get("/llamados/cantidad/codigoAzul", async(req, res)=>{
   
   try {
-    let respuesta = await db.cantidadCodigoAzulNoAtendido();
+    let respuesta = await db.cantidadCodigoAzulNoAtendido(null, null);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+
+app.get("/llamados/cantidad/codigoAzul/area/:area", async(req, res)=>{
+  
+  try {
+    let respuesta = await db.cantidadCodigoAzulNoAtendido(req.params.area, null);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+
+app.get("/llamados/cantidad/codigoAzul/ubicacion/:ubicacion", async(req, res)=>{
+  
+  try {
+    let respuesta = await db.cantidadCodigoAzulNoAtendido(null, req.params.ubicacion);
 
     res.status(200).send(respuesta);
   } catch (e) {
