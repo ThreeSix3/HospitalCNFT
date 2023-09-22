@@ -174,6 +174,21 @@ export async function borrarPaciente(id_paciente) {
   }
 }
 
+export async function borrarUsuario(id_usuario) {
+    try {
+      const respuesta = await fetch(`https://web-production-4bc5.up.railway.app/https://api-olimpiada-g1.up.railway.app/usuarios/${id_usuario}`, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          cache: "no-cache",
+        },
+      });
+      const data = await respuesta.json();
+      return data;
+    } catch (e) {
+      return e.message;
+    }
+  }
 export async function obtenerUsuarios() {
   try {
     const respuesta = await fetch("https://api-olimpiada-g1.up.railway.app/usuarios");
@@ -182,6 +197,28 @@ export async function obtenerUsuarios() {
   } catch (e) {
     return e.message;
   }
+}
+
+export async function actualizarUsuario(id_usuario, nombre_usuario, contrasena_usuario, super_usuario, id_enfermero){
+    try{
+        const respuesta = await fetch(`https://web-production-4bc5.up.railway.app/https://api-olimpiada-g1.up.railway.app/usuarios/${id_usuario}`, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+        cache: "no-cache",
+      },
+      body:JSON.stringify({
+        nombre_usuario : nombre_usuario,
+      contrasena_usuario: contrasena_usuario,
+      super_usuario : super_usuario,
+      id_enfermero : id_enfermero
+      })
+    });
+    const data = await respuesta.json();
+    return data;
+    }catch(e){
+
+    }
 }
 
 export async function obtenerEnfermeros() {

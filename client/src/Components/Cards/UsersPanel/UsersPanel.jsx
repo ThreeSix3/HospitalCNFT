@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import '../PatientsPanel/Patients.css';
-import Button from '../../Buttons/Button';
 import DeleteButton from '../../Buttons/DeleteButton';
 import EditButton from '../../Buttons/EditButton';
+import { actualizarUsuario, borrarUsuario } from '../../../Functions/dbFunctions';
 import { useEffect } from 'react';
 
-export default function UsersPanel({ usuarios }) {
-    const [permissionState, setPermissionState] = useState([]);
-    const handlePermissionChange = (event) => {
-        setPermissionState(event.target.value);
-    };
+export default function UsersPanel({ usuarios, enfermeros }) {
 
+    function actualizacionSuper(e, user){
+        actualizarUsuario(user.id_usuario, user.nombre_usuario, user.contrasena_usuario, e.target.value, user.id_enfermero).then((data)=>{
+            console.log(data);
+        });
+    }
+    function eliminarUsuario(id_usuario){
+        borrarUsuario(id_usuario).then((data)=>{
+            console.log(data)
+        })
+    }
     return (
         <div>
             <h2>Usuarios</h2>
@@ -28,13 +34,13 @@ export default function UsersPanel({ usuarios }) {
                         <tr key={user.id_usuario}>
                             <td>{user.nombre_usuario}</td>
                             <td>
-                                <select value={user.super_usuario} onChange={handlePermissionChange}>
+                                <select value={user.super_usuario} onChange={(e)=>{actualizacionSuper(e,user)}}>
                                     <option value="1">Admin</option>
                                     <option value="0">Usuario</option>
                                 </select>
                             </td>
                             <td><EditButton /* onClick={() => handleEditUser(user) } */ /></td>
-                            <td><DeleteButton /* onClick={async () => { await deleteUser(user.id) } } */ /></td>
+                            <td><DeleteButton  onClick={() => { eliminarUsuario(user.id_usuario) } } /></td>
                         </tr>
                     ))}
                 </tbody>
