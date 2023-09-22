@@ -542,10 +542,13 @@ export async function obtenerPacientes() {
         motivo_ingreso_paciente,
         nombre_ubicacion, 
         numero_ubicacion, 
-        id_enfermero
+        pacientes.id_enfermero,
+        nombre_enfermero,
+        apellido_enfermero
     FROM pacientes
     INNER JOIN grupo_factor ON pacientes.id_grupo_factor_paciente = grupo_factor.id_grupo_factor
     INNER JOIN ubicaciones ON pacientes.id_ubicacion = ubicaciones.id_ubicacion 
+    INNER JOIN enfermeros ON pacientes.id_enfermero = enfermeros.id_enfermero
     `);
     return respuesta;
   } catch (e) {
