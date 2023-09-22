@@ -34,9 +34,9 @@ export default function Sidebar({ user, setActiveElement }) {
                             <path d="M0 1H233.25" stroke="url(#paint0_linear_14_1186)" />
                             <defs>
                                 <linearGradient id="paint0_linear_14_1186" x1="0" y1="1" x2="231" y2="1" gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#E0E0E2" stop-opacity="0" />
-                                    <stop offset="0.5" stop-color="#E0E1E2" />
-                                    <stop offset="1" stop-color="#E0E1E2" stop-opacity="0.15625" />
+                                    <stop stopColor="#E0E0E2" stopOpacity="0" />
+                                    <stop offset="0.5" stopColor="#E0E1E2" />
+                                    <stop offset="1" stopColor="#E0E1E2" stopOpacity="0.15625" />
                                 </linearGradient>
                             </defs>
                         </svg>
