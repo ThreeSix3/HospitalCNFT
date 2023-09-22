@@ -115,7 +115,7 @@ export async function obtenerCantidadLlamadosAtendidosCodigoAzulFiltroArea(filtr
     }
   }
 
-
+  
 
   export async function obtenerCantidadLlamadosNoAtendidosNormales() {
     try {
@@ -221,6 +221,45 @@ export async function actualizarUsuario(id_usuario, nombre_usuario, contrasena_u
     }
 }
 
+export async function actualizarPaciente(id_paciente, nombre_paciente,
+  apellido_paciente,
+  dni_paciente,
+  telefono_paciente,
+  id_grupo_factor_paciente,
+  falta_paciente,
+  domicilio_paciente,
+  historia_clinica_paciente,
+  motivo_ingreso_paciente,
+  id_ubicacion,
+  id_enfermero){
+  try{
+      const respuesta = await fetch(`https://web-production-4bc5.up.railway.app/https://api-olimpiada-g1.up.railway.app/pacientes/${id_paciente}`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json",
+      cache: "no-cache",
+    },
+    body:JSON.stringify({
+      nombre_paciente :nombre_paciente,
+  apellido_paciente : apellido_paciente,
+  dni_paciente : dni_paciente,
+  telefono_paciente : telefono_paciente,
+  id_grupo_factor_paciente : id_grupo_factor_paciente,
+  falta_paciente : falta_paciente,
+  domicilio_paciente : domicilio_paciente,
+  historia_clinica_paciente : historia_clinica_paciente,
+  motivo_ingreso_paciente : motivo_ingreso_paciente,
+  id_ubicacion : id_ubicacion,
+  id_enfermero : id_enfermero
+    })
+  });
+  const data = await respuesta.json();
+  return data;
+  }catch(e){
+
+  }
+}
+
 export async function obtenerEnfermeros() {
   try {
     const respuesta = await fetch("https://api-olimpiada-g1.up.railway.app/enfermeros");
@@ -248,4 +287,15 @@ export async function obtenerEnfermeros() {
     }catch(e){
         return e.message
     }
+  }
+
+
+  export async function obtenerGruposSanguineos(){
+    try{
+      const respuesta = await fetch("https://api-olimpiada-g1.up.railway.app/grupoYFactor");
+    const data = await respuesta.json();
+    return data;
+  }catch(e){
+      return e.message
+  }
   }
