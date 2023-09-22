@@ -296,7 +296,40 @@ export async function cantidadCodigoAzulNoAtendido(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
-    WHERE id_paciente IS NULL AND estado_llamado = 0;
+    WHERE id_tipo_llamado = 2 NULL AND estado_llamado = 0;
+    `);
+    return respuesta[0].cantidad_llamados.toString();
+  }catch(e){
+    console.log(e);
+  }
+}
+export async function cantidadCodigoAzulAtendidos(){
+  try{
+    const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
+    FROM llamados
+    WHERE id_tipo_llamado = 2 NULL AND estado_llamado = 1;
+    `);
+    return respuesta[0].cantidad_llamados.toString();
+  }catch(e){
+    console.log(e);
+  }
+}
+export async function cantidadLlamadosNormalesAtendids(){
+  try{
+    const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
+    FROM llamados
+    WHERE id_tipo_llamado = 1 NULL AND estado_llamado = 1;
+    `);
+    return respuesta[0].cantidad_llamados.toString();
+  }catch(e){
+    console.log(e);
+  }
+}
+export async function cantidadLlamadosNormalesNoAtendids(){
+  try{
+    const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
+    FROM llamados
+    WHERE id_tipo_llamado = 1 NULL AND estado_llamado = 0;
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
