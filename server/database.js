@@ -292,11 +292,13 @@ export async function obtenerLlamadosCodigoAzul(atendidos) {
     return e.message;
   }
 }
-export async function cantidadCodigoAzulNoAtendido(){
+export async function cantidadCodigoAzulNoAtendido(filtro_area, filtro_ubicacion){
+  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
-    WHERE id_tipo_llamado = 2 AND estado_llamado = 0;
+    INNER JOIN ubicaciones ON llamados.id_ubicacion = ubicaciones.id_ubicacion
+    WHERE id_tipo_llamado = 2 AND estado_llamado = 0 ${filtro_ubicacion_valor} $filtro_area_valor};
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
