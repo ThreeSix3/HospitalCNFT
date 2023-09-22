@@ -3,10 +3,11 @@ import '../PatientsPanel/Patients.css';
 import Button from '../../Buttons/Button';
 import DeleteButton from '../../Buttons/DeleteButton';
 import EditButton from '../../Buttons/EditButton';
+import { useEffect } from 'react';
 
 export default function UsersPanel({ usuarios }) {
-    const [permissionState, setPermissionState] = useState(usuarios.superusuario);
-
+    const [permissionState, setPermissionState] = useState([]);
+    
     const handlePermissionChange = (event) => {
         setPermissionState(event.target.value);
     };
@@ -28,9 +29,9 @@ export default function UsersPanel({ usuarios }) {
                         <tr key={user.id_usuario}>
                             <td>{user.nombre_usuario}</td>
                             <td>
-                                <select value={permissionState} onChange={handlePermissionChange}>
-                                    <option value="admin">Admin</option>
-                                    <option value="usuario">Usuario</option>
+                                <select value={user.super_usuario} onChange={handlePermissionChange}>
+                                    <option value="1">Admin</option>
+                                    <option value="0">Usuario</option>
                                 </select>
                             </td>
                             <td><EditButton /* onClick={() => handleEditUser(user) } */ /></td>
