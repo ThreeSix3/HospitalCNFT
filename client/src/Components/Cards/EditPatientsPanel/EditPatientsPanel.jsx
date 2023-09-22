@@ -91,7 +91,7 @@ export default function EditPatientsPanel({ patientsData }) {
         const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
         return formattedDate;
     }
-
+    
     return (
         <div style={{ padding: '20px' }}>
             <div className="patientsControls" style={{ marginBottom: 30 }}>
@@ -129,7 +129,6 @@ export default function EditPatientsPanel({ patientsData }) {
                     </tbody>
                 </table>
             </div>
-            {isFiltersVisible ? <FiltersAlert close={closeAlert} onActiveLinkChange={handleActiveLinkChange} onChangePlaceholder={handleChangePlaceholder} /> : ''}
             {isAddPatientAlertVisible ? <AddPatientModal close={closeAddPatientAlert} initialData={editingPatient} /> : ''}
             {isDetailsModalOpen ? <PatientDetailsModal close={() => setIsDetailsModalOpen(false)} data={editingPatient} /> : ''}
         </div>
