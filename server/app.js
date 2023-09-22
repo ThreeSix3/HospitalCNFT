@@ -8,7 +8,9 @@ import dotenv from "dotenv";
 import cookie from "cookie";
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {origin: true}
+));
 dotenv.config();
 const key = process.env.CRYPTO_KEY;
 app.post("/encriptar", async (req, res) => {
