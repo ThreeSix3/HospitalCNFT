@@ -2,6 +2,11 @@ import React from 'react';
 import './Patients.css'
 import Button from '../../Buttons/Button';
 export default function PatientsList({ patientsData }) {
+    function formatDate(dateString) {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+        return formattedDate;
+      }
     return (
         <div>
             <table className="patientsTable">
@@ -17,13 +22,13 @@ export default function PatientsList({ patientsData }) {
                 </thead>
                 <tbody >
                     {patientsData.map((patient, index) => (
-                        <tr key={index}>
-                            <td>{patient.name}</td>
-                            <td>{patient.dni}</td>
-                            <td>{patient.birthdate}</td>
-                            <td>{patient.phone}</td>
-                            <td>{patient.bloodType}</td>
-                            <td>{patient.nurse}</td>
+                        <tr key={patient.id_paciente}>
+                            <td>{patient.nombre_paciente}</td>
+                            <td>{patient.dni_paciente}</td>
+                            <td>{formatDate(patient.fnac_paciente)}</td>
+                            <td>{patient.telefono_paciente}</td>
+                            <td>{patient.desc_grupo_factor}</td>
+                            <td>{patient.nombre_enfermero} {patient.apellido_enfermero}</td>
                         </tr>
                     ))}
                 </tbody>

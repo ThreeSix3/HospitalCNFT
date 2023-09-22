@@ -28,7 +28,7 @@ function App() {
   return (
     <Router basename="/">
       <Routes>
-        <Route path="/" element={<Login token={token} setToken={setToken} setId_enfermero={setId_enfermero} sesion={sesion} setSesion={setSesion} setNombre_usuario={setNombre_usuario}/>} />
+        <Route path="/" element={<Login token={token} setToken={setToken} setId_enfermero={setId_enfermero} setSesion={setSesion} setNombre_usuario={setNombre_usuario}/>} />
         <Route path="/Hospital" element={<Home token={token} nombre_usuario={nombre_usuario} id_enfermero={id_enfermero}/>} />
 
       </Routes>

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { iniciarSesion } from '../Functions/dbFunctions.js';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({token, setToken, setId_enfermero, sesion, setSesion, setNombre_usuario}) {
+export default function Login({token, setToken, setId_enfermero, setSesion, setNombre_usuario}) {
     const navigate = useNavigate();
     const [Usuario, setUsuario] = useState("");
     const [Contrasena, setContrasena] = useState("");
