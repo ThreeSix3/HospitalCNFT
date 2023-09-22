@@ -1,4 +1,5 @@
 .cardMedicalAlert {
+    flex: 0 0 25%;
     background-color: #F94242;
     color: #fff;
     display: flex;
@@ -8,10 +9,25 @@
     border-radius: 20px;
     width: 100%;
     padding: 10px;
+    margin: 5px 10px;
+}
+
+.secondaryCardMedicalAlert {
+    flex: 0 0 25%;
+    background-color: #07D5A1;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 10px;
 }
 
 .medicalAlertBtn {
-    background-color: #D9D9D950;
+    background-color: #d9d9d993;
     border-radius: 100px;
     color: white;
     font-size: 16px;
@@ -22,6 +38,11 @@
 }
 
 
-.locationSubtitle {
+.subtitle {
     margin: 7px;
+}
+
+.title {
+    margin: 15px;
+    font-size: 24px;
 }

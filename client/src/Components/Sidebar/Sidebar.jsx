@@ -56,6 +56,9 @@ export default function Sidebar({ user, setActiveElement }) {
                         <a onClick={() => setStateOfActiveElement(4)}>
                             <SidebarElement text={'Gestion de áreas'} icon={<ChevronLeftIcon />} isActive={activeElementState === 4} />
                         </a>
+                        <a onClick={() => setStateOfActiveElement(5)}>
+                            <SidebarElement text={'Ver llamados'} icon={<ChevronLeftIcon />} isActive={activeElementState === 5} />
+                        </a>
                         <DocsPanel />
                     </div>
                 </div>
