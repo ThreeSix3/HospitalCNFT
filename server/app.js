@@ -269,7 +269,7 @@ app.get("/llamados/cantidad/atendidos/area/:area", async(req, res)=>{
     throw new Error(e);
   }  
 })
-app.get("/llamados/cantidad/atendidos/ubicaicon/:ubicacion", async(req, res)=>{
+app.get("/llamados/cantidad/atendidos/ubicacion/:ubicacion", async(req, res)=>{
   
   try {
     let respuesta = await db. cantidadLlamadosNormalesAtendidos(null, req.params.ubicacion);
@@ -299,7 +299,7 @@ app.get("/llamados/cantidad/noatendidos/area/:area", async(req, res)=>{
     throw new Error(e);
   }  
 })
-app.get("/llamados/cantidad/noatendidos/ubicaicon/:ubicacion", async(req, res)=>{
+app.get("/llamados/cantidad/noatendidos/ubicacion/:ubicacion", async(req, res)=>{
   
   try {
     let respuesta = await db. cantidadLlamadosNormalesNoAtendidos(null, req.params.ubicacion);
@@ -329,7 +329,7 @@ app.get("/llamados/cantidad/codigoazul/atendidos/area/:area", async(req, res)=>{
     throw new Error(e);
   }  
 })
-app.get("//llamados/cantidad/codigoazul/atendidos/ubicaicon/:ubicacion", async(req, res)=>{
+app.get("//llamados/cantidad/codigoazul/atendidos/ubicacion/:ubicacion", async(req, res)=>{
   
   try {
     let respuesta = await db. cantidadLlamadosNormalesNoAtendidos(null, req.params.ubicacion);
