@@ -250,7 +250,7 @@ app.get("/llamados/cantidad/noatendidos", async(req, res)=>{
     throw new Error(e);
   }  
 })
-app.get("/llamados/cantidad/atendidos", async(req, res)=>{
+app.get("/llamados/cantidad/codigoazul/atendidos", async(req, res)=>{
   
   try {
     let respuesta = await db.cantidadCodigoAzulAtendido();
