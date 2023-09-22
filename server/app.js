@@ -217,9 +217,6 @@ app.get("/llamados", async (req, res) => {
   }
   res.status(200).send(respuesta);
 });
-function formatearCantidad(cantidad){
-  console.log(cantidad.length());
-}
 app.get("/llamados/cantidad/codigoAzul", async(req, res)=>{
   
   try {
@@ -255,7 +252,27 @@ app.get("/llamados/cantidad/codigoAzul/ubicacion/:ubicacion", async(req, res)=>{
 app.get("/llamados/cantidad/atendidos", async(req, res)=>{
   
   try {
-    let respuesta = await db. cantidadLlamadosNormalesAtendidos();
+    let respuesta = await db. cantidadLlamadosNormalesAtendidos(null, null);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("/llamados/cantidad/atendidos/area/:area", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadLlamadosNormalesAtendidos(req.params.area, null);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("/llamados/cantidad/atendidos/ubicaicon/:ubicacion", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadLlamadosNormalesAtendidos(null, req.params.ubicacion);
 
     res.status(200).send(respuesta);
   } catch (e) {
@@ -265,7 +282,27 @@ app.get("/llamados/cantidad/atendidos", async(req, res)=>{
 app.get("/llamados/cantidad/noatendidos", async(req, res)=>{
   
   try {
-    let respuesta = await db.cantidadLlamadosNormalesNoAtendidos();
+    let respuesta = await db.cantidadLlamadosNormalesNoAtendidos(null, null);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("/llamados/cantidad/noatendidos/area/:area", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadLlamadosNormalesNoAtendidos(req.params.area, null);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("/llamados/cantidad/noatendidos/ubicaicon/:ubicacion", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadLlamadosNormalesNoAtendidos(null, req.params.ubicacion);
 
     res.status(200).send(respuesta);
   } catch (e) {
@@ -275,14 +312,33 @@ app.get("/llamados/cantidad/noatendidos", async(req, res)=>{
 app.get("/llamados/cantidad/codigoazul/atendidos", async(req, res)=>{
   
   try {
-    let respuesta = await db.cantidadCodigoAzulAtendido();
+    let respuesta = await db.cantidadCodigoAzulAtendido(null, null);
 
     res.status(200).send(respuesta);
   } catch (e) {
     throw new Error(e);
   }  
 })
+app.get("/llamados/cantidad/codigoazul/atendidos/area/:area", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadCodigoAzulAtendido(req.params.area, null);
 
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
+app.get("//llamados/cantidad/codigoazul/atendidos/ubicaicon/:ubicacion", async(req, res)=>{
+  
+  try {
+    let respuesta = await db. cantidadLlamadosNormalesNoAtendidos(null, req.params.ubicacion);
+
+    res.status(200).send(respuesta);
+  } catch (e) {
+    throw new Error(e);
+  }  
+})
 app.get("/llamados/noAtendidos", async (req, res) => {
   let respuesta;
   try {
