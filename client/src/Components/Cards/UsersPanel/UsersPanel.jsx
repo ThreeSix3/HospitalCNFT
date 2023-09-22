@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 export default function UsersPanel({ usuarios }) {
     const [permissionState, setPermissionState] = useState([]);
-
     const handlePermissionChange = (event) => {
         setPermissionState(event.target.value);
     };
