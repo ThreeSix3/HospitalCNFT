@@ -1,0 +1,27 @@
+.cardMedicalAlert {
+    background-color: #F94242;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    width: 100%;
+    padding: 10px;
+}
+
+.medicalAlertBtn {
+    background-color: #D9D9D950;
+    border-radius: 100px;
+    color: white;
+    font-size: 16px;
+    width: 80%;
+    height: 35px;
+    border: transparent;
+    font-weight: 800;
+}
+
+
+.locationSubtitle {
+    margin: 7px;
+}
