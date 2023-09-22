@@ -5,12 +5,12 @@ import Stats from './Pages/Stats';
 import PageNotFound from './Pages/404';
 import AreasPanel from './Components/Cards/AreasPanel/AreasPanel';
 
-const ContentComponent = ({ activeElement, token, id_enfermero, nombre_usuario }) => {
+const ContentComponent = ({ activeElement, token, id_enfermero, nombre_usuario, setActiveElement }) => {
     let content;
 
     switch (activeElement) {
         case 0:
-            content = <Dashboard />;
+            content = <Dashboard setActiveElement={setActiveElement}/>;
             break;
         case 1:
             content = <Stats />;
