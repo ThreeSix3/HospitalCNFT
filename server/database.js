@@ -296,7 +296,7 @@ export async function cantidadCodigoAzulNoAtendido(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
-    WHERE id_tipo_llamado = 2 NULL AND estado_llamado = 0;
+    WHERE id_tipo_llamado = 2 AND estado_llamado = 0;
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
@@ -307,7 +307,7 @@ export async function cantidadCodigoAzulAtendido(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
-    WHERE id_tipo_llamado = 2 NULL AND estado_llamado = 1;
+    WHERE id_tipo_llamado = 2 AND estado_llamado = 1;
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
@@ -318,7 +318,7 @@ export async function cantidadLlamadosNormalesAtendidos(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
-    WHERE id_tipo_llamado = 1 NULL AND estado_llamado = 1;
+    WHERE id_tipo_llamado = 1 AND estado_llamado = 1;
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
@@ -329,7 +329,7 @@ export async function cantidadLlamadosNormalesNoAtendidos(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
-    WHERE id_tipo_llamado = 1 NULL AND estado_llamado = 0;
+    WHERE id_tipo_llamado = 1 AND estado_llamado = 0;
     `);
     return respuesta[0].cantidad_llamados.toString();
   }catch(e){
