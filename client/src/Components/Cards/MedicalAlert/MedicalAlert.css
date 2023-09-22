@@ -27,6 +27,7 @@
 }
 
 .medicalAlertBtn {
+    cursor: pointer;
     background-color: #d9d9d993;
     border-radius: 100px;
     color: white;
@@ -35,6 +36,22 @@
     height: 35px;
     border: transparent;
     font-weight: 800;
+}
+
+.medicalAlertBtn:hover {
+    background-color: #d9d9d9d0;
+    transform: translateY(2px) scale(1.05);
+    color: #fff;
+    border: transparent;
+    transition: all 0.25s ease-out;
+}
+
+.medicalAlertBtn:active {
+    background-color: #d9d9d9d0;
+    transform: translateY(-2px) scale(1);
+    color: #fff;
+    border: transparent;
+    transition: all 0.25s ease-out;
 }
 
 

@@ -8,7 +8,7 @@ import DetailsButton from '../../Buttons/DetailsButton';
 import AddPatientModal from '../AddPatientModal/AddPatientModal';
 import data from '../PatientsPanel/data';
 import PatientDetailsModal from './PatientDetailsModal';
-import {borrarPaciente} from '../../../Functions/dbFunctions.js'
+import { borrarPaciente } from '../../../Functions/dbFunctions.js'
 
 export default function EditPatientsPanel({ patientsData }) {
     const [inputContent, setInputContent] = useState(null);
@@ -90,11 +90,11 @@ export default function EditPatientsPanel({ patientsData }) {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
         return formattedDate;
-      }
+    }
 
     return (
         <div style={{ padding: '20px' }}>
-            <div className="patientsControls" style={{marginBottom: 30}}>
+            <div className="patientsControls" style={{ marginBottom: 30 }}>
                 <Button text={'Agregar paciente'} onClick={addPatientAlertVisible} />
             </div>
             <div>
@@ -121,7 +121,7 @@ export default function EditPatientsPanel({ patientsData }) {
                                 <td>{patient.telefono_paciente}</td>
                                 <td>{patient.desc_grupo_factor}</td>
                                 <td>{patient.id_enfermero}</td>
-                                <td><DeleteButton onClick={async ()=>{await borrarPaciente(patient.id_paciente)}} /></td>
+                                <td><DeleteButton onClick={async () => { await borrarPaciente(patient.id_paciente) }} /></td>
                                 <td><EditButton onClick={() => handleEditPatient(patient)} /></td>
                                 <td><DetailsButton onClick={() => handleViewDetails(patient)} /></td>
                             </tr>
