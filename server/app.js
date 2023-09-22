@@ -9,7 +9,7 @@ import cookie from "cookie";
 const app = express();
 app.use(express.json());
 app.use(cors(
-  {origin: true}
+  {origin: '*'}
 ));
 dotenv.config();
 const key = process.env.CRYPTO_KEY;
