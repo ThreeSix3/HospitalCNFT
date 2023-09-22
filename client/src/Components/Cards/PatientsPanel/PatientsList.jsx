@@ -6,7 +6,7 @@ export default function PatientsList({ patientsData }) {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
         return formattedDate;
-      }
+    }
     return (
         <div>
             <table className="patientsTable">
@@ -28,7 +28,7 @@ export default function PatientsList({ patientsData }) {
                             <td>{formatDate(patient.fnac_paciente)}</td>
                             <td>{patient.telefono_paciente}</td>
                             <td>{patient.desc_grupo_factor}</td>
-                            <td>{patient.nombre_enfermero} {patient.apellido_enfermero}</td>
+                            <td>{patient.id_enfermero}</td>
                         </tr>
                     ))}
                 </tbody>
