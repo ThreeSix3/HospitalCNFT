@@ -303,7 +303,7 @@ export async function cantidadCodigoAzulNoAtendido(){
     console.log(e);
   }
 }
-export async function cantidadCodigoAzulAtendidos(){
+export async function cantidadCodigoAzulAtendido(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
@@ -314,7 +314,7 @@ export async function cantidadCodigoAzulAtendidos(){
     console.log(e);
   }
 }
-export async function cantidadLlamadosNormalesAtendids(){
+export async function cantidadLlamadosNormalesAtendidos(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
@@ -325,7 +325,7 @@ export async function cantidadLlamadosNormalesAtendids(){
     console.log(e);
   }
 }
-export async function cantidadLlamadosNormalesNoAtendids(){
+export async function cantidadLlamadosNormalesNoAtendidos(){
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
