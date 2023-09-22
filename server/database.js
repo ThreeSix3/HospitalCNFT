@@ -584,7 +584,7 @@ export async function obtenerPacientes() {
         domicilio_paciente,
         historia_clinica_paciente,
         motivo_ingreso_paciente,
-        id_ubicacion,
+        pacientes.id_ubicacion,
         nombre_ubicacion, 
         numero_ubicacion, 
         pacientes.id_enfermero,
