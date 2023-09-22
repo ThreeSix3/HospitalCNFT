@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../PatientsPanel/Patients.css';
 import DeleteButton from '../../Buttons/DeleteButton';
 import EditButton from '../../Buttons/EditButton';
 import { actualizarUsuario, borrarUsuario } from '../../../Functions/dbFunctions';
-import { useEffect } from 'react';
 
 export default function UsersPanel({ usuarios, enfermeros }) {
 
-    function actualizacionSuper(e, user){
-        actualizarUsuario(user.id_usuario, user.nombre_usuario, user.contrasena_usuario, e.target.value, user.id_enfermero).then((data)=>{
+    function actualizacionSuper(e, user) {
+        actualizarUsuario(user.id_usuario, user.nombre_usuario, user.contrasena_usuario, e.target.value, user.id_enfermero).then((data) => {
             console.log(data);
         });
     }
-    function eliminarUsuario(id_usuario){
-        borrarUsuario(id_usuario).then((data)=>{
+    function eliminarUsuario(id_usuario) {
+        borrarUsuario(id_usuario).then((data) => {
             console.log(data)
         })
     }
     return (
         <div>
-            <h2>Usuarios</h2>
+            <h2 style={{ marginTop: '0' }}>Usuarios</h2>
             <table className="patientsTable">
                 <thead style={{ border: '1px solid black' }}>
                     <tr>
@@ -34,13 +33,13 @@ export default function UsersPanel({ usuarios, enfermeros }) {
                         <tr key={user.id_usuario}>
                             <td>{user.nombre_usuario}</td>
                             <td>
-                                <select value={user.super_usuario} onChange={(e)=>{actualizacionSuper(e,user)}}>
+                                <select value={user.super_usuario} onChange={(e) => { actualizacionSuper(e, user) }}>
                                     <option value="1">Admin</option>
                                     <option value="0">Usuario</option>
                                 </select>
                             </td>
                             <td><EditButton /* onClick={() => handleEditUser(user) } */ /></td>
-                            <td><DeleteButton  onClick={() => { eliminarUsuario(user.id_usuario) } } /></td>
+                            <td><DeleteButton onClick={() => { eliminarUsuario(user.id_usuario) }} /></td>
                         </tr>
                     ))}
                 </tbody>
@@ -56,7 +55,17 @@ export default function UsersPanel({ usuarios, enfermeros }) {
                         <th>Eliminar</th>
                     </tr>
                 </thead>
-
+                <tbody>
+                    {enfermeros.map((enfermero, index) => (
+                        <tr key={enfermero.id_enfermero}>
+                            <td>{enfermero.nombre_enfermero}</td>
+                            <td>{enfermero.dni_enfermero}</td>
+                            <td>{enfermero.telefono_enfermero}</td>
+                            <td><EditButton /* onClick={() => handleEditEnfermero(enfermero) } */ /></td>
+                            <td><DeleteButton /* onClick={async () => { await deleteEnfermero(enfermero.id) } } */ /></td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </div>
     );

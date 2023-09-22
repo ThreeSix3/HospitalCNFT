@@ -32,7 +32,7 @@ const ContentComponent = ({ activeElement, token, id_enfermero, nombre_usuario, 
             content = <PageNotFound />;
     }
 
-    return <div>{content}</div>;
+    return <>{content}</>;
 };
 
 export default ContentComponent;
