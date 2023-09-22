@@ -8,6 +8,7 @@ import DetailsButton from '../../Buttons/DetailsButton';
 import AddPatientModal from '../AddPatientModal/AddPatientModal';
 import data from '../PatientsPanel/data';
 import PatientDetailsModal from './PatientDetailsModal';
+import {borrarPaciente} from '../../../Functions/dbFunctions.js'
 
 export default function EditPatientsPanel({ patientsData }) {
     const [inputContent, setInputContent] = useState(null);
@@ -93,9 +94,7 @@ export default function EditPatientsPanel({ patientsData }) {
 
     return (
         <div style={{ padding: '20px' }}>
-            <div className="patientsControls">
-                <input type='text' className='patientsBrowser' placeholder={placeholder} value={inputContent} onChange={handleInputChange} />
-                <Button text={'Filtrar busqueda'} onClick={alertVisible} />
+            <div className="patientsControls" style={{marginBottom: 30}}>
                 <Button text={'Agregar paciente'} onClick={addPatientAlertVisible} />
             </div>
             <div>
@@ -116,13 +115,13 @@ export default function EditPatientsPanel({ patientsData }) {
                     <tbody >
                         {patientsData.map((patient, index) => (
                             <tr key={index}>
-                                <td>{patient.nombre_paciente}</td>
+                                <td>{patient.nombre_paciente} {patient.apellido_paciente}</td>
                                 <td>{patient.dni_paciente}</td>
                                 <td>{formatDate(patient.fnac_paciente)}</td>
                                 <td>{patient.telefono_paciente}</td>
                                 <td>{patient.desc_grupo_factor}</td>
-                                <td>{patient.nombre_enfermero} {patient.apellido_enfermero}</td>
-                                <td><DeleteButton /*onClick={funcion que borre}*/ /></td>
+                                <td>{patient.id_enfermero}</td>
+                                <td><DeleteButton onClick={async ()=>{await borrarPaciente(patient.id_paciente)}} /></td>
                                 <td><EditButton onClick={() => handleEditPatient(patient)} /></td>
                                 <td><DetailsButton onClick={() => handleViewDetails(patient)} /></td>
                             </tr>

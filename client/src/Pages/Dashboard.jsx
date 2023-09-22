@@ -5,7 +5,7 @@ import StatsPanel from "../Components/CallingStats/StatsPanel";
 import data from "../Components/CallingStats/data.";
 import { useEffect, useState } from "react";
 import { obtenerPacientes } from "../Functions/dbFunctions";
-function Dashboard() {
+function Dashboard({setActiveElement}) {
     const [pacientes, setPacientes] = useState([]);
     useEffect(()=>{
         (async ()=>{
@@ -20,7 +20,7 @@ function Dashboard() {
             <h2 style={{ fontSize: '36px', margin: '25px 0px 25px 0px' }}>Pacientes</h2>
             <div style={{ display: 'flex', width: '100%', gap: '30px', justifyContent: 'center' }}>
                 <PatientsPanel data={pacientes} />
-                <SystemConfigurationPanel />
+                <SystemConfigurationPanel setActiveElement={setActiveElement}/>
             </div>
             <div style={{ display: 'flex', width: '100%', gap: '30px', justifyContent: 'flex-start' }}>
                 <StatsPanel title={'Llamados atendidos'} children={<CallingBarStats data={data} />} />
