@@ -5,7 +5,7 @@ import Stats from './Pages/Stats';
 import PageNotFound from './Pages/404';
 import AreasPanel from './Components/Cards/AreasPanel/AreasPanel';
 
-const ContentComponent = ({ activeElement }) => {
+const ContentComponent = ({ activeElement, token, id_enfermero, nombre_usuario }) => {
     let content;
 
     switch (activeElement) {

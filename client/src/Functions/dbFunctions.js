@@ -17,3 +17,13 @@ export async function iniciarSesion(usuario, contrasena) {
       return e.message;
     }
   }
+
+  export async function obtenerPacientes() {
+    try {
+      const respuesta = await fetch("https://api-olimpiada-g1.up.railway.app/pacientes");
+      const data = await respuesta.json();
+      return data;
+    } catch (e) {
+      return e.message;
+    }
+  }

@@ -16,7 +16,7 @@ export default function Home({token, id_enfermero, nombre_usuario}) {
         <div style={{ display: 'flex' }}>
             <Sidebar user={nombre_usuario} setActiveElement={setActiveElement} />
             <div className='content'>
-                <ContentComponent activeElement={activeElement} />
+                <ContentComponent activeElement={activeElement} token={token} id_enfermero={id_enfermero} nombre_usuario={nombre_usuario}/>
             </div>
         </div>
     )

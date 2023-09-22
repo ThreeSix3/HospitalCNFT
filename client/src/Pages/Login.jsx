@@ -11,6 +11,17 @@ export default function Login({token, setToken, setId_enfermero, sesion, setSesi
     const [Usuario, setUsuario] = useState("");
     const [Contrasena, setContrasena] = useState("");
     const [mantenerSesion, setMantenerSesion] = useState(false);
+    useEffect(()=>{
+        if(localStorage.getItem('token') !== "" && localStorage.getItem('token') !== undefined){
+          setToken(localStorage.getItem('token'));
+        }
+        if(localStorage.getItem('id_enfermero') !== "" && localStorage.getItem('id_enfermero') !== undefined ){
+          setId_enfermero(localStorage.getItem('id_enfermero'));
+        }
+        if(localStorage.getItem('nombre_usuario') !== "" && localStorage.getItem('nombre_usuario') !== undefined ){
+            setNombre_usuario(localStorage.getItem('nombre_usuario'));
+          }
+      },[]);
     async function inicioSesion(){
         try {
             const data = await iniciarSesion(Usuario, Contrasena);
@@ -38,17 +49,7 @@ export default function Login({token, setToken, setId_enfermero, sesion, setSesi
           navigate('/Hospital');
         }
       }, [token]);
-    useEffect(()=>{
-        if(localStorage.getItem('token') !== "" && localStorage.getItem('token') !== undefined && sesion){
-          setToken(localStorage.getItem('token'));
-        }
-        if(localStorage.getItem('id_enfermero') !== "" && localStorage.getItem('id_enfermero') !== undefined  && sesion){
-          setId_enfermero(localStorage.getItem('id_enfermero'));
-        }
-        if(localStorage.getItem('nombre_usuario') !== "" && localStorage.getItem('nombre_usuario') !== undefined  && sesion){
-            setNombre_usuario(localStorage.getItem('nombre_usuario'));
-          }
-      },[]);
+
     return (
         <div style={{ width: '100%', display: 'flex', gap: '30px', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ marginTop: '10%', width: '40%' }}>
