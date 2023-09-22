@@ -702,7 +702,6 @@ export async function borrarPaciente( id_paciente ) {
  * @param {string} dni_paciente - El nuevo DNI del paciente.
  * @param {string} telefono_paciente - El nuevo número de teléfono del paciente.
  * @param {number} id_grupo_factor_paciente - El nuevo ID del grupo de factor del paciente.
- * @param {string} fnac_paciente - La nueva fecha de nacimiento del paciente.
  * @param {string} falta_paciente - La nueva fecha de alta del paciente.
  * @param {string} domicilio_paciente - El nuevo domicilio del paciente.
  * @param {string} historia_clinica_paciente - La nueva historia clínica del paciente.
@@ -719,7 +718,6 @@ export async function actualizarPaciente(
   dni_paciente,
   telefono_paciente,
   id_grupo_factor_paciente,
-  fnac_paciente,
   falta_paciente,
   domicilio_paciente,
   historia_clinica_paciente,
