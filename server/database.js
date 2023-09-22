@@ -621,7 +621,17 @@ export async function crearPaciente(
  * @returns {object} - Un objeto que contiene la respuesta de la base de datos después de la eliminación.
  * @throws {Error} Error - Se lanza una excepción en caso de error durante la eliminación.
  */
-
+export async function borrarTodosLosLlamadosDePaciente(id_paciente){
+  try{
+     const respuesta = await pool.query(
+      "DELETE FROM llamados WHERE id_paciente = ?;",
+      [id_paciente]
+    );
+    return respuesta;
+  }catch (e) {
+    throw new Error(e);
+  }
+}
 export async function borrarPaciente( id_paciente ) {
   try {
     const respuesta = await pool.query(
