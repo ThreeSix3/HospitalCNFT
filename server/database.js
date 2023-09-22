@@ -293,7 +293,7 @@ export async function obtenerLlamadosCodigoAzul(atendidos) {
   }
 }
 export async function cantidadCodigoAzulNoAtendido(filtro_area, filtro_ubicacion){
-  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
+  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND llamados.id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
@@ -306,7 +306,7 @@ export async function cantidadCodigoAzulNoAtendido(filtro_area, filtro_ubicacion
   }
 }
 export async function cantidadCodigoAzulAtendido(filtro_area, filtro_ubicacion){
-  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
+  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND llamados.id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
@@ -319,7 +319,7 @@ export async function cantidadCodigoAzulAtendido(filtro_area, filtro_ubicacion){
   }
 }
 export async function cantidadLlamadosNormalesAtendidos(filtro_area, filtro_ubicacion){
-  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
+  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND llamados.id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
@@ -332,7 +332,7 @@ export async function cantidadLlamadosNormalesAtendidos(filtro_area, filtro_ubic
   }
 }
 export async function cantidadLlamadosNormalesNoAtendidos(filtro_area, filtro_ubicacion){
-  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
+  let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND llamados.id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
     FROM llamados
