@@ -305,7 +305,7 @@ export async function cantidadCodigoAzulNoAtendido(filtro_area, filtro_ubicacion
     console.log(e);
   }
 }
-export async function cantidadCodigoAzulAtendido(){
+export async function cantidadCodigoAzulAtendido(filtro_area, filtro_ubicacion){
   let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
@@ -318,7 +318,7 @@ export async function cantidadCodigoAzulAtendido(){
     console.log(e);
   }
 }
-export async function cantidadLlamadosNormalesAtendidos(){
+export async function cantidadLlamadosNormalesAtendidos(filtro_area, filtro_ubicacion){
   let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
@@ -331,7 +331,7 @@ export async function cantidadLlamadosNormalesAtendidos(){
     console.log(e);
   }
 }
-export async function cantidadLlamadosNormalesNoAtendidos(){
+export async function cantidadLlamadosNormalesNoAtendidos(filtro_area, filtro_ubicacion){
   let filtro_area_valor = filtro_area !== null ? `AND id_area = ${filtro_area}` : '', filtro_ubicacion_valor = filtro_ubicacion !== null ? `AND id_ubicacion = ${filtro_ubicacion}` : ''
   try{
     const [respuesta] = await pool.query(`SELECT COUNT(*) AS cantidad_llamados
